@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #importing }
+CXXMLImporter class >> compileAccessorsNamed: aName [
+	Transcript show: aName.
+	BDItem 
+		compile: (self setterBodyFor: aName)
+		classified: 'accessing'.
+	BDItem 
+		compile: (self getterBodyFor: aName)
+		classified: 'accessing'.	
+	
+]
+
+{ #category : #importing }
 CXXMLImporter class >> compileSetterNamed: aName [
 
 	BDItem 
@@ -13,8 +25,21 @@ CXXMLImporter class >> compileSetterNamed: aName [
 ]
 
 { #category : #importing }
-CXXMLImporter class >> import [ 
+CXXMLImporter class >> getterBodyFor: aName [
 
+	^ (String streamContents: [:s |
+						s << aName.
+						s cr.
+						s tab.
+						s << '^ ' << aName.
+						s cr.
+						])
+	
+]
+
+{ #category : #importing }
+CXXMLImporter class >> import [ 
+	"self import"
 	| p base |
 	base := BDBase new.
 	p := XMLDOMParser onFileNamed: 'BD.319.xml'.
@@ -23,9 +48,12 @@ CXXMLImporter class >> import [
 		bd := BDItem new.
 		base add: bd. 
 		each attributeNamesAndValuesDo: [ :attName :value | 
-			[bd perform: attName with: value ] on: MessageNotUnderstood do: [ :ex | self compileSetterNamed: attName ]
-			]
-		]
+			bd perform: (attName, ':') asSymbol with: value
+			"[ bd perform: attName with: value ] 
+					on: MessageNotUnderstood 
+					do: [ :ex | self compileAccessorsNamed: attName ]" ]
+		].
+	^ base
 ]
 
 { #category : #importing }

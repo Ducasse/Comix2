@@ -23,6 +23,15 @@ BDBase >> initialize [
 ]
 
 { #category : #io }
+BDBase >> load [
+	"self new load"
+	| base |
+	base := (workingDirectory / (workingDirectory lastFileFor: 'BDs' extension: 'ston')) 
+		asFileReference readStreamDo: [ :str | (STON fromStream: str)].
+	^ base
+]
+
+{ #category : #io }
 BDBase >> save [
 
 	(workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
