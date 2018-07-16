@@ -14,6 +14,12 @@ CXBase >> add: aBD [
 	bds add: aBD 
 ]
 
+{ #category : #accessing }
+CXBase >> bds [
+
+	^ bds
+]
+
 { #category : #initialize }
 CXBase >> initialize [
 
