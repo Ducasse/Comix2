@@ -21,10 +21,15 @@ CXCompleteCheckerTest >> setUp [
 { #category : #tests }
 CXCompleteCheckerTest >> testACompleteSerieElementShouldBeSerieComplete [
 	
-	| aquablue |
+	| aquablue aya |
 	aquablue := (base serieNamed: 'Aquablue').
 	checker checkSerie: aquablue.
 	self assert: checker suspects size equals: 0.
 	
-	
+	"we set the serie to complete but this is not true."
+	aya := (base serieNamed: 'Aya de Yopougon').
+	aya serieComplete: true. 
+	checker checkSerie: aya. 
+	self assert: checker suspects size equals: 1.
+	"there is one bd stating that the serie is uncomplete"
 ]
