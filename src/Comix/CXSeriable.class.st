@@ -1,3 +1,7 @@
+"
+Having a computed (by opposition to storing the information) version of a serie completeness is unclear,
+since we can have two comix and still the serie is in 5 tomes and we do not know it and cannot deduce it. 
+"
 Class {
 	#name : #CXSeriable,
 	#superclass : #Object,
@@ -52,6 +56,23 @@ CXSeriable >> maxNumber [
 	max := 0.
 	bds do: [:each | each number ifNotNil: [max := each number max: max]].
 	^ max 
+]
+
+{ #category : #queries }
+CXSeriable >> missingNumbers [
+
+	| all strange max |
+	strange := OrderedCollection new.
+	max := self maxNumber.
+	all := (1 to: max) asOrderedCollection.
+	bds do: [:each | 
+				each original ifTrue: [
+					(all includes: each number) 
+						ifTrue: [ all remove: each number]
+						ifFalse: [ strange add: each number]]].
+	"when the serie is not finished we make sure that we mention that the next one is missing."
+	self isSerieComplete ifFalse: [all add: max + 1].
+	^ {all asArray . strange asArray}
 ]
 
 { #category : #printing }
