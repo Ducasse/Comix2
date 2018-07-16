@@ -122,6 +122,87 @@ CXItem >> entryNumber: aValue [
 
 ]
 
+{ #category : #'import from xml' }
+CXItem >> importAuthors: aString [
+	self authors: aString
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importCastermanNote: aString [
+	self castermanNote: aString
+]
+
+{ #category : #'import from xml' }
+CXItem >> importCollection: aString [
+	self collection: aString
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importDepotLegal: aDate [
+	(aDate isKindOf: Date)
+		ifTrue: [ self depotLegal: aDate ]
+		ifFalse: [ self depotLegal: (Date readFrom: aDate) ]
+]
+
+{ #category : #'import from xml' }
+CXItem >> importMainSerie: aString [
+	self mainSerie: aString
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importNotes: aValue [
+	self notes: aValue
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importNumber: anInteger [
+
+	(anInteger isKindOf: Number)
+		ifTrue: [ self number: anInteger ]
+		ifFalse: [ self number: (Integer readFrom: anInteger) ]
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importNumberOnCover: anInteger [
+
+	(anInteger isKindOf: Number)
+		ifTrue: [ self numberOnCover: anInteger ]
+		ifFalse: [ self numberOnCover: (Integer readFrom: anInteger) ]
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importSerieComplete: aValue [
+	self serieComplete: (Object readFrom: aValue)
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importSortedAs: aString [
+	self sortedAs: aString
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importTitle: aString [
+	self title: aString
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importYear: anInteger [
+
+	(anInteger isKindOf: Year)
+		ifTrue: [ self year: anInteger ]
+		ifFalse: [ self year: (Integer readFrom: anInteger) ]
+
+]
+
 { #category : #accessing }
 CXItem >> mainSerie [
 	^ mainSerie
