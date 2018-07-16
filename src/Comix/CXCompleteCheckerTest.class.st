@@ -2,7 +2,6 @@ Class {
 	#name : #CXCompleteCheckerTest,
 	#superclass : #CXBaseTest,
 	#instVars : [
-		'base',
 		'checker'
 	],
 	#category : #'Comix-Model'
