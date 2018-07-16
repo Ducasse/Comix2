@@ -1,5 +1,5 @@
 Class {
-	#name : #BDItem,
+	#name : #CXItem,
 	#superclass : #Object,
 	#instVars : [
 		'title',
@@ -23,221 +23,221 @@ Class {
 		'coverPictureName',
 		'collection'
 	],
-	#category : #Comix
+	#category : #'Comix-Model'
 }
 
 { #category : #accessing }
-BDItem >> authors [
+CXItem >> authors [
 	^ authors
 
 ]
 
 { #category : #accessing }
-BDItem >> authors: aValue [
+CXItem >> authors: aValue [
 	authors := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> castermanNote [
+CXItem >> castermanNote [
 	^ castermanNote
 
 ]
 
 { #category : #accessing }
-BDItem >> castermanNote: aValue [
+CXItem >> castermanNote: aValue [
 	castermanNote := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> collection [
+CXItem >> collection [
 	^ collection
 
 ]
 
 { #category : #accessing }
-BDItem >> collection: aValue [
+CXItem >> collection: aValue [
 	collection := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> coverPictureName [
+CXItem >> coverPictureName [
 	^ coverPictureName
 
 ]
 
 { #category : #accessing }
-BDItem >> coverPictureName: aValue [
+CXItem >> coverPictureName: aValue [
 	coverPictureName := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> depotLegal [
+CXItem >> depotLegal [
 	^ depotLegal
 
 ]
 
 { #category : #accessing }
-BDItem >> depotLegal: aValue [
+CXItem >> depotLegal: aValue [
 	depotLegal := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> editor [
+CXItem >> editor [
 	^ editor
 
 ]
 
 { #category : #accessing }
-BDItem >> editor: aValue [
+CXItem >> editor: aValue [
 	editor := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> entryCreationDate [
+CXItem >> entryCreationDate [
 	^ entryCreationDate
 
 ]
 
 { #category : #accessing }
-BDItem >> entryCreationDate: aValue [
+CXItem >> entryCreationDate: aValue [
 	entryCreationDate := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> entryNumber [
+CXItem >> entryNumber [
 	^ entryNumber
 
 ]
 
 { #category : #accessing }
-BDItem >> entryNumber: aValue [
+CXItem >> entryNumber: aValue [
 	entryNumber := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> mainSerie [
+CXItem >> mainSerie [
 	^ mainSerie
 
 ]
 
 { #category : #accessing }
-BDItem >> mainSerie: aValue [
+CXItem >> mainSerie: aValue [
 	mainSerie := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> notes [
+CXItem >> notes [
 	^ notes
 
 ]
 
 { #category : #accessing }
-BDItem >> notes: aValue [
+CXItem >> notes: aValue [
 	notes := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> number [
+CXItem >> number [
 	^ number
 
 ]
 
 { #category : #accessing }
-BDItem >> number: aValue [
+CXItem >> number: aValue [
 	number := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> numberOnCover [
+CXItem >> numberOnCover [
 	^ numberOnCover
 
 ]
 
 { #category : #accessing }
-BDItem >> numberOnCover: aValue [
+CXItem >> numberOnCover: aValue [
 	numberOnCover := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> original [
+CXItem >> original [
 	^ original
 
 ]
 
 { #category : #accessing }
-BDItem >> original: aValue [
+CXItem >> original: aValue [
 	original := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> serie [
+CXItem >> serie [
 	^ serie
 
 ]
 
 { #category : #accessing }
-BDItem >> serie: aValue [
+CXItem >> serie: aValue [
 	serie := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> serieComplete [
+CXItem >> serieComplete [
 	^ serieComplete
 
 ]
 
 { #category : #accessing }
-BDItem >> serieComplete: aValue [
+CXItem >> serieComplete: aValue [
 	serieComplete := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> sortedAs [
+CXItem >> sortedAs [
 	^ sortedAs
 
 ]
 
 { #category : #accessing }
-BDItem >> sortedAs: aValue [
+CXItem >> sortedAs: aValue [
 	sortedAs := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> title [
+CXItem >> title [
 	^ title
 
 ]
 
 { #category : #accessing }
-BDItem >> title: aValue [
+CXItem >> title: aValue [
 	title := aValue
 
 ]
 
 { #category : #accessing }
-BDItem >> year [
+CXItem >> year [
 	^ year
 
 ]
 
 { #category : #accessing }
-BDItem >> year: aValue [
+CXItem >> year: aValue [
 	year := aValue
 
 ]

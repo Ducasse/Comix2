@@ -1,7 +1,7 @@
 Class {
 	#name : #MiniSeriePrinter,
 	#superclass : #SeriePrinter,
-	#category : #Comix
+	#category : #'Comix-Tools'
 }
 
 { #category : #initialize }

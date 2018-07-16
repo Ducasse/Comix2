@@ -1,21 +1,21 @@
 Class {
-	#name : #BDBase,
+	#name : #CXBase,
 	#superclass : #Object,
 	#instVars : [
 		'bds',
 		'workingDirectory'
 	],
-	#category : #Comix
+	#category : #'Comix-Model'
 }
 
 { #category : #adding }
-BDBase >> add: aBD [
+CXBase >> add: aBD [
 
 	bds add: aBD 
 ]
 
 { #category : #initialize }
-BDBase >> initialize [
+CXBase >> initialize [
 
 	super initialize.
 	bds := OrderedCollection new. 
@@ -23,16 +23,17 @@ BDBase >> initialize [
 ]
 
 { #category : #io }
-BDBase >> load [
+CXBase >> load [
 	"self new load"
 	| base |
-	base := (workingDirectory / (workingDirectory lastFileFor: 'BDs' extension: 'ston')) 
+	
+	base := (workingDirectory lastFileFor: 'BDs' extension: 'ston') 
 		asFileReference readStreamDo: [ :str | (STON fromStream: str)].
 	^ base
 ]
 
 { #category : #io }
-BDBase >> save [
+CXBase >> save [
 
 	(workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
 		asFileReference writeStreamDo: [ :str | str nextPutAll: 

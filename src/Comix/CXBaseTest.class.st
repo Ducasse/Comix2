@@ -1,26 +1,26 @@
 Class {
-	#name : #BDBaseTest,
+	#name : #CXBaseTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'testingWorkingDirectory'
 	],
-	#category : #Comix
+	#category : #'Comix-Tools'
 }
 
 { #category : #'as yet unclassified' }
-BDBaseTest class >> contentsForTest [ 
+CXBaseTest class >> contentsForTest [ 
 
 	^ ''
 ]
 
 { #category : #'as yet unclassified' }
-BDBaseTest class >> fileNameForTest [
+CXBaseTest class >> fileNameForTest [
 
 	^ 'BD.ston'
 ]
 
 { #category : #setup }
-BDBaseTest >> setUp [
+CXBaseTest >> setUp [
 
 	super setUp.
 	testingWorkingDirectory := FileSystem memory workingDirectory.

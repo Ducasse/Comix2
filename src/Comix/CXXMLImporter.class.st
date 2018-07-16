@@ -1,16 +1,16 @@
 Class {
 	#name : #CXXMLImporter,
 	#superclass : #Object,
-	#category : #Comix
+	#category : #'Comix-Migration Support'
 }
 
 { #category : #importing }
 CXXMLImporter class >> compileAccessorsNamed: aName [
 	Transcript show: aName.
-	BDItem 
+	CXItem 
 		compile: (self setterBodyFor: aName)
 		classified: 'accessing'.
-	BDItem 
+	CXItem 
 		compile: (self getterBodyFor: aName)
 		classified: 'accessing'.	
 	
@@ -19,7 +19,7 @@ CXXMLImporter class >> compileAccessorsNamed: aName [
 { #category : #importing }
 CXXMLImporter class >> compileSetterNamed: aName [
 
-	BDItem 
+	CXItem 
 		compile: (self setterBodyFor: aName)
 		classified: 'accessing'
 ]
@@ -41,11 +41,11 @@ CXXMLImporter class >> getterBodyFor: aName [
 CXXMLImporter class >> import [ 
 	"self import"
 	| p base |
-	base := BDBase new.
+	base := CXBase new.
 	p := XMLDOMParser onFileNamed: 'BD.319.xml'.
 	p parseDocument elements first elements do: [ :each | 
 		| bd | 
-		bd := BDItem new.
+		bd := CXItem new.
 		base add: bd. 
 		each attributeNamesAndValuesDo: [ :attName :value | 
 			bd perform: (attName, ':') asSymbol with: value

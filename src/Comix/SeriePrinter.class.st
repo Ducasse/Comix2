@@ -1,14 +1,14 @@
 Class {
 	#name : #SeriePrinter,
 	#superclass : #LatexPrinter,
-	#category : #Comix
+	#category : #'Comix-Tools'
 }
 
 { #category : #printing }
 SeriePrinter class >> printBaseName: aSymbol [
 
 	| fx |
-	fx := BDBase baseNamed: aSymbol asSymbol.
+	fx := CXBase baseNamed: aSymbol asSymbol.
 	(self new base: fx) save
 ]
 

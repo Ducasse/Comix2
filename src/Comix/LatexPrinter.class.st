@@ -1,13 +1,12 @@
 Class {
 	#name : #LatexPrinter,
-	#superclass : #Object,
+	#superclass : #CXTools,
 	#instVars : [
 		'stream',
 		'twoColumn',
-		'lines',
-		'base'
+		'lines'
 	],
-	#category : #Comix
+	#category : #'Comix-Tools'
 }
 
 { #category : #latex }
@@ -94,7 +93,7 @@ LatexPrinter >> dispatchTwoColumns [
 					[self addTableTwoEnd.
 					self addTableTwoStart]].
 	self printBD: (bds at: totalSize).
-	self printBD: ((BDItem new)
+	self printBD: ((CXItem new)
 				title: ' ';
 				serie: ' ';
 				number: 0;
