@@ -214,7 +214,7 @@ CXItem >> serieComplete: aValue [
 
 { #category : #accessing }
 CXItem >> sortedAs [
-	^ sortedAs
+	^ sortedAs ifNil: [ title ]
 
 ]
 

@@ -2,35 +2,38 @@ Class {
 	#name : #CXBase,
 	#superclass : #Object,
 	#instVars : [
-		'bds',
-		'workingDirectory'
+		'workingDirectory',
+		'series'
 	],
 	#category : #'Comix-Model'
 }
 
 { #category : #adding }
-CXBase >> add: aBD [
-
-	bds add: aBD 
+CXBase >> addNewSerieFromCollection: bds [
+	"bds is a collection of unconnected bds objects. It means that their series are not object but string"
+	| newSeries |
+	newSeries := bds groupedBy: [ :each | each serie ].
+	newSeries keysAndValuesDo: [ :k :v | self addSerie: 
+													(CXSerie new 
+														sortedAs: k;
+														title: v first serie;
+														bds: v)
+														]
+	
+		
 ]
 
 { #category : #adding }
 CXBase >> addSerie: aSerie [
 
-	bds at: aSerie sortedAs put: aSerie 
-]
-
-{ #category : #accessing }
-CXBase >> bds [
-
-	^ bds
+	series at: aSerie sortedAs put: aSerie 
 ]
 
 { #category : #initialize }
 CXBase >> initialize [
 
 	super initialize.
-	bds := OrderedCollection new. 
+	series := Dictionary new. 
 	workingDirectory := FileSystem workingDirectory.
 ]
 
@@ -38,7 +41,6 @@ CXBase >> initialize [
 CXBase >> load [
 	"self new load"
 	| base |
-	
 	base := (workingDirectory lastFileFor: 'BDs' extension: 'ston') 
 		asFileReference readStreamDo: [ :str | (STON fromStream: str)].
 	^ base
@@ -50,4 +52,16 @@ CXBase >> save [
 	(workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
 		asFileReference writeStreamDo: [ :str | str nextPutAll: 
 		(STON toStringPretty: self)]
+]
+
+{ #category : #accessing }
+CXBase >> serieNamed: aTitle [
+
+	^ series at: aTitle ifAbsent: [ self error: 'There is no serie named ', aTitle ]
+]
+
+{ #category : #adding }
+CXBase >> series [
+
+	^ series values
 ]
