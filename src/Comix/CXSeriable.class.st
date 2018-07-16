@@ -45,6 +45,15 @@ CXSeriable >> isSerieComplete [
 		ifFalse: [ serieComplete ]
 ]
 
+{ #category : #queries }
+CXSeriable >> maxNumber [
+
+	| max |
+	max := 0.
+	bds do: [:each | each number ifNotNil: [max := each number max: max]].
+	^ max 
+]
+
 { #category : #printing }
 CXSeriable >> printOn: aStream [
 

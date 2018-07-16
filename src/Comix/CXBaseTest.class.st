@@ -26,13 +26,21 @@ CXBaseTest >> testAddNewSerieFromCollection [
 CXBaseTest >> testBdsDo [
 	"self new testBdsDo"
 	
-	| base col count |
-	base := CXBase new.  
-	col := (STON fromString: self stonFile contents).
-	base addNewSerieFromCollection: col.
+	| count |
 	count := 0.
-	base seriesDo: [ :serie | count := count + 1 ].
-	self assert: count equals: 3
+	base bdsDo: [ :serie | count := count + 1 ].
+	self assert: count equals: 8
+]
+
+{ #category : #tests }
+CXBaseTest >> testMaxNumber [
+	"self new testMaxNumber"
+	
+	| oumok aquablue |
+	oumok := (base serieNamed: 'Nic oumouk').
+	self assert: oumok maxNumber equals: 1. 
+	aquablue := (base serieNamed: 'Aquablue').
+	self assert: aquablue maxNumber equals: 8. 
 ]
 
 { #category : #tests }
