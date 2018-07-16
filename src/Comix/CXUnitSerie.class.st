@@ -3,3 +3,9 @@ Class {
 	#superclass : #CXSeriable,
 	#category : #'Comix-Model'
 }
+
+{ #category : #testing }
+CXUnitSerie >> isSerieComplete [
+
+	^ true
+]

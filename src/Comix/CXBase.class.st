@@ -29,6 +29,12 @@ CXBase >> addSerie: aSerie [
 	series at: aSerie sortedAs put: aSerie 
 ]
 
+{ #category : #iterations }
+CXBase >> bdsDo: aBlock [
+
+	series values do: [:each | each bds do: aBlock ]
+]
+
 { #category : #initialize }
 CXBase >> initialize [
 
@@ -64,4 +70,10 @@ CXBase >> serieNamed: aTitle [
 CXBase >> series [
 
 	^ series values
+]
+
+{ #category : #iterations }
+CXBase >> seriesDo: aBlock [
+
+	series values do: aBlock
 ]

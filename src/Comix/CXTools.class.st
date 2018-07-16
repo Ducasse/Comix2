@@ -6,3 +6,9 @@ Class {
 	],
 	#category : #'Comix-Tools'
 }
+
+{ #category : #initialization }
+CXTools >> setBase: aBase [
+
+	base := aBase 
+]

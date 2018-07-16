@@ -29,11 +29,33 @@ CXSeriable >> checkValidity [
 	bds allSatisfy: [ :each | each serie = self title ]
 ]
 
+{ #category : #initialization }
+CXSeriable >> initialize [
+
+	super initialize.
+	serieComplete := false.
+	
+]
+
+{ #category : #testing }
+CXSeriable >> isSerieComplete [
+
+	^ serieComplete isNil 
+		ifTrue: [ false ]
+		ifFalse: [ serieComplete ]
+]
+
 { #category : #printing }
 CXSeriable >> printOn: aStream [
 
 	super printOn: aStream. 
 	aStream << title
+]
+
+{ #category : #accessing }
+CXSeriable >> serieComplete: aBoolean [
+
+	serieComplete := aBoolean.
 ]
 
 { #category : #accessing }
