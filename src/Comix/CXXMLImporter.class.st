@@ -40,20 +40,20 @@ CXXMLImporter class >> getterBodyFor: aName [
 { #category : #importing }
 CXXMLImporter class >> import [ 
 	"self import"
-	| p base |
-	base := CXBase new.
+	| p col |
+	col := OrderedCollection new.
 	p := XMLDOMParser onFileNamed: 'BD.319.xml'.
 	p parseDocument elements first elements do: [ :each | 
 		| bd | 
 		bd := CXItem new.
-		base add: bd. 
+		col add: bd.
 		each attributeNamesAndValuesDo: [ :attName :value | 
 			bd perform: (attName, ':') asSymbol with: value
 			"[ bd perform: attName with: value ] 
 					on: MessageNotUnderstood 
 					do: [ :ex | self compileAccessorsNamed: attName ]" ]
 		].
-	^ base
+	^ col
 ]
 
 { #category : #importing }

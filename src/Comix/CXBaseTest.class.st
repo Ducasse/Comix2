@@ -142,3 +142,12 @@ CXBaseTest >> testBase [
 	base := (STON fromString: self stonFile contents).
 	self assert: base bds size equals: 7.
 ]
+
+{ #category : #setup }
+CXBaseTest >> testBaseHasSeries [
+	"self new testBaseHasSeries"
+	
+	| base | 
+	base := (STON fromString: self stonFile contents).
+	self assert: base series equals: 2.
+]

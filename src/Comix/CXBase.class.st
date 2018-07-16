@@ -14,6 +14,12 @@ CXBase >> add: aBD [
 	bds add: aBD 
 ]
 
+{ #category : #adding }
+CXBase >> addSerie: aSerie [
+
+	bds at: aSerie sortedAs put: aSerie 
+]
+
 { #category : #accessing }
 CXBase >> bds [
 

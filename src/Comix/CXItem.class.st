@@ -182,6 +182,12 @@ CXItem >> original: aValue [
 
 ]
 
+{ #category : #printing }
+CXItem >> printOn: aStream [
+	
+	aStream nextPutAll: self title.
+]
+
 { #category : #accessing }
 CXItem >> serie [
 	^ serie
