@@ -4,17 +4,17 @@ Class {
 	#category : #'Comix-Tools'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 MiniSeriePrinter >> initialize [ 
 
 	super initialize.
 	self fileName:  'MSeries'
 ]
 
-{ #category : #initialize }
+{ #category : #printing }
 MiniSeriePrinter >> printBD: aBD [
 
-	aBD isOriginal 
+	aBD original 
 		ifTrue: [
 		stream 
 			nextPutAll: ((aBD hasNumber) 
@@ -27,14 +27,14 @@ MiniSeriePrinter >> printBD: aBD [
 			]
 ]
 
-{ #category : #initialize }
+{ #category : #printing }
 MiniSeriePrinter >> printSerie: each [
 
 	each missingNumbers first isEmpty
 		ifFalse: [
-	stream nextPutAll: '\paragraph{' , each title asString .
+	stream nextPutAll: '\paragraph{' , each title asString.
 	stream nextPutAll: ' (Ms:'.
 	each missingNumbers first do: [:missing | stream nextPutAll: missing asString] 
 		separatedBy: [stream nextPut: Character space].
-	stream nextPutAll: ')' ; nextPutAll: '}' ; cr.]
+	stream nextPutAll: ')' ; nextPutAll: '}' ; cr]
 ]

@@ -25,17 +25,23 @@ SeriePrinter >> columns [
 	^ 'twocolumn'
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
+SeriePrinter >> defaultFileName [
+	^ 'BELIST'
+	
+]
+
+{ #category : #initialization }
 SeriePrinter >> initialize [
 
 	super initialize.
 	self fileName:  'Series'
 ]
 
-{ #category : #initialize }
+{ #category : #printing }
 SeriePrinter >> printBD: aBD [ 
 
-	aBD isOriginal 
+	aBD original 
 		ifTrue: [
 		stream cr; 
 			nextPutAll: ((aBD hasNumber) 
@@ -50,7 +56,7 @@ SeriePrinter >> printBD: aBD [
 			self hline]
 ]
 
-{ #category : #initialize }
+{ #category : #printing }
 SeriePrinter >> printBDs: aSortedCollection [
 
 	self addTableStart.
@@ -58,7 +64,7 @@ SeriePrinter >> printBDs: aSortedCollection [
 	self addTableEnd
 ]
 
-{ #category : #initialize }
+{ #category : #operate }
 SeriePrinter >> treatBase [
 	"self printNormal"
 

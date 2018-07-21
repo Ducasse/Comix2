@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'stream',
 		'twoColumn',
-		'lines'
+		'lines',
+		'fileName'
 	],
 	#category : #'Comix-Tools'
 }
@@ -61,7 +62,13 @@ LatexPrinter >> columns [
 	^ ''
 ]
 
-{ #category : #latex }
+{ #category : #initialization }
+LatexPrinter >> defaultFileName [
+	^ 'BELIST'
+	
+]
+
+{ #category : #operate }
 LatexPrinter >> dispatch [
 	
 	| bds |
@@ -73,7 +80,7 @@ LatexPrinter >> dispatch [
 
 ]
 
-{ #category : #latex }
+{ #category : #operate }
 LatexPrinter >> dispatchTwoColumns [
 
 	| bds totalSize size |
@@ -106,6 +113,12 @@ LatexPrinter >> extension [
 	^ 'tex'
 ]
 
+{ #category : #accessing }
+LatexPrinter >> fileName: name [
+
+	fileName := name
+]
+
 { #category : #latex }
 LatexPrinter >> hline [
 	stream
@@ -113,7 +126,7 @@ LatexPrinter >> hline [
 		cr
 ]
 
-{ #category : #latex }
+{ #category : #initialization }
 LatexPrinter >> initialize [
 
 	super initialize.
@@ -125,14 +138,14 @@ LatexPrinter >> initialize [
 { #category : #latex }
 LatexPrinter >> linePlus [
 
-	lines := lines +1 
+	lines := lines + 1 
 
 ]
 
 { #category : #latex }
 LatexPrinter >> printBD: aBD [
 
-	aBD isOriginal 
+	aBD original 
 		ifTrue: [
 		stream cr; 
 			nextPutAll: ((aBD hasNumber) ifTrue: [aBD publicNumber asString] ifFalse: ['']); nextPutAll: '&' ; 
@@ -141,21 +154,13 @@ LatexPrinter >> printBD: aBD [
 			nextPutAll: aBD year asString ]
 ]
 
-{ #category : #latex }
-LatexPrinter >> self [ stream.
-	self addLatexStart.
-	self treatBase.
-	self addLatexEnd
-]
-
-{ #category : #latex }
+{ #category : #initialization }
 LatexPrinter >> stream [ 
 	
-	stream := (MultiByteFileStream newFileNamed: self nextBDFileName).
-	stream converter: UTF8TextConverter new
+	stream := FileSystem workingDirectory  lastFileFor: 'BDs' extension: self extension
 ]
 
-{ #category : #latex }
+{ #category : #operate }
 LatexPrinter >> treatBase [
 
 	twoColumn 
