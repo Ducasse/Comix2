@@ -147,10 +147,35 @@ CXItem >> importCollection: aString [
 ]
 
 { #category : #'import from xml' }
+CXItem >> importCoverPictureName: aString [
+	self coverPictureName: aString
+
+]
+
+{ #category : #'import from xml' }
 CXItem >> importDepotLegal: aDate [
-	(aDate isKindOf: Date)
-		ifTrue: [ self depotLegal: aDate ]
-		ifFalse: [ self depotLegal: (Date readFrom: aDate) ]
+	self depotLegal: aDate
+]
+
+{ #category : #'import from xml' }
+CXItem >> importEditor: aString [
+	self editor: aString
+
+]
+
+{ #category : #accessing }
+CXItem >> importEntryCreationDate: aValue [
+	self entryCreationDate: (Date readFromString: aValue)
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importEntryNumber: anInteger [
+
+	(anInteger isKindOf: Number)
+		ifTrue: [ self number: anInteger ]
+		ifFalse: [ self number: (Integer readFromString: anInteger) ]
+
 ]
 
 { #category : #'import from xml' }
@@ -170,7 +195,7 @@ CXItem >> importNumber: anInteger [
 
 	(anInteger isKindOf: Number)
 		ifTrue: [ self number: anInteger ]
-		ifFalse: [ self number: (Integer readFrom: anInteger) ]
+		ifFalse: [ self number: (Integer readFromString: anInteger) ]
 
 ]
 
@@ -179,13 +204,28 @@ CXItem >> importNumberOnCover: anInteger [
 
 	(anInteger isKindOf: Number)
 		ifTrue: [ self numberOnCover: anInteger ]
-		ifFalse: [ self numberOnCover: (Integer readFrom: anInteger) ]
+		ifFalse: [ self numberOnCover: (Integer readFromString: anInteger) ]
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importOriginal: aValue [
+
+	(aValue isKindOf: Boolean)
+		ifTrue: [ self original: aValue ]
+		ifFalse: [ self original: (Boolean readFromString: aValue) ]
+
+]
+
+{ #category : #'import from xml' }
+CXItem >> importSerie: aValue [
+	self serie: aValue
 
 ]
 
 { #category : #'import from xml' }
 CXItem >> importSerieComplete: aValue [
-	self serieComplete: (Object readFrom: aValue)
+	self serieComplete: (Object readFromString: aValue)
 
 ]
 
@@ -206,7 +246,7 @@ CXItem >> importYear: anInteger [
 
 	(anInteger isKindOf: Year)
 		ifTrue: [ self year: anInteger ]
-		ifFalse: [ self year: (Integer readFrom: anInteger) ]
+		ifFalse: [ self year: (Integer readFromString: anInteger) ]
 
 ]
 
@@ -278,9 +318,8 @@ CXItem >> printOn: aStream [
 
 { #category : #'accessing - composed' }
 CXItem >> publicNumber [
-	^ number isNil 
-		ifTrue: [(self numberOnCover isNil) ifTrue: [0] ifFalse: [self numberOnCover]]
-		ifFalse: [self number]
+	^ number ifNil: [self numberOnCover isNil ifTrue: [0] ifFalse: [self numberOnCover]]
+	
 ]
 
 { #category : #accessing }
@@ -308,8 +347,16 @@ CXItem >> serieComplete: aValue [
 ]
 
 { #category : #accessing }
+CXItem >> serieTitle [
+	"for now it will just be the serie but when serie got connected it will change"
+	
+	^ serie
+]
+
+{ #category : #accessing }
 CXItem >> sortedAs [
-	"Return "
+	"An item is sorted within a serie as an explicit number, when there is a mess
+	in the numbering or via its public number"
 	^ sortedAs ifNil: [ self publicNumber asString ]
 
 ]

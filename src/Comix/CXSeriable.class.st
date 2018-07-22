@@ -28,6 +28,12 @@ CXSeriable >> bds: aCol [
 ]
 
 { #category : #accessing }
+CXSeriable >> bdsDo: aBlock [
+
+	^ bds do: aBlock
+]
+
+{ #category : #accessing }
 CXSeriable >> checkValidity [
 	
 	bds allSatisfy: [ :each | each serie = self title ]
@@ -75,6 +81,18 @@ CXSeriable >> missingNumbers [
 	^ {all asArray . strange asArray}
 ]
 
+{ #category : #accessing }
+CXSeriable >> originalBds [
+
+	^ bds select: [ :each | each original ]
+]
+
+{ #category : #accessing }
+CXSeriable >> originalBdsDo: aBlock [
+
+	^ bds do: [ :aBd | aBd original ifTrue: [ aBlock value: aBd ]]
+]
+
 { #category : #printing }
 CXSeriable >> printOn: aStream [
 
@@ -93,7 +111,7 @@ CXSeriable >> serieComplete: aBoolean [
 CXSeriable >> sortedAs [
 	"A serie can be sorted in a special way if it is set, by default use its title"
 	
-	^ sortedAs ifNil: [ title ]
+	^ sortedAs ifNil: [ title ] 
 ]
 
 { #category : #accessing }

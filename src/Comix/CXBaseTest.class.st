@@ -62,6 +62,16 @@ CXBaseTest >> testMissingNumbers [
 ]
 
 { #category : #tests }
+CXBaseTest >> testOriginalBdsDo [
+	"self new testOriginalBdsDo"
+	
+	| count |
+	count := 0.
+	base originalBdsDo: [ :serie | count := count + 1 ].
+	self assert: count equals: 7
+]
+
+{ #category : #tests }
 CXBaseTest >> testSerieComplete [
 	"self new testSerieNamed"
 	
@@ -81,6 +91,16 @@ CXBaseTest >> testSerieNamed [
 	self assert: oumok bds size equals: 1. 
 	aquablue := (base serieNamed: 'Aquablue').
 	self assert: aquablue bds size equals: 5. 
+]
+
+{ #category : #tests }
+CXBaseTest >> testSerieTitle [
+	"self new testSerieTitle"
+	
+	| oumok |
+	oumok := (base serieNamed: 'Nic oumouk').
+	self assert: oumok bds first serieTitle equals: 'Nic oumouk'. 
+	
 ]
 
 { #category : #tests }

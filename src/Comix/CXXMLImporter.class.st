@@ -42,13 +42,13 @@ CXXMLImporter class >> import [
 	"self import"
 	| p col |
 	col := OrderedCollection new.
-	p := XMLDOMParser onFileNamed: 'BD.319.xml'.
+	p := XMLDOMParser onFileNamed: 'BD.321.xml'.
 	p parseDocument elements first elements do: [ :each | 
 		| bd | 
 		bd := CXItem new.
 		col add: bd.
 		each attributeNamesAndValuesDo: [ :attName :value | 
-			bd perform: (attName, ':') asSymbol with: value
+			bd perform: ('import', attName capitalized , ':') asSymbol with: value
 			"[ bd perform: attName with: value ] 
 					on: MessageNotUnderstood 
 					do: [ :ex | self compileAccessorsNamed: attName ]" ]

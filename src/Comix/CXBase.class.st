@@ -32,7 +32,7 @@ CXBase >> addSerie: aSerie [
 { #category : #iterations }
 CXBase >> bdsDo: aBlock [
 
-	series values do: [:each | each bds do: aBlock ]
+	series values do: [:aSerie | aSerie bdsDo: aBlock ]
 ]
 
 { #category : #iterations }
@@ -40,7 +40,7 @@ CXBase >> bdsSortedBySeries [
 
 	| ord |
 	ord := OrderedCollection new.
-	self bdsDo: [ :each | ord add: each ].
+	self originalBdsDo: [ :each | ord add: each ].
 	^ ord
 ]
 
@@ -59,6 +59,12 @@ CXBase >> load [
 	base := (workingDirectory lastFileFor: 'BDs' extension: 'ston') 
 		asFileReference readStreamDo: [ :str | (STON fromStream: str)].
 	^ base
+]
+
+{ #category : #iterations }
+CXBase >> originalBdsDo: aBlock [
+
+	series values do: [:aSerie | aSerie originalBdsDo: aBlock ]
 ]
 
 { #category : #io }

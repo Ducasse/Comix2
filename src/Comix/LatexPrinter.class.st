@@ -1,8 +1,7 @@
 "
 LatexPrinter new
 	setBase: (CXBase new addNewSerieFromCollection: (STON fromString: CXBasicBaseTest contentsForTest));
-	treatBase
-	
+	save
 "
 Class {
 	#name : #LatexPrinter,
@@ -58,7 +57,8 @@ LatexPrinter >> addTableTwoEnd [
 { #category : #latex }
 LatexPrinter >> addTableTwoStart [
 
-	stream cr ; nextPutAll: '\noindent\begin{tabular}{|p{0.5cm}p{3.2cm}p{3cm}p{0.5cm}||p{0.5cm}p{3.2cm}p{3cm}p{0.5cm}|}\hline' ; cr
+	stream cr ; 
+		nextPutAll: '\noindent\begin{tabular}{|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}||p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|}\hline' ; cr
 
 ]
 
@@ -88,34 +88,38 @@ LatexPrinter >> dispatch [
 
 { #category : #operate }
 LatexPrinter >> dispatchTwoColumns [
-
 	| bds totalSize size |
 	"the logic looks strange but we need to know the size of a serie for paginating
 	the items. Therefore we use the series."
-	
 	bds := base bdsSortedBySeries.
 	totalSize := bds size.
-	totalSize odd ifTrue: [size := totalSize - 1] ifFalse: [size := totalSize].
-	
-	1 to: size
-		by: 2
-		do: 
-			[:i | 
-			self printBD: (bds at: i).
-			stream nextPutAll: '&'.
-			self printBD: (bds at: i + 1).
-			self hline.
-			(i + 1 rem: 120) isZero 
-				ifTrue: 
-					[self addTableTwoEnd.
-					self addTableTwoStart]].
+	totalSize odd
+		ifTrue: [ size := totalSize - 1 ]
+		ifFalse: [ size := totalSize ].
+	1 to: size by: 2 do: [ :i | 
+		self printBD: (bds at: i).
+		self emitSeparator.
+		self printBD: (bds at: i + 1).
+		self hline.
+		(i + 1 rem: 120) isZero
+			ifTrue: [ self addTableTwoEnd.
+				self addTableTwoStart ] ].
 	self printBD: (bds at: totalSize).
-	self printBD: ((CXItem new)
+
+	"to finish the latex?"
+	self
+		printBD:
+			(CXItem new
 				title: ' ';
 				original: false;
 				serie: ' ';
 				number: 0;
 				year: 0)
+]
+
+{ #category : #operate }
+LatexPrinter >> emitSeparator [
+	stream nextPutAll: '&'
 ]
 
 { #category : #latex }
@@ -156,14 +160,31 @@ LatexPrinter >> linePlus [
 
 { #category : #latex }
 LatexPrinter >> printBD: aBD [
-
+	
 	aBD original 
 		ifTrue: [
-		stream cr; 
-			nextPutAll: ((aBD hasNumber) ifTrue: [aBD publicNumber asString] ifFalse: ['']); nextPutAll: '&' ; 
-			nextPutAll: aBD sortedAs asString ; nextPutAll: '&' ; 
-			nextPutAll: aBD title asString ; nextPutAll: '&' ; 
-			nextPutAll: aBD year asString ]
+			stream cr; 
+				nextPutAll: (aBD hasNumber ifTrue: [ aBD publicNumber asString ] ifFalse: ['']); 
+				nextPutAll: '/' ; 
+				nextPutAll: aBD sortedAs asString. 
+			self emitSeparator. 	
+			stream 	
+				nextPutAll: aBD serie asString.
+			self emitSeparator. 	
+			stream  
+				nextPutAll: aBD title asString.
+			self emitSeparator. 	
+			stream 
+				nextPutAll: aBD year asString ]
+]
+
+{ #category : #actions }
+LatexPrinter >> save [
+	self setStream.
+	self addLatexStart.
+	self treatBase.
+	self addLatexEnd.
+	stream flush
 ]
 
 { #category : #initialization }
@@ -171,12 +192,6 @@ LatexPrinter >> setStream [
 	
 	stream := "FileSystem workingDirectory lastFileFor: self defaultFileName extension: self extension"
 	(FileSystem workingDirectory nextNameFor: self defaultFileName extension: self extension) asFileReference writeStream
-]
-
-{ #category : #initialization }
-LatexPrinter >> stream [ 
-	
-	stream := FileSystem workingDirectory lastFileFor: self defaultFileName extension: self extension
 ]
 
 { #category : #operate }
