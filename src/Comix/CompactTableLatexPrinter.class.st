@@ -23,13 +23,63 @@ Class {
 }
 
 { #category : #latex }
-CompactTableLatexPrinter >> addLatexEnd [
+CompactTableLatexPrinter >> columns [
+	
+	^ ''
+]
+
+{ #category : #initialization }
+CompactTableLatexPrinter >> defaultFileName [
+	^ fileName ifNil: [ 'BELIST' ]
+	
+]
+
+{ #category : #operate }
+CompactTableLatexPrinter >> dispatchInColumns [
+	| bds totalSize size |
+	"the logic looks strange but we need to know the size of a serie for paginating
+	the items. Therefore we use the series."
+	bds := base bdsSortedBySeries.
+	totalSize := bds size.
+	totalSize odd
+		ifTrue: [ size := totalSize - 1 ]
+		ifFalse: [ size := totalSize ].
+	1 to: size by: 2 do: [ :i | 
+		self printBD: (bds at: i).
+		self emitSeparator.
+		self printBD: (bds at: i + 1).
+		self emitHLine.
+		(i + 1 rem: 120) isZero
+			ifTrue: [ self emitTableEnd.
+				self emitTableStart ] ].
+	self printBD: (bds at: totalSize).
+
+	"to finish the latex?"
+	self
+		printBD:
+			(CXItem new
+				title: ' ';
+				original: false;
+				serie: ' ';
+				number: 0;
+				year: 0)
+]
+
+{ #category : #latex }
+CompactTableLatexPrinter >> emitHLine [
+	stream
+		nextPutAll: '\\ \hline';
+		cr
+]
+
+{ #category : #latex }
+CompactTableLatexPrinter >> emitLatexEnd [
 
 	stream nextPutAll: '\end{document}'
 ]
 
 { #category : #latex }
-CompactTableLatexPrinter >> addLatexStart [
+CompactTableLatexPrinter >> emitLatexStart [
 
 	stream nextPutAll: '\documentclass[', self columns, ']{article}
 \usepackage[utf8]{inputenc}  %% les accents dans le fichier.tex
@@ -44,89 +94,22 @@ CompactTableLatexPrinter >> addLatexStart [
 ]
 
 { #category : #latex }
-CompactTableLatexPrinter >> addTableEnd [
+CompactTableLatexPrinter >> emitSeparator [
+	stream nextPutAll: '&'
+]
+
+{ #category : #latex }
+CompactTableLatexPrinter >> emitTableEnd [
 
 	stream cr ; nextPutAll: '\end{tabular}' ; cr
 ]
 
 { #category : #latex }
-CompactTableLatexPrinter >> addTableStart [
-
-	stream cr ; nextPutAll: '\noindent\begin{tabular}{|rp{3.2cm}p{4cm}r|}\hline' ; cr
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> addTableTwoEnd [
-
-	stream cr ; nextPutAll: '\end{tabular}' ; cr
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> addTableTwoStart [
+CompactTableLatexPrinter >> emitTableStart [
 
 	stream cr ; 
 		nextPutAll: '\noindent\begin{tabular}{|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}||p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|}\hline' ; cr
 
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> columns [
-	
-	^ ''
-]
-
-{ #category : #initialization }
-CompactTableLatexPrinter >> defaultFileName [
-	^ fileName ifNil: [ 'BELIST' ]
-	
-]
-
-{ #category : #operate }
-CompactTableLatexPrinter >> dispatch [
-	
-	| bds |
-	bds := base bdsSortedBySeries.
-	1 to: bds size do: [:i |
-					self printBD: (bds at: i). self hline.
-					(i rem: 84) isZero ifTrue: [ self addTableEnd. self addTableStart]].
-
-
-]
-
-{ #category : #operate }
-CompactTableLatexPrinter >> dispatchTwoColumns [
-	| bds totalSize size |
-	"the logic looks strange but we need to know the size of a serie for paginating
-	the items. Therefore we use the series."
-	bds := base bdsSortedBySeries.
-	totalSize := bds size.
-	totalSize odd
-		ifTrue: [ size := totalSize - 1 ]
-		ifFalse: [ size := totalSize ].
-	1 to: size by: 2 do: [ :i | 
-		self printBD: (bds at: i).
-		self emitSeparator.
-		self printBD: (bds at: i + 1).
-		self hline.
-		(i + 1 rem: 120) isZero
-			ifTrue: [ self addTableTwoEnd.
-				self addTableTwoStart ] ].
-	self printBD: (bds at: totalSize).
-
-	"to finish the latex?"
-	self
-		printBD:
-			(CXItem new
-				title: ' ';
-				original: false;
-				serie: ' ';
-				number: 0;
-				year: 0)
-]
-
-{ #category : #operate }
-CompactTableLatexPrinter >> emitSeparator [
-	stream nextPutAll: '&'
 ]
 
 { #category : #latex }
@@ -139,13 +122,6 @@ CompactTableLatexPrinter >> extension [
 CompactTableLatexPrinter >> fileName: name [
 
 	fileName := name
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> hline [
-	stream
-		nextPutAll: '\\ \hline';
-		cr
 ]
 
 { #category : #initialization }
@@ -193,9 +169,9 @@ CompactTableLatexPrinter >> printBD: aBD [
 { #category : #actions }
 CompactTableLatexPrinter >> save [
 
-	self addLatexStart.
+	self emitLatexStart.
 	self treatBase.
-	self addLatexEnd.
+	self emitLatexEnd.
 	stream flush
 ]
 
@@ -209,13 +185,20 @@ CompactTableLatexPrinter >> setStream [
 { #category : #operate }
 CompactTableLatexPrinter >> treatBase [
 
-	twoColumn 
-		ifTrue: 
-			[ self addTableTwoStart.
-			self dispatchTwoColumns.
-			self addTableTwoEnd ]
-		ifFalse: 
-			[ self addTableStart.
-			self dispatch.
-			self addTableEnd ]
+	self emitTableStart.
+	self dispatchInColumns.
+	self emitTableEnd
+]
+
+{ #category : #actions }
+CompactTableLatexPrinter >> visitBase [
+	"We redefine the tranversal because we fill the table item by items"
+	self save
+	
+]
+
+{ #category : #latex }
+CompactTableLatexPrinter >> visitItem: aBD [
+	
+	self printBD: aBD
 ]

@@ -25,4 +25,5 @@ CXTools >> visitItem: anItem [
 
 { #category : #initialization }
 CXTools >> visitSerie: aSerie [
+	aSerie originalBdsDo: [ :each | self visitItem: each ]
 ]

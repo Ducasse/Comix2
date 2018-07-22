@@ -56,7 +56,7 @@ SeriePrinter >> printBD: aBD [
 			nextPutAll: '&' ; 
 			nextPutAll: aBD title asString ; nextPutAll: '&' ; 
 			nextPutAll: aBD year asString.
-			self hline]
+			self emitHLine]
 ]
 
 { #category : #printing }
