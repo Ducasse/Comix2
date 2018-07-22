@@ -122,6 +122,13 @@ CXItem >> entryNumber: aValue [
 
 ]
 
+{ #category : #'accessing - composed' }
+CXItem >> hasNumber [
+
+
+	^ self publicNumber isNil not
+]
+
 { #category : #'import from xml' }
 CXItem >> importAuthors: aString [
 	self authors: aString
@@ -154,7 +161,7 @@ CXItem >> importMainSerie: aString [
 
 { #category : #'import from xml' }
 CXItem >> importNotes: aValue [
-	self notes: aValue
+	self notes: aValue asString
 
 ]
 
@@ -184,13 +191,13 @@ CXItem >> importSerieComplete: aValue [
 
 { #category : #'import from xml' }
 CXItem >> importSortedAs: aString [
-	self sortedAs: aString
+	self sortedAs: aString asString
 
 ]
 
 { #category : #'import from xml' }
 CXItem >> importTitle: aString [
-	self title: aString
+	self title: aString asString
 
 ]
 
@@ -269,6 +276,13 @@ CXItem >> printOn: aStream [
 	aStream nextPutAll: self title.
 ]
 
+{ #category : #'accessing - composed' }
+CXItem >> publicNumber [
+	^ number isNil 
+		ifTrue: [(self numberOnCover isNil) ifTrue: [0] ifFalse: [self numberOnCover]]
+		ifFalse: [self number]
+]
+
 { #category : #accessing }
 CXItem >> serie [
 	^ serie
@@ -295,13 +309,14 @@ CXItem >> serieComplete: aValue [
 
 { #category : #accessing }
 CXItem >> sortedAs [
-	^ sortedAs ifNil: [ title ]
+	"Return "
+	^ sortedAs ifNil: [ self publicNumber asString ]
 
 ]
 
 { #category : #accessing }
 CXItem >> sortedAs: aValue [
-	sortedAs := aValue
+	sortedAs := aValue asString
 
 ]
 
@@ -313,7 +328,7 @@ CXItem >> title [
 
 { #category : #accessing }
 CXItem >> title: aValue [
-	title := aValue
+	title := aValue asString
 
 ]
 

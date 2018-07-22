@@ -79,6 +79,7 @@ CXSeriable >> missingNumbers [
 CXSeriable >> printOn: aStream [
 
 	super printOn: aStream. 
+	aStream space.
 	aStream << title
 ]
 
@@ -90,7 +91,8 @@ CXSeriable >> serieComplete: aBoolean [
 
 { #category : #accessing }
 CXSeriable >> sortedAs [
-
+	"A serie can be sorted in a special way if it is set, by default use its title"
+	
 	^ sortedAs ifNil: [ title ]
 ]
 

@@ -123,10 +123,17 @@ CXBasicBaseTest class >> fileNameForTest [
 ]
 
 { #category : #setup }
+CXBasicBaseTest >> initialize [
+
+	super initialize.
+	testingWorkingDirectory := FileSystem memory workingDirectory.
+	
+]
+
+{ #category : #setup }
 CXBasicBaseTest >> setUp [
 
 	super setUp.
-	testingWorkingDirectory := FileSystem memory workingDirectory.
 	(testingWorkingDirectory / self class fileNameForTest)
 		writeStreamDo: [ :stream | 
 			stream nextPutAll: self class contentsForTest ].

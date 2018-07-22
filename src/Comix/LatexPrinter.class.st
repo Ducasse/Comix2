@@ -1,3 +1,9 @@
+"
+LatexPrinter new
+	setBase: (CXBase new addNewSerieFromCollection: (STON fromString: CXBasicBaseTest contentsForTest));
+	treatBase
+	
+"
 Class {
 	#name : #LatexPrinter,
 	#superclass : #CXTools,
@@ -64,7 +70,7 @@ LatexPrinter >> columns [
 
 { #category : #initialization }
 LatexPrinter >> defaultFileName [
-	^ 'BELIST'
+	^ fileName ifNil: [ 'BELIST' ]
 	
 ]
 
@@ -84,9 +90,13 @@ LatexPrinter >> dispatch [
 LatexPrinter >> dispatchTwoColumns [
 
 	| bds totalSize size |
+	"the logic looks strange but we need to know the size of a serie for paginating
+	the items. Therefore we use the series."
+	
 	bds := base bdsSortedBySeries.
 	totalSize := bds size.
 	totalSize odd ifTrue: [size := totalSize - 1] ifFalse: [size := totalSize].
+	
 	1 to: size
 		by: 2
 		do: 
@@ -102,6 +112,7 @@ LatexPrinter >> dispatchTwoColumns [
 	self printBD: (bds at: totalSize).
 	self printBD: ((CXItem new)
 				title: ' ';
+				original: false;
 				serie: ' ';
 				number: 0;
 				year: 0)
@@ -133,6 +144,7 @@ LatexPrinter >> initialize [
 	lines := 0.
 	self fileName: 'BELIST'.
 	twoColumn := true.
+	self setStream
 ]
 
 { #category : #latex }
@@ -149,15 +161,22 @@ LatexPrinter >> printBD: aBD [
 		ifTrue: [
 		stream cr; 
 			nextPutAll: ((aBD hasNumber) ifTrue: [aBD publicNumber asString] ifFalse: ['']); nextPutAll: '&' ; 
-			nextPutAll: aBD publicSortedAs asString ; nextPutAll: '&' ; 
+			nextPutAll: aBD sortedAs asString ; nextPutAll: '&' ; 
 			nextPutAll: aBD title asString ; nextPutAll: '&' ; 
 			nextPutAll: aBD year asString ]
 ]
 
 { #category : #initialization }
+LatexPrinter >> setStream [ 
+	
+	stream := "FileSystem workingDirectory lastFileFor: self defaultFileName extension: self extension"
+	(FileSystem workingDirectory nextNameFor: self defaultFileName extension: self extension) asFileReference writeStream
+]
+
+{ #category : #initialization }
 LatexPrinter >> stream [ 
 	
-	stream := FileSystem workingDirectory  lastFileFor: 'BDs' extension: self extension
+	stream := FileSystem workingDirectory lastFileFor: self defaultFileName extension: self extension
 ]
 
 { #category : #operate }
@@ -165,11 +184,11 @@ LatexPrinter >> treatBase [
 
 	twoColumn 
 		ifTrue: 
-			[self addTableTwoStart.
+			[ self addTableTwoStart.
 			self dispatchTwoColumns.
-			self addTableTwoEnd]
+			self addTableTwoEnd ]
 		ifFalse: 
-			[self addTableStart.
+			[ self addTableStart.
 			self dispatch.
-			self addTableEnd]
+			self addTableEnd ]
 ]

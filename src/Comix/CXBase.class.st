@@ -35,7 +35,16 @@ CXBase >> bdsDo: aBlock [
 	series values do: [:each | each bds do: aBlock ]
 ]
 
-{ #category : #initialize }
+{ #category : #iterations }
+CXBase >> bdsSortedBySeries [
+
+	| ord |
+	ord := OrderedCollection new.
+	self bdsDo: [ :each | ord add: each ].
+	^ ord
+]
+
+{ #category : #initialization }
 CXBase >> initialize [
 
 	super initialize.
