@@ -125,7 +125,6 @@ CXItem >> entryNumber: aValue [
 { #category : #'accessing - composed' }
 CXItem >> hasNumber [
 
-
 	^ self publicNumber isNil not
 ]
 
@@ -173,8 +172,8 @@ CXItem >> importEntryCreationDate: aValue [
 CXItem >> importEntryNumber: anInteger [
 
 	(anInteger isKindOf: Number)
-		ifTrue: [ self number: anInteger ]
-		ifFalse: [ self number: (Integer readFromString: anInteger) ]
+		ifTrue: [ self entryNumber: anInteger ]
+		ifFalse: [ self entryNumber: (Integer readFromString: anInteger) ]
 
 ]
 
@@ -250,6 +249,19 @@ CXItem >> importYear: anInteger [
 
 ]
 
+{ #category : #testing }
+CXItem >> isSpeciallyNumbered [
+
+	| num1 num2 | 
+	num1 := self hasNumber 
+		ifTrue: [ self publicNumber ] 
+		ifFalse: [ 0 ].
+	num2 := self sortedAs asNumber.
+	^ ( num2 = num1 ) not
+	
+		
+]
+
 { #category : #accessing }
 CXItem >> mainSerie [
 	^ mainSerie
@@ -318,7 +330,7 @@ CXItem >> printOn: aStream [
 
 { #category : #'accessing - composed' }
 CXItem >> publicNumber [
-	^ number ifNil: [self numberOnCover isNil ifTrue: [0] ifFalse: [self numberOnCover]]
+	^ number ifNil: [ self numberOnCover isNil ifTrue: [0] ifFalse: [ self numberOnCover ]]
 	
 ]
 
@@ -357,6 +369,8 @@ CXItem >> serieTitle [
 CXItem >> sortedAs [
 	"An item is sorted within a serie as an explicit number, when there is a mess
 	in the numbering or via its public number"
+	
+	"should be migrated to use numberAsOnCover"
 	^ sortedAs ifNil: [ self publicNumber asString ]
 
 ]

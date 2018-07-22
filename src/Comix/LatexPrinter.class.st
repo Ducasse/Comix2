@@ -163,10 +163,15 @@ LatexPrinter >> printBD: aBD [
 	
 	aBD original 
 		ifTrue: [
-			stream cr; 
-				nextPutAll: (aBD hasNumber ifTrue: [ aBD publicNumber asString ] ifFalse: ['']); 
-				nextPutAll: '/' ; 
-				nextPutAll: aBD sortedAs asString. 
+			stream cr.
+		
+			aBD isSpeciallyNumbered
+				 ifTrue: [ stream 
+								nextPutAll: aBD publicNumber asString ;  
+								nextPutAll: '/' ; 
+								nextPutAll: aBD sortedAs asString] 
+				ifFalse: [ stream 
+								nextPutAll: aBD publicNumber asString ].
 			self emitSeparator. 	
 			stream 	
 				nextPutAll: aBD serie asString.
@@ -180,7 +185,7 @@ LatexPrinter >> printBD: aBD [
 
 { #category : #actions }
 LatexPrinter >> save [
-	self setStream.
+
 	self addLatexStart.
 	self treatBase.
 	self addLatexEnd.
@@ -191,7 +196,7 @@ LatexPrinter >> save [
 LatexPrinter >> setStream [ 
 	
 	stream := "FileSystem workingDirectory lastFileFor: self defaultFileName extension: self extension"
-	(FileSystem workingDirectory nextNameFor: self defaultFileName extension: self extension) asFileReference writeStream
+	(FileSystem workingDirectory nextNameFor: self defaultFileName extension: self extension) asFileReference writeStream.
 ]
 
 { #category : #operate }
