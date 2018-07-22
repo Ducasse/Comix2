@@ -32,7 +32,7 @@ CXBase >> addSerie: aSerie [
 { #category : #iterations }
 CXBase >> bdsDo: aBlock [
 
-	series values do: [:aSerie | aSerie bdsDo: aBlock ]
+	self series do: [:aSerie | aSerie bdsDo: aBlock ]
 ]
 
 { #category : #iterations }
@@ -64,7 +64,7 @@ CXBase >> load [
 { #category : #iterations }
 CXBase >> originalBdsDo: aBlock [
 
-	series values do: [:aSerie | aSerie originalBdsDo: aBlock ]
+	self series do: [:aSerie | aSerie originalBdsDo: aBlock ]
 ]
 
 { #category : #io }
@@ -84,11 +84,16 @@ CXBase >> serieNamed: aTitle [
 { #category : #adding }
 CXBase >> series [
 
-	^ series values
+	^ SortedCollection new 
+			sortBlock: [:a :b | a title < b title]; 
+			addAll: series values; 
+			yourself
+			
+
 ]
 
 { #category : #iterations }
 CXBase >> seriesDo: aBlock [
 
-	series values do: aBlock
+	self series do: aBlock
 ]

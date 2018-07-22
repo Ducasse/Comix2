@@ -23,7 +23,10 @@ CXSeriable >> bds [
 { #category : #accessing }
 CXSeriable >> bds: aCol [
 
-	bds := aCol.
+	bds := SortedCollection new
+					sortBlock: [:a :b | a publicNumber < b publicNumber ] ;
+					addAll: aCol; 
+					yourself.
 	self checkValidity.
 ]
 

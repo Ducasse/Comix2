@@ -1,10 +1,17 @@
 "
-LatexPrinter new
-	setBase: (CXBase new addNewSerieFromCollection: (STON fromString: CXBasicBaseTest contentsForTest));
-	save
+CompactTableLatexPrinter new
+	setBase: (CXBase new addNewSerieFromCollection: (STON fromStream: 'BDs.1.ston' asFileReference readStream))
+	save.
+	
+	
+CompactTableLatexPrinter new
+	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter import);
+	save.
+		
+CXXMLImporter import
 "
 Class {
-	#name : #LatexPrinter,
+	#name : #CompactTableLatexPrinter,
 	#superclass : #CXTools,
 	#instVars : [
 		'stream',
@@ -16,13 +23,13 @@ Class {
 }
 
 { #category : #latex }
-LatexPrinter >> addLatexEnd [
+CompactTableLatexPrinter >> addLatexEnd [
 
 	stream nextPutAll: '\end{document}'
 ]
 
 { #category : #latex }
-LatexPrinter >> addLatexStart [
+CompactTableLatexPrinter >> addLatexStart [
 
 	stream nextPutAll: '\documentclass[', self columns, ']{article}
 \usepackage[utf8]{inputenc}  %% les accents dans le fichier.tex
@@ -37,25 +44,25 @@ LatexPrinter >> addLatexStart [
 ]
 
 { #category : #latex }
-LatexPrinter >> addTableEnd [
+CompactTableLatexPrinter >> addTableEnd [
 
 	stream cr ; nextPutAll: '\end{tabular}' ; cr
 ]
 
 { #category : #latex }
-LatexPrinter >> addTableStart [
+CompactTableLatexPrinter >> addTableStart [
 
 	stream cr ; nextPutAll: '\noindent\begin{tabular}{|rp{3.2cm}p{4cm}r|}\hline' ; cr
 ]
 
 { #category : #latex }
-LatexPrinter >> addTableTwoEnd [
+CompactTableLatexPrinter >> addTableTwoEnd [
 
 	stream cr ; nextPutAll: '\end{tabular}' ; cr
 ]
 
 { #category : #latex }
-LatexPrinter >> addTableTwoStart [
+CompactTableLatexPrinter >> addTableTwoStart [
 
 	stream cr ; 
 		nextPutAll: '\noindent\begin{tabular}{|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}||p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|}\hline' ; cr
@@ -63,19 +70,19 @@ LatexPrinter >> addTableTwoStart [
 ]
 
 { #category : #latex }
-LatexPrinter >> columns [
+CompactTableLatexPrinter >> columns [
 	
 	^ ''
 ]
 
 { #category : #initialization }
-LatexPrinter >> defaultFileName [
+CompactTableLatexPrinter >> defaultFileName [
 	^ fileName ifNil: [ 'BELIST' ]
 	
 ]
 
 { #category : #operate }
-LatexPrinter >> dispatch [
+CompactTableLatexPrinter >> dispatch [
 	
 	| bds |
 	bds := base bdsSortedBySeries.
@@ -87,7 +94,7 @@ LatexPrinter >> dispatch [
 ]
 
 { #category : #operate }
-LatexPrinter >> dispatchTwoColumns [
+CompactTableLatexPrinter >> dispatchTwoColumns [
 	| bds totalSize size |
 	"the logic looks strange but we need to know the size of a serie for paginating
 	the items. Therefore we use the series."
@@ -118,31 +125,31 @@ LatexPrinter >> dispatchTwoColumns [
 ]
 
 { #category : #operate }
-LatexPrinter >> emitSeparator [
+CompactTableLatexPrinter >> emitSeparator [
 	stream nextPutAll: '&'
 ]
 
 { #category : #latex }
-LatexPrinter >> extension [
+CompactTableLatexPrinter >> extension [
 
 	^ 'tex'
 ]
 
 { #category : #accessing }
-LatexPrinter >> fileName: name [
+CompactTableLatexPrinter >> fileName: name [
 
 	fileName := name
 ]
 
 { #category : #latex }
-LatexPrinter >> hline [
+CompactTableLatexPrinter >> hline [
 	stream
 		nextPutAll: '\\ \hline';
 		cr
 ]
 
 { #category : #initialization }
-LatexPrinter >> initialize [
+CompactTableLatexPrinter >> initialize [
 
 	super initialize.
 	lines := 0.
@@ -152,14 +159,14 @@ LatexPrinter >> initialize [
 ]
 
 { #category : #latex }
-LatexPrinter >> linePlus [
+CompactTableLatexPrinter >> linePlus [
 
 	lines := lines + 1 
 
 ]
 
 { #category : #latex }
-LatexPrinter >> printBD: aBD [
+CompactTableLatexPrinter >> printBD: aBD [
 	
 	aBD original 
 		ifTrue: [
@@ -184,7 +191,7 @@ LatexPrinter >> printBD: aBD [
 ]
 
 { #category : #actions }
-LatexPrinter >> save [
+CompactTableLatexPrinter >> save [
 
 	self addLatexStart.
 	self treatBase.
@@ -193,14 +200,14 @@ LatexPrinter >> save [
 ]
 
 { #category : #initialization }
-LatexPrinter >> setStream [ 
+CompactTableLatexPrinter >> setStream [ 
 	
 	stream := "FileSystem workingDirectory lastFileFor: self defaultFileName extension: self extension"
 	(FileSystem workingDirectory nextNameFor: self defaultFileName extension: self extension) asFileReference writeStream.
 ]
 
 { #category : #operate }
-LatexPrinter >> treatBase [
+CompactTableLatexPrinter >> treatBase [
 
 	twoColumn 
 		ifTrue: 
