@@ -15,7 +15,10 @@ SeriePrinter class >> printBaseName: aSymbol [
 { #category : #latex }
 SeriePrinter >> addTableStart [ 
 
-	stream cr ; nextPutAll: '\noindent\begin{tabular}{|rp{5cm}r|}\hline' ; cr
+	stream 
+		cr ; 
+		nextPutAll: '\noindent\begin{tabular}{|rp{5cm}r|}\hline' ; 
+		cr
 
 ]
 
@@ -69,7 +72,8 @@ SeriePrinter >> treatBase [
 	"self printNormal"
 
 	base series do: [ :each | 
-						self printSerie: each. stream cr.
+						self printSerie: each. 
+						stream cr.
 						self printBDs: each bds]
 
 	
