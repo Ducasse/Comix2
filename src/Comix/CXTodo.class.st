@@ -64,3 +64,9 @@ CXTodo >> c [
 
 	" should model series explicitly from an item ie not as strings."
 ]
+
+{ #category : #'accessing structure variables' }
+CXTodo >> c2 [
+
+	" mini serie should filter completed series"
+]
