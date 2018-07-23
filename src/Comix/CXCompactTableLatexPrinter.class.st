@@ -11,31 +11,22 @@ CompactTableLatexPrinter new
 CXXMLImporter import
 "
 Class {
-	#name : #CompactTableLatexPrinter,
-	#superclass : #CXTools,
+	#name : #CXCompactTableLatexPrinter,
+	#superclass : #CXAbstractLaTeXPrinter,
 	#instVars : [
-		'stream',
-		'twoColumn',
-		'lines',
-		'fileName'
+		'lines'
 	],
 	#category : #'Comix-Tools'
 }
 
-{ #category : #latex }
-CompactTableLatexPrinter >> columns [
-	
-	^ ''
-]
-
 { #category : #initialization }
-CompactTableLatexPrinter >> defaultFileName [
-	^ fileName ifNil: [ 'BELIST' ]
+CXCompactTableLatexPrinter >> defaultFileName [
+	^ 'CompactFullList'
 	
 ]
 
 { #category : #operate }
-CompactTableLatexPrinter >> dispatchInColumns [
+CXCompactTableLatexPrinter >> dispatchInColumns [
 	| bds totalSize size |
 	"the logic looks strange but we need to know the size of a serie for paginating
 	the items. Therefore we use the series."
@@ -66,83 +57,31 @@ CompactTableLatexPrinter >> dispatchInColumns [
 ]
 
 { #category : #latex }
-CompactTableLatexPrinter >> emitHLine [
-	stream
-		nextPutAll: '\\ \hline';
-		cr
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> emitLatexEnd [
-
-	stream nextPutAll: '\end{document}'
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> emitLatexStart [
-
-	stream nextPutAll: '\documentclass[', self columns, ']{article}
-\usepackage[utf8]{inputenc}  %% les accents dans le fichier.tex
-\usepackage{calc}
-\usepackage[pdftex]{graphicx}
-\usepackage{vmargin}
-\setmarginsrb{1.2cm}{2cm}{1.2cm}{1.2cm}{0cm}{0cm}{0cm}{0cm}
-\pagestyle{empty}
-\begin{document}
-\noindent
-\scriptsize'
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> emitSeparator [
-	stream nextPutAll: '&'
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> emitTableEnd [
-
-	stream cr ; nextPutAll: '\end{tabular}' ; cr
-]
-
-{ #category : #latex }
-CompactTableLatexPrinter >> emitTableStart [
+CXCompactTableLatexPrinter >> emitTableStart [
 
 	stream cr ; 
 		nextPutAll: '\noindent\begin{tabular}{|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}||p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|}\hline' ; cr
 
 ]
 
-{ #category : #latex }
-CompactTableLatexPrinter >> extension [
-
-	^ 'tex'
-]
-
-{ #category : #accessing }
-CompactTableLatexPrinter >> fileName: name [
-
-	fileName := name
-]
-
 { #category : #initialization }
-CompactTableLatexPrinter >> initialize [
+CXCompactTableLatexPrinter >> initialize [
 
 	super initialize.
 	lines := 0.
 	self fileName: 'BELIST'.
-	twoColumn := true.
 	self setStream
 ]
 
 { #category : #latex }
-CompactTableLatexPrinter >> linePlus [
+CXCompactTableLatexPrinter >> linePlus [
 
 	lines := lines + 1 
 
 ]
 
 { #category : #latex }
-CompactTableLatexPrinter >> printBD: aBD [
+CXCompactTableLatexPrinter >> printBD: aBD [
 	
 	aBD original 
 		ifTrue: [
@@ -167,7 +106,7 @@ CompactTableLatexPrinter >> printBD: aBD [
 ]
 
 { #category : #actions }
-CompactTableLatexPrinter >> save [
+CXCompactTableLatexPrinter >> save [
 
 	self emitLatexStart.
 	self treatBase.
@@ -175,15 +114,8 @@ CompactTableLatexPrinter >> save [
 	stream flush
 ]
 
-{ #category : #initialization }
-CompactTableLatexPrinter >> setStream [ 
-	
-	stream := "FileSystem workingDirectory lastFileFor: self defaultFileName extension: self extension"
-	(FileSystem workingDirectory nextNameFor: self defaultFileName extension: self extension) asFileReference writeStream.
-]
-
 { #category : #operate }
-CompactTableLatexPrinter >> treatBase [
+CXCompactTableLatexPrinter >> treatBase [
 
 	self emitTableStart.
 	self dispatchInColumns.
@@ -191,14 +123,14 @@ CompactTableLatexPrinter >> treatBase [
 ]
 
 { #category : #actions }
-CompactTableLatexPrinter >> visitBase [
+CXCompactTableLatexPrinter >> visitBase [
 	"We redefine the tranversal because we fill the table item by items"
 	self save
 	
 ]
 
 { #category : #latex }
-CompactTableLatexPrinter >> visitItem: aBD [
+CXCompactTableLatexPrinter >> visitItem: aBD [
 	
 	self printBD: aBD
 ]

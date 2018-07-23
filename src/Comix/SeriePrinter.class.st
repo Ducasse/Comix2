@@ -1,6 +1,6 @@
 Class {
 	#name : #SeriePrinter,
-	#superclass : #CompactTableLatexPrinter,
+	#superclass : #CXCompactTableLatexPrinter,
 	#category : #'Comix-Tools'
 }
 
