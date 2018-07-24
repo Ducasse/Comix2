@@ -13,6 +13,13 @@ CXTodo >> a [
 ]
 
 { #category : #'accessing structure variables' }
+CXTodo >> a0 [
+	"Manage multiple bases and store so that we can add an element"
+
+	
+]
+
+{ #category : #'accessing structure variables' }
 CXTodo >> b [
 
 	" should model range based series such as manga

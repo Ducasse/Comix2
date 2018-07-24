@@ -22,8 +22,7 @@ CXSeriePrinter >> columns [
 
 { #category : #initialization }
 CXSeriePrinter >> defaultFileName [
-
-	^ 'Series'
+	^ 'TwoColumnsSeries'
 ]
 
 { #category : #operate }
@@ -42,40 +41,58 @@ CXSeriePrinter >> doSerie: aSerie [
 
 { #category : #operate }
 CXSeriePrinter >> postSerie: aSerie [
-
-	stream nextPutAll: '\end{itemize}'; cr
+	stream
+		nextPutAll: '\squishend';
+		cr
 ]
 
 { #category : #operate }
 CXSeriePrinter >> preSerie: aSerie [
-
-	stream nextPutAll: '\begin{itemize}'; cr
+	stream
+		nextPutAll: '\squishlist';
+		cr
 ]
 
 { #category : #operate }
 CXSeriePrinter >> visitItem: anItem [
-
-	stream nextPutAll: '\item '.
-	stream nextPutAll: anItem number printString. 
-	stream space; nextPutAll: '-'.
-	stream nextPutAll: anItem title asString. 
-	stream space; nextPutAll: '-'.
-	stream nextPutAll: anItem year printString. 
-	stream space.
-	stream nextPutAll: (anItem original ifTrue: [  ' (orig)' ] ifFalse: [ ' (not original)' ]). 
-	stream cr.
-	
+	stream
+		<< '\item[';
+		<< anItem publicNumber printString;
+		<< ']';
+		space;
+		<< ' - ';
+		<< anItem title asString;
+		space;
+		<< ' - ';
+		<<
+			(anItem year
+				ifNotNil: [ :y | 
+					y printString size = 4
+						ifTrue: [ y printString copyFrom: 3 to: 4 ]
+						ifFalse: [ y printString ] ]
+				ifNil: [ '' ]);
+		space;
+		<<
+			(anItem original
+				ifFalse: [ 'NOr' ]
+				ifTrue: [ '' ]);
+		cr
 ]
 
 { #category : #operate }
 CXSeriePrinter >> visitSerie: aSerie [
-
-	stream space; cr.
-	stream 
-		<< '\paragraph{' ; 
-		<< aSerie title asString ; 
-		<< '} ';
+	stream
+		space;
+		cr.
+	stream
+		<< '\paragraph{';
+		<< aSerie title asString;
+		<< '}';
+		cr;
+		cr;
+		<< '\noindent ';
+		<< 'Ms:';
 		<< aSerie missingNumberString;
 		cr.
-	super visitSerie: aSerie.
+	super visitSerie: aSerie
 ]

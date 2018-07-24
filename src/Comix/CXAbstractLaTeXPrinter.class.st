@@ -38,14 +38,31 @@ CXAbstractLaTeXPrinter >> emitLatexEnd [
 
 { #category : #latex }
 CXAbstractLaTeXPrinter >> emitLatexStart [
-
-	stream nextPutAll: '\documentclass[', self columns, ']{article}
+	stream
+		nextPutAll:
+			'\documentclass[' , self columns
+				,
+					']{article}
 \usepackage[utf8]{inputenc}  %% les accents dans le fichier.tex
 \usepackage{calc}
 \usepackage[pdftex]{graphicx}
 \usepackage{vmargin}
 \setmarginsrb{1.2cm}{2cm}{1.2cm}{1.2cm}{0cm}{0cm}{0cm}{0cm}
 \pagestyle{empty}
+
+\newcommand{\squishlist}{
+ \begin{list}{$\bullet$}
+ { \setlength{\itemsep}{0pt}
+   \setlength{\parsep}{3pt}
+   \setlength{\topsep}{3pt}
+   \setlength{\partopsep}{0pt}
+   \setlength{\leftmargin}{1.5em}
+   \setlength{\labelwidth}{1em}
+   \setlength{\labelsep}{0.5em} } }
+   
+\newcommand{\squishend}{
+ \end{list} }   
+
 \begin{document}
 \noindent
 \scriptsize'
