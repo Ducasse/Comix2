@@ -40,9 +40,15 @@ CXXMLImporter class >> getterBodyFor: aName [
 { #category : #importing }
 CXXMLImporter class >> import [ 
 	"self import"
+	^ self importFileName: 'BD.322.xml'
+]
+
+{ #category : #importing }
+CXXMLImporter class >> importFileName: aString [
+	"self importFileName: 'BD.322.xml'"
 	| p col |
 	col := OrderedCollection new.
-	p := XMLDOMParser onFileNamed: 'BD.321.xml'.
+	p := XMLDOMParser onFileNamed: aString.
 	p parseDocument elements first elements do: [ :each | 
 		| bd | 
 		bd := CXItem new.

@@ -70,3 +70,9 @@ CXTodo >> c2 [
 
 	" mini serie should filter completed series"
 ]
+
+{ #category : #'accessing structure variables' }
+CXTodo >> d [
+
+	"not sure unitSerie makes sense"
+]

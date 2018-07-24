@@ -26,9 +26,13 @@ CXMissingSeriePrinter >> visitSerie: aSerie [
 
 	aSerie missingNumbers first isEmpty
 		ifFalse: [
-	stream nextPutAll: '\paragraph{' , aSerie title asString.
-	stream nextPutAll: ' (Ms:'.
-	aSerie missingNumbers first do: [:missing | stream nextPutAll: missing asString] 
-		separatedBy: [stream nextPut: Character space].
-	stream nextPutAll: ')' ; nextPutAll: '}' ; cr]
+			stream 
+				nextPutAll: '\paragraph{';
+				nextPutAll: aSerie title asString;
+				nextPutAll: ' (Ms:';
+				nextPutAll: aSerie missingNumberString.
+			stream 
+				nextPutAll: ')' ; 
+				nextPutAll: '} '.
+			stream cr ]
 ]

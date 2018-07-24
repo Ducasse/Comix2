@@ -1,3 +1,6 @@
+"
+By default iterate over original items. 
+"
 Class {
 	#name : #CXAbstractLaTeXPrinter,
 	#superclass : #CXTools,

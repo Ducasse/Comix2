@@ -67,6 +67,11 @@ CXSeriable >> maxNumber [
 	^ max 
 ]
 
+{ #category : #missing }
+CXSeriable >> missingNumberString [
+	^ ''
+]
+
 { #category : #queries }
 CXSeriable >> missingNumbers [
 
