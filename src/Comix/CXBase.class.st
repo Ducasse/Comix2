@@ -1,9 +1,13 @@
+"
+I'm a collection of series. For example the own comix. I could also be the collection of lent ones. 
+"
 Class {
 	#name : #CXBase,
 	#superclass : #Object,
 	#instVars : [
 		'workingDirectory',
-		'series'
+		'series',
+		'kind'
 	],
 	#category : #'Comix-Model'
 }
@@ -52,12 +56,24 @@ CXBase >> initialize [
 	workingDirectory := FileSystem workingDirectory.
 ]
 
+{ #category : #accessing }
+CXBase >> kind [
+	^ kind
+]
+
+{ #category : #accessing }
+CXBase >> kind: aSymbol [
+	"Indicates the kind of collection for example own, to sell, or lookedup"
+	kind := aSymbol
+]
+
 { #category : #io }
 CXBase >> load [
 	"self new load"
+
 	| base |
-	base := (workingDirectory lastFileFor: 'BDs' extension: 'ston') 
-		asFileReference readStreamDo: [ :str | (STON fromStream: str)].
+	base := (workingDirectory lastFileFor: 'BDs' extension: 'ston') asFileReference
+					readStreamDo: [ :str | STON fromStream: str ].
 	^ base
 ]
 

@@ -1,9 +1,6 @@
 Class {
 	#name : #CXBasicBaseTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'testingWorkingDirectory'
-	],
+	#superclass : #CXFileTest,
 	#category : #'Comix-Model'
 }
 
@@ -120,25 +117,6 @@ CXBasicBaseTest class >> contentsForTest [
 CXBasicBaseTest class >> fileNameForTest [
 
 	^ 'BD.ston'
-]
-
-{ #category : #setup }
-CXBasicBaseTest >> initialize [
-
-	super initialize.
-	testingWorkingDirectory := FileSystem memory workingDirectory.
-	
-]
-
-{ #category : #setup }
-CXBasicBaseTest >> setUp [
-
-	super setUp.
-	(testingWorkingDirectory / self class fileNameForTest)
-		writeStreamDo: [ :stream | 
-			stream nextPutAll: self class contentsForTest ].
-		
-
 ]
 
 { #category : #setup }
