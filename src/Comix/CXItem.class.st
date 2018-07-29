@@ -26,6 +26,12 @@ Class {
 	#category : #'Comix-Model'
 }
 
+{ #category : #testing }
+CXItem >> <= anItem [
+	
+	^  self title ifNil: [ self number <= anItem number] ifNotNil: [ self title <= anItem title ]
+]
+
 { #category : #accessing }
 CXItem >> authors [
 	^ authors

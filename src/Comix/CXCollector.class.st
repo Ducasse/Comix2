@@ -1,6 +1,18 @@
 "
 I manage multiple bases (group of series) in a generic manner.  
 I'm a singleton since I manage the bases. 
+
+
+	| ownedBase collector |
+	ownedBase := (CXBase new addNewSerieFromCollection: CXXMLImporter import).
+	ownedBase kind: #owned.
+	collector := CXCollector new.
+	collector add: ownedBase.
+	collector save
+	
+	CXCollector load
+	
+	
 "
 Class {
 	#name : #CXCollector,
@@ -23,20 +35,40 @@ CXCollector class >> defaultFileName [
 ]
 
 { #category : #loading }
-CXCollector class >> load [
-	"self new load"
+CXCollector class >> install [
+	"self install"
 
-	self load: self defaultFileName 
+	self setUniqueInstance: (self install: self defaultFileName)
+]
+
+{ #category : #loading }
+CXCollector class >> install: filename [
+	"self install: 'CXCollection'"
+
+	self setUniqueInstance: (self install: filename)
+]
+
+{ #category : #loading }
+CXCollector class >> load [
+	"self load"
+
+	^ self load: self defaultFileName
 ]
 
 { #category : #loading }
 CXCollector class >> load: filename [
-	"self new load"
+	"self load: 'CXCollection'"
 
-	| base |
-	base := (self workingDirectory lastFileFor: filename extension: 'ston')
+	| instance |
+	instance := (self workingDirectory lastFileFor: filename extension: 'ston')
 		asFileReference readStreamDo: [ :str | STON fromStream: str ].
-	uniqueInstance := base
+	^ instance
+]
+
+{ #category : #accessing }
+CXCollector class >> setUniqueInstance: anInstance [
+
+	uniqueInstance := anInstance
 ]
 
 { #category : #accessing }

@@ -38,9 +38,10 @@ CXXMLImporter class >> getterBodyFor: aName [
 ]
 
 { #category : #importing }
-CXXMLImporter class >> import [ 
+CXXMLImporter class >> import [
 	"self import"
-	^ self importFileName: 'BD.322.xml'
+
+	^ self importFileName: 'BD.323.xml'
 ]
 
 { #category : #importing }

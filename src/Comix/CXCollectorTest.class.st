@@ -1,5 +1,5 @@
 Class {
-	#name : #CXBaseCollectionTest,
+	#name : #CXCollectorTest,
 	#superclass : #CXFileTest,
 	#instVars : [
 		'collector'
@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #setup }
-CXBaseCollectionTest >> setUp [
+CXCollectorTest >> setUp [
 
 	super setUp.
 	collector := CXCollector new
 ]
 
 { #category : #setup }
-CXBaseCollectionTest >> testAddBase [
+CXCollectorTest >> testAddBase [
 	| ownedBase |
 	ownedBase := CXBase new.
 	ownedBase kind: #owned.
@@ -24,7 +24,7 @@ CXBaseCollectionTest >> testAddBase [
 ]
 
 { #category : #setup }
-CXBaseCollectionTest >> testBaseFor [
+CXCollectorTest >> testBaseFor [
 	| ownedBase |
 	ownedBase := CXBase new.
 	ownedBase kind: #owned.
@@ -33,7 +33,7 @@ CXBaseCollectionTest >> testBaseFor [
 ]
 
 { #category : #setup }
-CXBaseCollectionTest >> testBaseForError [
+CXCollectorTest >> testBaseForError [
 
 	self should: [ collector baseFor: #notdeclared ] raise: Error
 ]
