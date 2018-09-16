@@ -11,12 +11,11 @@ BaselineOfComix >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec
-				project: 'XMLParser'
-				with: [ spec
-						className: #ConfigurationOfXMLParser;
-						versionString: #stable;
-						repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/'.
-				spec package: 'Comix' 
-				]
-			]
+					project: 'XMLParser'
+					with: [ spec
+								className: #ConfigurationOfXMLParser;
+								versionString: #stable;
+								repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
+				spec package: 'Comix' with: [ spec requires: #('XMLParser') ] ]
+			
 ]
