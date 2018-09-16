@@ -1,6 +1,6 @@
 "
 CXThreeColumnsSeriePrinter new
-	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter import);
+	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
 	save.
 "
 Class {

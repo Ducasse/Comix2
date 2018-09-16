@@ -1,6 +1,6 @@
 Class {
 	#name : #CXSanitizer,
-	#superclass : #CXTools,
+	#superclass : #CXComixBaseTools,
 	#instVars : [
 		'suspects'
 	],

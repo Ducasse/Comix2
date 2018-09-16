@@ -1,6 +1,6 @@
 Class {
 	#name : #NewCompactTableLatexPrinter,
-	#superclass : #CXTools,
+	#superclass : #CXComixBaseTools,
 	#instVars : [
 		'stream',
 		'lines',

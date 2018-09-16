@@ -1,12 +1,18 @@
+"
+A simple importer from my old format. 
+Used in comments of other classes.
+"
 Class {
 	#name : #CXXMLImporter,
 	#superclass : #Object,
+	#instVars : [
+		'workingDirectory'
+	],
 	#category : #'Comix-Migration Support'
 }
 
-{ #category : #importing }
-CXXMLImporter class >> compileAccessorsNamed: aName [
-	Transcript show: aName.
+{ #category : #utils }
+CXXMLImporter >> compileAccessorsNamed: aName [
 	CXItem 
 		compile: (self setterBodyFor: aName)
 		classified: 'accessing'.
@@ -16,16 +22,16 @@ CXXMLImporter class >> compileAccessorsNamed: aName [
 	
 ]
 
-{ #category : #importing }
-CXXMLImporter class >> compileSetterNamed: aName [
+{ #category : #utils }
+CXXMLImporter >> compileSetterNamed: aName [
 
 	CXItem 
 		compile: (self setterBodyFor: aName)
 		classified: 'accessing'
 ]
 
-{ #category : #importing }
-CXXMLImporter class >> getterBodyFor: aName [
+{ #category : #utils }
+CXXMLImporter >> getterBodyFor: aName [
 
 	^ (String streamContents: [:s |
 						s << aName.
@@ -38,15 +44,15 @@ CXXMLImporter class >> getterBodyFor: aName [
 ]
 
 { #category : #importing }
-CXXMLImporter class >> import [
-	"self import"
+CXXMLImporter >> import [
+	"self new import"
 
-	^ self importFileName: 'BD.323.xml'
+	^ self importFileName: (self workingDirectory lastFileFor: 'BD' extension: 'xml') fullName
 ]
 
 { #category : #importing }
-CXXMLImporter class >> importFileName: aString [
-	"self importFileName: 'BD.322.xml'"
+CXXMLImporter >> importFileName: aString [
+	"self new importFileName: 'BD.322.xml'"
 	| p col |
 	col := OrderedCollection new.
 	p := XMLDOMParser onFileNamed: aString.
@@ -63,8 +69,14 @@ CXXMLImporter class >> importFileName: aString [
 	^ col
 ]
 
-{ #category : #importing }
-CXXMLImporter class >> setterBodyFor: aName [
+{ #category : #initialization }
+CXXMLImporter >> initialize [ 
+	super initialize.
+	workingDirectory := FileSystem workingDirectory
+]
+
+{ #category : #utils }
+CXXMLImporter >> setterBodyFor: aName [
 
 	^ (String streamContents: [:s |
 						s << aName.
@@ -76,4 +88,16 @@ CXXMLImporter class >> setterBodyFor: aName [
 						s cr.
 						])
 	
+]
+
+{ #category : #accessing }
+CXXMLImporter >> workingDirectory [
+
+	^ workingDirectory
+]
+
+{ #category : #accessing }
+CXXMLImporter >> workingDirectory: aFileReference [
+
+	workingDirectory := aFileReference
 ]

@@ -1,5 +1,11 @@
 "
-I'm a collection of series. For example the own comix. I could also be the collection of lent ones. 
+I'm a collection of series. For example the owned comix. I could also be the collection of lent ones. 
+
+
+	(CXBase new addNewSerieFromCollection: CXXMLImporter new import) save
+	will generate a ston file containing all the objects from the XML  old file format. 
+	
+
 "
 Class {
 	#name : #CXBase,

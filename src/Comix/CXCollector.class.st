@@ -4,7 +4,7 @@ I'm a singleton since I manage the bases.
 
 
 	| ownedBase collector |
-	ownedBase := (CXBase new addNewSerieFromCollection: CXXMLImporter import).
+	ownedBase := (CXBase new addNewSerieFromCollection: CXXMLImporter new import).
 	ownedBase kind: #owned.
 	collector := CXCollector new.
 	collector add: ownedBase.

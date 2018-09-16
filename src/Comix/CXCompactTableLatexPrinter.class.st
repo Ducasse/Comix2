@@ -1,14 +1,14 @@
 "
-CompactTableLatexPrinter new
+CXCompactTableLatexPrinter new
 	setBase: (CXBase new addNewSerieFromCollection: (STON fromStream: 'BDs.1.ston' asFileReference readStream))
 	save.
 	
 	
-CompactTableLatexPrinter new
-	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter import);
+CXCompactTableLatexPrinter new
+	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
 	save.
 		
-CXXMLImporter import
+CXXMLImporter new import
 "
 Class {
 	#name : #CXCompactTableLatexPrinter,
