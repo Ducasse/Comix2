@@ -8,11 +8,19 @@ I'm a singleton since I manage the bases.
 	ownedBase kind: #owned.
 	collector := CXCollector new.
 	collector add: ownedBase.
-	collector save
+	collector save.
+	
 	
 	CXCollector load
 	
 	
+	| lookingForBase serie |
+	serie := (CXSerie new sortedAs: 'Empress' ; title: 'Empress').
+	lookingForBase := (CXBase new addNewSerieFromCollection: {serie}).
+	lookingForBase kind: #lookingFor.
+	lookingForBase save
+
+
 "
 Class {
 	#name : #CXCollector,

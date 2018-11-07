@@ -18,6 +18,18 @@ Class {
 	#category : #'Comix-Model'
 }
 
+{ #category : #'ston-core' }
+CXBase class >> stonAllInstVarNames [
+	^ self instanceVariables copyWithoutAll: self stonNotSerializedInstVarNames
+
+]
+
+{ #category : #'ston-core' }
+CXBase class >> stonNotSerializedInstVarNames [
+	^ {#workingDirectory}
+
+]
+
 { #category : #adding }
 CXBase >> addNewSerieFromCollection: bds [
 	"bds is a collection of unconnected bds objects. It means that their series are not object but string"
@@ -91,8 +103,18 @@ CXBase >> originalBdsDo: aBlock [
 
 { #category : #io }
 CXBase >> save [
-
+	| name |
+	name := kind isNil.
 	(workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
+		asFileReference writeStreamDo: [ :str | str nextPutAll: 
+		(STON toStringPretty: self)]
+]
+
+{ #category : #io }
+CXBase >> saveKind [
+	| name |
+	name := kind ifNotNil: [:akind | 'BDs', akind asString ] ifNil: [ 'BDs'].
+	(workingDirectory / (workingDirectory nextNameFor: name extension: 'ston')) 
 		asFileReference writeStreamDo: [ :str | str nextPutAll: 
 		(STON toStringPretty: self)]
 ]
