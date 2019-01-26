@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'testingWorkingDirectory'
 	],
-	#category : #'Comix-Model'
+	#category : #'Comix-Tests'
 }
 
 { #category : #data }

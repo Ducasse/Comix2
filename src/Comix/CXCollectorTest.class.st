@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'collector'
 	],
-	#category : #'Comix-Model'
+	#category : #'Comix-Tests'
 }
 
 { #category : #setup }

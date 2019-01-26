@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'base'
 	],
-	#category : #'Comix-Model'
+	#category : #'Comix-Tests'
 }
 
 { #category : #setup }

@@ -1,7 +1,7 @@
 Class {
 	#name : #CXBasicBaseTest,
 	#superclass : #CXFileTest,
-	#category : #'Comix-Model'
+	#category : #'Comix-Tests'
 }
 
 { #category : #resources }
