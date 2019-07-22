@@ -15,8 +15,28 @@ Class {
 		'series',
 		'kind'
 	],
+	#classInstVars : [
+		'workingDirectory'
+	],
 	#category : #'Comix-Model'
 }
+
+{ #category : #'ston-core' }
+CXBase class >> import: aFileName [
+
+	
+]
+
+{ #category : #'ston-core' }
+CXBase class >> load: filename [
+	"self load: 'BDs'"
+
+	| instance |
+	instance := (self workingDirectory lastFileFor: filename extension: 'ston')
+		asFileReference readStreamDo: [ :str | STON fromStream: str ].
+	^ instance
+	
+]
 
 { #category : #'ston-core' }
 CXBase class >> stonAllInstVarNames [
@@ -28,6 +48,17 @@ CXBase class >> stonAllInstVarNames [
 CXBase class >> stonNotSerializedInstVarNames [
 	^ {#workingDirectory}
 
+]
+
+{ #category : #'ston-core' }
+CXBase class >> workingDirectory [
+
+	^ workingDirectory ifNil: [ workingDirectory := FileSystem workingDirectory ]
+]
+
+{ #category : #'ston-core' }
+CXBase class >> workingDirectory: aFileReference [
+	workingDirectory := aFileReference
 ]
 
 { #category : #adding }
@@ -93,6 +124,14 @@ CXBase >> load [
 	base := (workingDirectory lastFileFor: 'BDs' extension: 'ston') asFileReference
 					readStreamDo: [ :str | STON fromStream: str ].
 	^ base
+]
+
+{ #category : #adding }
+CXBase >> numberOfBDs [
+
+	^ series inject: 0 into: [ :sum :each | sum + each numberOfBDs ]
+			
+
 ]
 
 { #category : #iterations }

@@ -60,7 +60,7 @@ CXCompactTableLatexPrinter >> dispatchInColumns [
 CXCompactTableLatexPrinter >> emitTableStart [
 
 	stream cr ; 
-		nextPutAll: '\noindent\begin{tabular}{|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}||p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|}\hline' ; cr
+		nextPutAll: '\noindent\begin{tabular}{p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}}\hline' ; cr
 
 ]
 

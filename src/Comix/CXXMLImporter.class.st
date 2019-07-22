@@ -1,6 +1,11 @@
 "
 A simple importer from my old format. 
 Used in comments of other classes.
+
+
+CXCompactTableLatexPrinter new
+	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
+	save.
 "
 Class {
 	#name : #CXXMLImporter,

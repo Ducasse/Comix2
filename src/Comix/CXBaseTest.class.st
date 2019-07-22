@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'base'
 	],
-	#category : #'Comix-Model'
+	#category : #'Comix-Tests'
 }
 
 { #category : #setup }
@@ -59,6 +59,13 @@ CXBaseTest >> testMissingNumbers [
 	"since the first one is not an original"
 	aya := (base serieNamed: 'Aya de Yopougon').
 	self assert: aya missingNumbers equals: #((1 3 5) #())  
+]
+
+{ #category : #tests }
+CXBaseTest >> testNumberOfElements [
+	"self new testNumberOfElements"
+	
+	self assert: base numberOfBDs equals: 8
 ]
 
 { #category : #tests }
