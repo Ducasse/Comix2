@@ -2,12 +2,16 @@
 I manage multiple bases (group of series) in a generic manner.  
 I'm a singleton since I manage the bases. 
 
-
-	| ownedBase collector |
-	ownedBase := (CXBase new addNewSerieFromCollection: CXXMLImporter new import).
-	ownedBase kind: #owned.
+	| ownedBaseFromXML ownedBaseFromSTON collector |
+	ownedBaseFromXML := (CXBase new addNewSerieFromCollection: CXXMLImporter new import).
+	ownedBaseFromXML kind: #xml.
+	ownedBaseFromSTON := (CXBase load: 'BDs').
+	ownedBaseFromSTON kind: #ston.
+	ownedBaseFromSTON numberOfBDs . 
+	ownedBaseFromXML numberOfBDs.
+	
 	collector := CXCollector new.
-	collector add: ownedBase.
+	collector add: ownedBaseFromXML.
 	collector save.
 	
 	
@@ -16,9 +20,9 @@ I'm a singleton since I manage the bases.
 	
 	| lookingForBase serie |
 	serie := (CXSerie new sortedAs: 'Empress' ; title: 'Empress').
-	lookingForBase := (CXBase new addNewSerieFromCollection: {serie}).
+	lookingForBase := (CXBase new addSerie: serie).
 	lookingForBase kind: #lookingFor.
-	lookingForBase save
+	lookingForBase saveKind
 
 
 "

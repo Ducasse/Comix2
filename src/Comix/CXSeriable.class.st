@@ -46,7 +46,7 @@ CXSeriable >> checkValidity [
 CXSeriable >> initialize [
 
 	super initialize.
-	serieComplete := false.
+	serieComplete := false
 	
 ]
 
@@ -87,6 +87,12 @@ CXSeriable >> missingNumbers [
 	"when the serie is not finished we make sure that we mention that the next one is missing."
 	self isSerieComplete ifFalse: [all add: max + 1].
 	^ {all asArray . strange asArray}
+]
+
+{ #category : #accessing }
+CXSeriable >> numberOfBDs [
+
+	^ bds size
 ]
 
 { #category : #accessing }
