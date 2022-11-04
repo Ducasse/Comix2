@@ -23,10 +23,10 @@ CXSeriable >> bds [
 { #category : #accessing }
 CXSeriable >> bds: aCol [
 
-	bds := SortedCollection new
-					sortBlock: [:a :b | a publicNumber < b publicNumber ] ;
-					addAll: aCol; 
-					yourself.
+	self rawBds: (SortedCollection new
+						sortBlock: [:a :b | a publicNumber < b publicNumber ] ;
+						addAll: aCol; 
+						yourself).
 	self checkValidity.
 ]
 
@@ -113,6 +113,12 @@ CXSeriable >> printOn: aStream [
 	super printOn: aStream. 
 	aStream space.
 	aStream << title
+]
+
+{ #category : #accessing }
+CXSeriable >> rawBds: aCollection [
+
+	bds := aCollection
 ]
 
 { #category : #accessing }

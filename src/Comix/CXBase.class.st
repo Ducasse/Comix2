@@ -141,12 +141,22 @@ CXBase >> originalBdsDo: aBlock [
 ]
 
 { #category : #io }
+CXBase >> prepareModelToBeSaved [
+	
+	self series do: [:each | each rawBds: each bds asOrderedCollection ]
+]
+
+{ #category : #io }
+CXBase >> restoredModel [
+]
+
+{ #category : #io }
 CXBase >> save [
-	| name |
-	name := kind isNil.
+	self prepareModelToBeSaved.
 	(workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
 		asFileReference writeStreamDo: [ :str | str nextPutAll: 
-		(STON toStringPretty: self)]
+		(STON toStringPretty: self)].
+	self restoredModel.
 ]
 
 { #category : #io }

@@ -79,6 +79,15 @@ CXBaseTest >> testOriginalBdsDo [
 ]
 
 { #category : #tests }
+CXBaseTest >> testPrepareToBeStored [
+	"self new testPrepareToBeStored"
+
+	self assert: base series first bds class equals: SortedCollection. 
+	base prepareModelToBeSaved.
+	self assert: base series first bds class equals: OrderedCollection. 
+]
+
+{ #category : #tests }
 CXBaseTest >> testSerieComplete [
 	"self new testSerieNamed"
 	
