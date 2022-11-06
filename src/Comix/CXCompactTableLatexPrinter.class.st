@@ -1,14 +1,25 @@
 "
+```
 CXCompactTableLatexPrinter new
 	setBase: (CXBase new addNewSerieFromCollection: (STON fromStream: 'BDs.1.ston' asFileReference readStream))
 	save.
-	
-	
+```
+
+With files taken in the working directory
+
+```	
 CXCompactTableLatexPrinter new
 	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
 	save.
-		
-CXXMLImporter new import
+```
+
+With files taken from the git storage location.
+```		
+CXCompactTableLatexPrinter new
+	setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);
+	setWorkingDirectoryFromBase;
+	save.
+```
 "
 Class {
 	#name : #CXCompactTableLatexPrinter,
@@ -70,7 +81,7 @@ CXCompactTableLatexPrinter >> initialize [
 	super initialize.
 	lines := 0.
 	self fileName: 'BELIST'.
-	self setStream
+
 ]
 
 { #category : #latex }
@@ -107,11 +118,13 @@ CXCompactTableLatexPrinter >> printBD: aBD [
 
 { #category : #actions }
 CXCompactTableLatexPrinter >> save [
-
+	
+	self setStream.
 	self emitLatexStart.
 	self treatBase.
 	self emitLatexEnd.
-	stream flush
+	stream flush.
+	stream close
 ]
 
 { #category : #operate }

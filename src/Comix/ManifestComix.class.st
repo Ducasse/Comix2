@@ -4,5 +4,5 @@ This test is temporary. It checks that during the transition the information dup
 Class {
 	#name : #ManifestComix,
 	#superclass : #PackageManifest,
-	#category : #Comix
+	#category : #'Comix-Manifest'
 }

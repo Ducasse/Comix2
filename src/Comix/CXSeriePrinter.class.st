@@ -28,9 +28,7 @@ CXSeriePrinter >> defaultFileName [
 { #category : #operate }
 CXSeriePrinter >> doBase [
 	base seriesDo: [ :aSerie | 
-		"aSerie title = 'Bretagne'
-			ifTrue: [ self halt ]."
-		(aSerie bds size = 1 and: [aSerie bds first original not ])
+		(aSerie bds size = 1 and: [ aSerie bds first original not ])
 				ifFalse: [ self visitSerie: aSerie ]]
 ]
 

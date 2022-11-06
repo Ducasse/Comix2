@@ -12,3 +12,11 @@ CXSerie >> missingNumberString [
 				do: [:missing | str nextPutAll: missing asString] 
 				separatedBy: [str nextPut: Character space]]
 ]
+
+{ #category : #printing }
+CXSerie >> printOn: aStream [
+
+	aStream << 'Serie '.
+	aStream space.
+	aStream << title
+]

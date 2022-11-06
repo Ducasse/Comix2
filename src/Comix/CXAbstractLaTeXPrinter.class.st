@@ -6,7 +6,8 @@ Class {
 	#superclass : #CXComixBaseTools,
 	#instVars : [
 		'stream',
-		'fileName'
+		'fileName',
+		'workingDirectory'
 	],
 	#category : #'Comix-Tools'
 }
@@ -85,7 +86,7 @@ CXAbstractLaTeXPrinter >> extension [
 	^ 'tex'
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 CXAbstractLaTeXPrinter >> fileName [
 	^ fileName ifNil: [ self defaultFileName ]
 	
@@ -101,12 +102,13 @@ CXAbstractLaTeXPrinter >> fileName: name [
 CXAbstractLaTeXPrinter >> initialize [
 
 	super initialize.
-	self setStream
+	workingDirectory := FileSystem workingDirectory.
+	
 ]
 
-{ #category : #initialization }
+{ #category : #io }
 CXAbstractLaTeXPrinter >> save [
-
+	self setStream.
 	self emitLatexStart.
 	self visitBase.
 	self emitLatexEnd.
@@ -114,7 +116,27 @@ CXAbstractLaTeXPrinter >> save [
 ]
 
 { #category : #initialization }
-CXAbstractLaTeXPrinter >> setStream [ 
-	
-	stream := (FileSystem workingDirectory nextNameFor: self fileName extension: self extension) asFileReference writeStream.
+CXAbstractLaTeXPrinter >> setStream [
+
+	stream := (self workingDirectory
+		           nextNameFor: self fileName
+		           extension: self extension) asFileReference writeStream
+]
+
+{ #category : #configuring }
+CXAbstractLaTeXPrinter >> setWorkingDirectoryFromBase [
+
+	workingDirectory := base workingDirectory
+]
+
+{ #category : #accessing }
+CXAbstractLaTeXPrinter >> workingDirectory [
+
+	^ workingDirectory
+]
+
+{ #category : #accessing }
+CXAbstractLaTeXPrinter >> workingDirectory: aFileReference [
+
+	workingDirectory := aFileReference
 ]

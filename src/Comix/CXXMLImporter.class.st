@@ -1,11 +1,18 @@
 "
-A simple importer from my old format. 
+A simple importer from my old format in XML. 
 Used in comments of other classes.
 
+The following will load the latest file named BD.xxx.xml in the current working directory.
+```
+CXXMLImporter new import
+```
 
+```
 CXCompactTableLatexPrinter new
-	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
+	setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);
+	setWorkingDirectoryFromBase;
 	save.
+```
 "
 Class {
 	#name : #CXXMLImporter,
@@ -15,6 +22,27 @@ Class {
 	],
 	#category : #'Comix-Migration Support'
 }
+
+{ #category : #examples }
+CXXMLImporter class >> stefBds [
+	<example>
+	
+	^ self stefImporter import
+
+	
+]
+
+{ #category : #examples }
+CXXMLImporter class >> stefImporter [
+	<example>
+	
+	^ self new 
+		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix/' asFileReference ;
+		yourself
+	
+
+	
+]
 
 { #category : #utils }
 CXXMLImporter >> compileAccessorsNamed: aName [

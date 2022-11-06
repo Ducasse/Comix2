@@ -39,6 +39,14 @@ CXBase class >> load: filename [
 ]
 
 { #category : #'ston-core' }
+CXBase class >> stefBase [
+	<example>
+	
+	^ self new 
+		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix' asFileReference ; 		yourself
+]
+
+{ #category : #'ston-core' }
 CXBase class >> stonAllInstVarNames [
 	^ self instanceVariables copyWithoutAll: self stonNotSerializedInstVarNames
 
@@ -147,7 +155,7 @@ CXBase >> prepareModelToBeSaved [
 ]
 
 { #category : #io }
-CXBase >> restoredModel [
+CXBase >> restoreModel [
 ]
 
 { #category : #io }
@@ -156,7 +164,7 @@ CXBase >> save [
 	(workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
 		asFileReference writeStreamDo: [ :str | str nextPutAll: 
 		(STON toStringPretty: self)].
-	self restoredModel.
+	self restoreModel.
 ]
 
 { #category : #io }
@@ -189,4 +197,16 @@ CXBase >> series [
 CXBase >> seriesDo: aBlock [
 
 	self series do: aBlock
+]
+
+{ #category : #accessing }
+CXBase >> workingDirectory [
+
+	^ workingDirectory
+]
+
+{ #category : #accessing }
+CXBase >> workingDirectory: aFileReference [
+
+	workingDirectory := aFileReference 
 ]
