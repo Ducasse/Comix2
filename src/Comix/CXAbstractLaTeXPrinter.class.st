@@ -118,9 +118,9 @@ CXAbstractLaTeXPrinter >> save [
 { #category : #initialization }
 CXAbstractLaTeXPrinter >> setStream [
 
-	stream := (self workingDirectory
+	stream := (self workingDirectory / (self workingDirectory
 		           nextNameFor: self fileName
-		           extension: self extension) asFileReference writeStream
+		           extension: self extension)) writeStream
 ]
 
 { #category : #configuring }
