@@ -88,6 +88,17 @@ CXBaseTest >> testPrepareToBeStored [
 ]
 
 { #category : #tests }
+CXBaseTest >> testRestoreModel [
+	"self new testRestoreModel"
+
+	self assert: base series first bds class equals: SortedCollection. 
+	base prepareModelToBeSaved.
+	self assert: base series first bds class equals: OrderedCollection. 
+	base restoreModel.
+	self assert: base series first bds class equals: SortedCollection. 
+]
+
+{ #category : #tests }
 CXBaseTest >> testSerieComplete [
 	"self new testSerieNamed"
 	

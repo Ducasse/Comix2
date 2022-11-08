@@ -156,6 +156,8 @@ CXBase >> prepareModelToBeSaved [
 
 { #category : #io }
 CXBase >> restoreModel [
+	
+	self series do: [:each | each bds: each bds ]
 ]
 
 { #category : #io }
@@ -185,18 +187,22 @@ CXBase >> serieNamed: aTitle [
 { #category : #adding }
 CXBase >> series [
 
-	^ SortedCollection new 
-			sortBlock: [:a :b | a title < b title]; 
-			addAll: series values; 
-			yourself
-			
-
+	^ SortedCollection new
+		  sortBlock: self seriesSortBlock;
+		  addAll: series values;
+		  yourself
 ]
 
 { #category : #iterations }
 CXBase >> seriesDo: aBlock [
 
 	self series do: aBlock
+]
+
+{ #category : #adding }
+CXBase >> seriesSortBlock [
+
+	^ [ :a :b | a title < b title ]
 ]
 
 { #category : #accessing }

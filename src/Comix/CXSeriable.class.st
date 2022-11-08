@@ -24,10 +24,10 @@ CXSeriable >> bds [
 CXSeriable >> bds: aCol [
 
 	self rawBds: (SortedCollection new
-						sortBlock: [:a :b | a publicNumber < b publicNumber ] ;
-						addAll: aCol; 
-						yourself).
-	self checkValidity.
+			 sortBlock: self bdsSortBlock;
+			 addAll: aCol;
+			 yourself).
+	self checkInvariant
 ]
 
 { #category : #accessing }
@@ -37,7 +37,13 @@ CXSeriable >> bdsDo: aBlock [
 ]
 
 { #category : #accessing }
-CXSeriable >> checkValidity [
+CXSeriable >> bdsSortBlock [
+
+	^ [ :a :b | a publicNumber < b publicNumber ]
+]
+
+{ #category : #accessing }
+CXSeriable >> checkInvariant [
 	
 	bds allSatisfy: [ :each | each serie = self title ]
 ]
