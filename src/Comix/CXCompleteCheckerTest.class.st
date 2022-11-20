@@ -22,12 +22,12 @@ CXCompleteCheckerTest >> setUp [
 CXCompleteCheckerTest >> testACompleteSerieElementShouldBeSerieComplete [
 	
 	| aquablue aya |
-	aquablue := (base serieNamed: 'Aquablue').
+	aquablue := base serieNamed: 'Aquablue'.
 	checker visitSerie: aquablue.
 	self assert: checker suspects size equals: 0.
 	
 	"we set the serie to complete but this is not true."
-	aya := (base serieNamed: 'Aya de Yopougon').
+	aya := base serieNamed: 'Aya de Yopougon'.
 	aya serieComplete: true. 
 	checker visitSerie: aya. 
 	self assert: checker suspects size equals: 1.

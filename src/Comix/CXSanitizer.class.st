@@ -1,3 +1,12 @@
+"
+Some utilies
+
+```
+CXCompleteChecker new
+ setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);
+ suspects
+```
+"
 Class {
 	#name : #CXSanitizer,
 	#superclass : #CXComixBaseTools,

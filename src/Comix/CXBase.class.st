@@ -43,12 +43,14 @@ CXBase class >> stefBase [
 	<example>
 	
 	^ self new 
-		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix' asFileReference ; 		yourself
+		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix' asFileReference ; 		
+		yourself
 ]
 
 { #category : #'ston-core' }
 CXBase class >> stonAllInstVarNames [
-	^ self instanceVariables copyWithoutAll: self stonNotSerializedInstVarNames
+
+	^ self instVarNames copyWithoutAll: self stonNotSerializedInstVarNames
 
 ]
 

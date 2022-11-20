@@ -3,10 +3,12 @@ For now manage original and not original.
 Once we have series connected and saved. 
 We will be able to document better: complete or not.
 
-
+```
 CXSeriePrinter new
-	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
+	setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);	
+	setWorkingDirectoryFromBase;
 	save.
+```
 "
 Class {
 	#name : #CXSeriePrinter,
