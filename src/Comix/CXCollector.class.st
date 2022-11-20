@@ -2,10 +2,11 @@
 I manage multiple bases (group of series) in a generic manner.  
 I'm a singleton since I manage the bases. 
 
+```
 	| ownedBaseFromXML ownedBaseFromSTON collector |
-	ownedBaseFromXML := (CXBase new addNewSerieFromCollection: CXXMLImporter new import).
+	ownedBaseFromXML := CXBase new addNewSerieFromCollection: CXXMLImporter new import.
 	ownedBaseFromXML kind: #xml.
-	ownedBaseFromSTON := (CXBase load: 'BDs').
+	ownedBaseFromSTON := CXBase load: 'BDs'.
 	ownedBaseFromSTON kind: #ston.
 	ownedBaseFromSTON numberOfBDs . 
 	ownedBaseFromXML numberOfBDs.
@@ -13,17 +14,15 @@ I'm a singleton since I manage the bases.
 	collector := CXCollector new.
 	collector add: ownedBaseFromXML.
 	collector save.
-	
-	
-	CXCollector load
-	
-	
+```	
+
+```	
 	| lookingForBase serie |
 	serie := (CXSerie new sortedAs: 'Empress' ; title: 'Empress').
 	lookingForBase := (CXBase new addSerie: serie).
 	lookingForBase kind: #lookingFor.
 	lookingForBase saveKind
-
+```
 
 "
 Class {
@@ -101,7 +100,8 @@ CXCollector class >> workingDirectory: aFileReference [
 ]
 
 { #category : #'adding/removing' }
-CXCollector >> add: aCXBase [ 
+CXCollector >> add: aCXBase [
+	
 	bases at: aCXBase kind put: aCXBase
 ]
 

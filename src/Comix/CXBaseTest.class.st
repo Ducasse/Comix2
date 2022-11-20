@@ -11,6 +11,36 @@ Class {
 	#category : #'Comix-Tests'
 }
 
+{ #category : #tests }
+CXBaseTest >> invariantNumberOfAllBds: aBase [
+	
+	| count |
+	count := 0.
+	aBase bdsDo: [ :serie | count := count + 1 ].
+	self assert: count equals: 8
+	
+]
+
+{ #category : #tests }
+CXBaseTest >> invariantNumberOfOriginalBDs: aBase [
+	
+	| count |
+	count := 0.
+	aBase originalBdsDo: [ :serie | count := count + 1 ].
+	self assert: count equals: 7
+]
+
+{ #category : #tests }
+CXBaseTest >> invariantSerieComplete: aSerie [
+	"self new testSerieNamed"
+	
+
+	self deny: aSerie isSerieComplete.
+	aSerie serieComplete: true. 
+	self assert: aSerie isSerieComplete.
+
+]
+
 { #category : #setup }
 CXBaseTest >> setUp [
 
@@ -19,7 +49,7 @@ CXBaseTest >> setUp [
 	base addNewSerieFromCollection: (STON fromString: self stonFile contents).
 ]
 
-{ #category : #tests }
+{ #category : #'tests - migration from XML to Ston' }
 CXBaseTest >> testAddNewSerieFromCollection [
 	"self new testAddNewSerieFromCollection"
 
@@ -27,13 +57,9 @@ CXBaseTest >> testAddNewSerieFromCollection [
 ]
 
 { #category : #tests }
-CXBaseTest >> testBdsDo [
-	"self new testBdsDo"
+CXBaseTest >> testBdsDoCountsNotOriginalBDs [
 	
-	| count |
-	count := 0.
-	base bdsDo: [ :serie | count := count + 1 ].
-	self assert: count equals: 8
+	self invariantNumberOfAllBds: base
 ]
 
 { #category : #tests }
@@ -62,23 +88,12 @@ CXBaseTest >> testMissingNumbers [
 ]
 
 { #category : #tests }
-CXBaseTest >> testNumberOfElements [
-	"self new testNumberOfElements"
-	
-	self assert: base numberOfBDs equals: 8
-]
-
-{ #category : #tests }
 CXBaseTest >> testOriginalBdsDo [
-	"self new testOriginalBdsDo"
 	
-	| count |
-	count := 0.
-	base originalBdsDo: [ :serie | count := count + 1 ].
-	self assert: count equals: 7
+	self invariantNumberOfOriginalBDs: base
 ]
 
-{ #category : #tests }
+{ #category : #'tests - store/restore' }
 CXBaseTest >> testPrepareToBeStored [
 	"self new testPrepareToBeStored"
 
@@ -87,7 +102,7 @@ CXBaseTest >> testPrepareToBeStored [
 	self assert: base series first bds class equals: OrderedCollection. 
 ]
 
-{ #category : #tests }
+{ #category : #'tests - store/restore' }
 CXBaseTest >> testRestoreModel [
 	"self new testRestoreModel"
 
@@ -98,15 +113,38 @@ CXBaseTest >> testRestoreModel [
 	self assert: base series first bds class equals: SortedCollection. 
 ]
 
+{ #category : #'tests - save and load' }
+CXBaseTest >> testSaveCreatesAFile [ 
+
+	self deny: (testingWorkingDirectory / 'saved.ston') exists.
+	base saveOnFileReference: testingWorkingDirectory / 'saved.ston'.
+	self assert: (testingWorkingDirectory / 'saved.ston') exists.
+	
+	
+	
+]
+
+{ #category : #'tests - save and load' }
+CXBaseTest >> testSavedStonIsOk [
+
+	| newBase |
+	base saveOnFileReference: testingWorkingDirectory / 'saved.ston'.
+	newBase := base loadFromFileReference: (testingWorkingDirectory / 'saved.ston').
+	self invariantNumberOfOriginalBDs: newBase.  	
+		
+	self invariantSerieComplete: (newBase serieNamed: 'Aquablue').
+	self invariantSerieComplete: (newBase serieNamed: 'Nic oumouk').
+	
+	
+	
+	
+]
+
 { #category : #tests }
 CXBaseTest >> testSerieComplete [
-	"self new testSerieNamed"
 	
-	| aquablue | 
-	aquablue := (base serieNamed: 'Aquablue').
-	aquablue serieComplete: true. 
-	self assert: aquablue isSerieComplete.
-
+	self invariantSerieComplete: (base serieNamed: 'Aquablue').
+	self invariantSerieComplete: (base serieNamed: 'Nic oumouk').
 ]
 
 { #category : #tests }
