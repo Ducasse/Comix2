@@ -1,31 +1,44 @@
 "
+```
 CXCompactTableLatexPrinter new
 	setBase: (CXBase new addNewSerieFromCollection: (STON fromStream: 'BDs.1.ston' asFileReference readStream))
 	save.
-	
-	
+```
+
+With files taken in the working directory
+
+```	
 CXCompactTableLatexPrinter new
 	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
 	save.
-		
-CXXMLImporter new import
+```
+
+With files taken from the git storage location.
+```		
+CXCompactTableLatexPrinter new
+	setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);
+	setWorkingDirectoryFromBase;
+	save.
+```
 "
 Class {
-	#name : #CXCompactTableLatexPrinter,
-	#superclass : #CXAbstractLaTeXPrinter,
+	#name : 'CXCompactTableLatexPrinter',
+	#superclass : 'CXAbstractLaTeXPrinter',
 	#instVars : [
 		'lines'
 	],
-	#category : #'Comix-Tools'
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXCompactTableLatexPrinter >> defaultFileName [
 	^ 'CompactFullList'
 	
 ]
 
-{ #category : #operate }
+{ #category : 'operate' }
 CXCompactTableLatexPrinter >> dispatchInColumns [
 	| bds totalSize size |
 	"the logic looks strange but we need to know the size of a serie for paginating
@@ -56,31 +69,31 @@ CXCompactTableLatexPrinter >> dispatchInColumns [
 				year: 0)
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXCompactTableLatexPrinter >> emitTableStart [
 
 	stream cr ; 
-		nextPutAll: '\noindent\begin{tabular}{|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}||p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|}\hline' ; cr
+		nextPutAll: '\noindent\begin{tabular}{p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}|p{0.3cm}p{3.2cm}p{3cm}p{0.5cm}}\hline' ; cr
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXCompactTableLatexPrinter >> initialize [
 
 	super initialize.
 	lines := 0.
 	self fileName: 'BELIST'.
-	self setStream
+
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXCompactTableLatexPrinter >> linePlus [
 
 	lines := lines + 1 
 
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXCompactTableLatexPrinter >> printBD: aBD [
 	
 	aBD original 
@@ -105,16 +118,18 @@ CXCompactTableLatexPrinter >> printBD: aBD [
 				nextPutAll: aBD year asString ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 CXCompactTableLatexPrinter >> save [
-
+	
+	self setStream.
 	self emitLatexStart.
 	self treatBase.
 	self emitLatexEnd.
-	stream flush
+	stream flush.
+	stream close
 ]
 
-{ #category : #operate }
+{ #category : 'operate' }
 CXCompactTableLatexPrinter >> treatBase [
 
 	self emitTableStart.
@@ -122,14 +137,14 @@ CXCompactTableLatexPrinter >> treatBase [
 	self emitTableEnd
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 CXCompactTableLatexPrinter >> visitBase [
 	"We redefine the tranversal because we fill the table item by items"
 	self save
 	
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXCompactTableLatexPrinter >> visitItem: aBD [
 	
 	self printBD: aBD

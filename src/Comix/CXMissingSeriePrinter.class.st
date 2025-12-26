@@ -1,27 +1,29 @@
 "
 CXMissingSeriePrinter new
-	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter import);
+	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
 	save.
 "
 Class {
-	#name : #CXMissingSeriePrinter,
-	#superclass : #CXAbstractLaTeXPrinter,
-	#category : #'Comix-Tools'
+	#name : 'CXMissingSeriePrinter',
+	#superclass : 'CXAbstractLaTeXPrinter',
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXMissingSeriePrinter >> columns [
 
 	^ 'twocolumn'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXMissingSeriePrinter >> defaultFileName [
 
 	^ 'MissingSeries'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXMissingSeriePrinter >> visitSerie: aSerie [
 
 	aSerie missingNumbers first isEmpty

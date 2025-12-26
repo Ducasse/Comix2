@@ -1,20 +1,22 @@
 Class {
-	#name : #CXCollectorTest,
-	#superclass : #CXFileTest,
+	#name : 'CXCollectorTest',
+	#superclass : 'CXFileTest',
 	#instVars : [
 		'collector'
 	],
-	#category : #'Comix-Tests'
+	#category : 'Comix-Tests',
+	#package : 'Comix',
+	#tag : 'Tests'
 }
 
-{ #category : #setup }
+{ #category : 'setup' }
 CXCollectorTest >> setUp [
 
 	super setUp.
 	collector := CXCollector new
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 CXCollectorTest >> testAddBase [
 	| ownedBase |
 	ownedBase := CXBase new.
@@ -23,7 +25,7 @@ CXCollectorTest >> testAddBase [
 	self assert: (collector baseNames includes: #owned)
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 CXCollectorTest >> testBaseFor [
 	| ownedBase |
 	ownedBase := CXBase new.
@@ -32,7 +34,7 @@ CXCollectorTest >> testBaseFor [
 	self assert: (collector baseFor: #owned) equals: ownedBase
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 CXCollectorTest >> testBaseForError [
 
 	self should: [ collector baseFor: #notdeclared ] raise: Error

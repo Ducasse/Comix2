@@ -3,57 +3,59 @@ For now manage original and not original.
 Once we have series connected and saved. 
 We will be able to document better: complete or not.
 
-
+```
 CXSeriePrinter new
-	setBase: (CXBase new addNewSerieFromCollection: CXXMLImporter new import);
+	setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);	
+	setWorkingDirectoryFromBase;
 	save.
+```
 "
 Class {
-	#name : #CXSeriePrinter,
-	#superclass : #CXAbstractLaTeXPrinter,
-	#category : #'Comix-Tools'
+	#name : 'CXSeriePrinter',
+	#superclass : 'CXAbstractLaTeXPrinter',
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXSeriePrinter >> columns [
 
 	^ 'twocolumn'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXSeriePrinter >> defaultFileName [
 	^ 'TwoColumnsSeries'
 ]
 
-{ #category : #operate }
+{ #category : 'operate' }
 CXSeriePrinter >> doBase [
 	base seriesDo: [ :aSerie | 
-		"aSerie title = 'Bretagne'
-			ifTrue: [ self halt ]."
-		(aSerie bds size = 1 and: [aSerie bds first original not ])
+		(aSerie bds size = 1 and: [ aSerie bds first original not ])
 				ifFalse: [ self visitSerie: aSerie ]]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXSeriePrinter >> doSerie: aSerie [
 	aSerie bdsDo: [ :each | self visitItem: each ]
 ]
 
-{ #category : #operate }
+{ #category : 'operate' }
 CXSeriePrinter >> postSerie: aSerie [
 	stream
 		nextPutAll: '\squishend';
 		cr
 ]
 
-{ #category : #operate }
+{ #category : 'operate' }
 CXSeriePrinter >> preSerie: aSerie [
 	stream
 		nextPutAll: '\squishlist';
 		cr
 ]
 
-{ #category : #operate }
+{ #category : 'operate' }
 CXSeriePrinter >> visitItem: anItem [
 	stream
 		<< '\item[';
@@ -79,7 +81,7 @@ CXSeriePrinter >> visitItem: anItem [
 		cr
 ]
 
-{ #category : #operate }
+{ #category : 'operate' }
 CXSeriePrinter >> visitSerie: aSerie [
 	stream
 		space;

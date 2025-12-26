@@ -1,49 +1,51 @@
 Class {
-	#name : #CXComixBaseTools,
-	#superclass : #CXTools,
+	#name : 'CXComixBaseTools',
+	#superclass : 'CXTools',
 	#instVars : [
 		'base'
 	],
-	#category : #'Comix-Tools'
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> doBase [
 	base seriesDo: [ :aSerie | self visitSerie: aSerie ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> doSerie: aSerie [
 	aSerie originalBdsDo: [ :each | self visitItem: each ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> postBase [
 	
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> postSerie: aSerie [
 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> preBase [
 	
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> preSerie: aSerie [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXComixBaseTools >> setBase: aBase [
 
 	base := aBase 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> visitBase [
 	"visit all series and comics even those that are not originals."
 
@@ -52,11 +54,11 @@ CXComixBaseTools >> visitBase [
 	self postBase
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> visitItem: anItem [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXComixBaseTools >> visitSerie: aSerie [
 	self preSerie: aSerie.
 	"here we may have a problem if we have a unique item not original in the serie.

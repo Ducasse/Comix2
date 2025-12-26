@@ -2,41 +2,44 @@
 By default iterate over original items. 
 "
 Class {
-	#name : #CXAbstractLaTeXPrinter,
-	#superclass : #CXComixBaseTools,
+	#name : 'CXAbstractLaTeXPrinter',
+	#superclass : 'CXComixBaseTools',
 	#instVars : [
 		'stream',
-		'fileName'
+		'fileName',
+		'workingDirectory'
 	],
-	#category : #'Comix-Tools'
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXAbstractLaTeXPrinter >> columns [
 	
 	^ ''
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXAbstractLaTeXPrinter >> defaultFileName [
 
 	^ 'ShouldProvide'
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXAbstractLaTeXPrinter >> emitHLine [
 	stream
 		nextPutAll: '\\ \hline';
 		cr
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXAbstractLaTeXPrinter >> emitLatexEnd [
 
 	stream nextPutAll: '\end{document}'
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXAbstractLaTeXPrinter >> emitLatexStart [
 	stream
 		nextPutAll:
@@ -68,53 +71,74 @@ CXAbstractLaTeXPrinter >> emitLatexStart [
 \scriptsize'
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXAbstractLaTeXPrinter >> emitSeparator [
 	stream nextPutAll: '&'
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXAbstractLaTeXPrinter >> emitTableEnd [
 
 	stream cr ; nextPutAll: '\end{tabular}' ; cr
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXAbstractLaTeXPrinter >> extension [
 
 	^ 'tex'
 ]
 
-{ #category : #initialization }
+{ #category : 'accessing' }
 CXAbstractLaTeXPrinter >> fileName [
 	^ fileName ifNil: [ self defaultFileName ]
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXAbstractLaTeXPrinter >> fileName: name [
 
 	fileName := name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXAbstractLaTeXPrinter >> initialize [
 
 	super initialize.
-	self setStream
+	workingDirectory := FileSystem workingDirectory.
+	
 ]
 
-{ #category : #initialization }
+{ #category : 'io' }
 CXAbstractLaTeXPrinter >> save [
-
+	self setStream.
 	self emitLatexStart.
 	self visitBase.
 	self emitLatexEnd.
 	stream flush
 ]
 
-{ #category : #initialization }
-CXAbstractLaTeXPrinter >> setStream [ 
-	
-	stream := (FileSystem workingDirectory nextNameFor: self fileName extension: self extension) asFileReference writeStream.
+{ #category : 'initialization' }
+CXAbstractLaTeXPrinter >> setStream [
+
+	stream := (self workingDirectory / (self workingDirectory
+		           nextNameFor: self fileName
+		           extension: self extension)) writeStream
+]
+
+{ #category : 'configuring' }
+CXAbstractLaTeXPrinter >> setWorkingDirectoryFromBase [
+
+	workingDirectory := base workingDirectory
+]
+
+{ #category : 'accessing' }
+CXAbstractLaTeXPrinter >> workingDirectory [
+
+	^ workingDirectory
+]
+
+{ #category : 'accessing' }
+CXAbstractLaTeXPrinter >> workingDirectory: aFileReference [
+
+	workingDirectory := aFileReference
 ]

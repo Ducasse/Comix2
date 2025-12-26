@@ -4,17 +4,19 @@ CXThreeColumnsSeriePrinter new
 	save.
 "
 Class {
-	#name : #CXThreeColumnsSeriePrinter,
-	#superclass : #CXSeriePrinter,
-	#category : #'Comix-Tools'
+	#name : 'CXThreeColumnsSeriePrinter',
+	#superclass : 'CXSeriePrinter',
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXThreeColumnsSeriePrinter >> defaultFileName [
 	^ 'ThreeColumnsSeries'
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXThreeColumnsSeriePrinter >> emitLatexEnd [
 	stream
 		nextPutAll:
@@ -23,7 +25,7 @@ CXThreeColumnsSeriePrinter >> emitLatexEnd [
 	\end{document}'
 ]
 
-{ #category : #latex }
+{ #category : 'latex' }
 CXThreeColumnsSeriePrinter >> emitLatexStart [
 	stream
 		nextPutAll:

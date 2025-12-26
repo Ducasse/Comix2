@@ -1,6 +1,6 @@
-Extension { #name : #FileReference }
+Extension { #name : 'FileReference' }
 
-{ #category : #'*Comix' }
+{ #category : '*Comix' }
 FileReference >> lastFileFor: baseFileName extension: extension [
   "Assumes a file is named using a version number encoded as '.' followed by digits
   preceding the file extension, e.g., games.22.ston

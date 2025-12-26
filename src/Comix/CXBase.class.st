@@ -1,38 +1,79 @@
 "
 I'm a collection of series. For example the owned comix. I could also be the collection of lent ones. 
 
+```
+(CXBase new addNewSerieFromCollection: CXXMLImporter new import).
 
-	(CXBase new addNewSerieFromCollection: CXXMLImporter new import) save
-	will generate a ston file containing all the objects from the XML  old file format. 
+(CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds)
+```
+will generate a ston file containing all the objects from the XML  old file format. 
 	
 
 "
 Class {
-	#name : #CXBase,
-	#superclass : #Object,
+	#name : 'CXBase',
+	#superclass : 'Object',
 	#instVars : [
 		'workingDirectory',
 		'series',
 		'kind'
 	],
-	#category : #'Comix-Model'
+	#classInstVars : [
+		'workingDirectory'
+	],
+	#category : 'Comix-Model',
+	#package : 'Comix',
+	#tag : 'Model'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
+CXBase class >> load: filename [
+	"self load: 'BDs'"
+
+	| instance |
+	instance := (self workingDirectory lastFileFor: filename extension: 'ston')
+		asFileReference readStreamDo: [ :str | STON fromStream: str ].
+	^ instance
+	
+]
+
+{ #category : 'ston-core' }
+CXBase class >> stefBase [
+	<example>
+	
+	^ self new 
+		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix' asFileReference ; 		
+		yourself
+]
+
+{ #category : 'ston-core' }
 CXBase class >> stonAllInstVarNames [
-	^ self instanceVariables copyWithoutAll: self stonNotSerializedInstVarNames
+
+	^ self instVarNames copyWithoutAll: self stonNotSerializedInstVarNames
 
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 CXBase class >> stonNotSerializedInstVarNames [
 	^ {#workingDirectory}
 
 ]
 
-{ #category : #adding }
+{ #category : 'ston-core' }
+CXBase class >> workingDirectory [
+
+	^ workingDirectory ifNil: [ workingDirectory := FileSystem workingDirectory ]
+]
+
+{ #category : 'ston-core' }
+CXBase class >> workingDirectory: aFileReference [
+	workingDirectory := aFileReference
+]
+
+{ #category : 'private for importing' }
 CXBase >> addNewSerieFromCollection: bds [
 	"bds is a collection of unconnected bds objects. It means that their series are not object but string"
+	
 	| newSeries |
 	newSeries := bds groupedBy: [ :each | each serie ].
 	newSeries keysAndValuesDo: [ :k :v | self addSerie: 
@@ -45,19 +86,19 @@ CXBase >> addNewSerieFromCollection: bds [
 		
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 CXBase >> addSerie: aSerie [
 
 	series at: aSerie sortedAs put: aSerie 
 ]
 
-{ #category : #iterations }
+{ #category : 'iterations' }
 CXBase >> bdsDo: aBlock [
 
 	self series do: [:aSerie | aSerie bdsDo: aBlock ]
 ]
 
-{ #category : #iterations }
+{ #category : 'iterations' }
 CXBase >> bdsSortedBySeries [
 
 	| ord |
@@ -66,7 +107,7 @@ CXBase >> bdsSortedBySeries [
 	^ ord
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXBase >> initialize [
 
 	super initialize.
@@ -74,70 +115,128 @@ CXBase >> initialize [
 	workingDirectory := FileSystem workingDirectory.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXBase >> kind [
+	"Return the status of a base, e.g., owned, lookingFor, lent"
+	
 	^ kind
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXBase >> kind: aSymbol [
-	"Indicates the kind of collection for example own, to sell, or lookedup"
+	"Indicates the kind of collection for example own, to sell, or lookedup
+	Pay attention that it will be used to save file"
+	
 	kind := aSymbol
 ]
 
-{ #category : #io }
+{ #category : 'io' }
 CXBase >> load [
 	"self new load"
-
-	| base |
-	base := (workingDirectory lastFileFor: 'BDs' extension: 'ston') asFileReference
-					readStreamDo: [ :str | STON fromStream: str ].
-	^ base
+	"this shows that there is something wrong a base cannot load itself.
+	It should be on the class side, then the working directory probably too. 
+	So all the API sucks!"
+	self flag: #comeBack.
+	^ self loadFromFileReference:  (workingDirectory lastFileFor: 'BDs' extension: 'ston') asFileReference
+	
 ]
 
-{ #category : #iterations }
+{ #category : 'io' }
+CXBase >> loadFromFileReference: aFileReference [
+	"self new load"
+	self flag: #comeBack. 
+	"this creates a new instance so the logic is absurd or/and buggy"
+	^ aFileReference asFileReference readStreamDo: [ :str | STON fromStream: str ].
+
+]
+
+{ #category : 'adding' }
+CXBase >> numberOfBDs [
+
+	^ series inject: 0 into: [ :sum :each | sum + each numberOfBDs ]
+			
+
+]
+
+{ #category : 'iterations' }
 CXBase >> originalBdsDo: aBlock [
-
-	self series do: [:aSerie | aSerie originalBdsDo: aBlock ]
+	"Original bds refers to the fact that this is not a reedition."
+	self series do: [ :aSerie | aSerie originalBdsDo: aBlock ]
 ]
 
-{ #category : #io }
+{ #category : 'io' }
+CXBase >> prepareModelToBeSaved [
+	
+	self series do: [:each | each rawBds: each bds asOrderedCollection ]
+]
+
+{ #category : 'io' }
+CXBase >> restoreModel [
+	
+	self series do: [:each | each bds: each bds ]
+]
+
+{ #category : 'io' }
 CXBase >> save [
-	| name |
-	name := kind isNil.
-	(workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
-		asFileReference writeStreamDo: [ :str | str nextPutAll: 
-		(STON toStringPretty: self)]
+	self flag: ##comeBack. 
+	"Strange ut does not use the kind so it looks infinished"
+	self saveOnFileReference: (workingDirectory / (workingDirectory nextNameFor: 'BDs' extension: 'ston')) 
 ]
 
-{ #category : #io }
+{ #category : 'io' }
 CXBase >> saveKind [
 	| name |
+	self flag: #comeBack. 
+	"check save and keep only one."
 	name := kind ifNotNil: [:akind | 'BDs', akind asString ] ifNil: [ 'BDs'].
 	(workingDirectory / (workingDirectory nextNameFor: name extension: 'ston')) 
 		asFileReference writeStreamDo: [ :str | str nextPutAll: 
 		(STON toStringPretty: self)]
 ]
 
-{ #category : #accessing }
+{ #category : 'io' }
+CXBase >> saveOnFileReference: aFileReference [
+	self prepareModelToBeSaved.
+	aFileReference asFileReference 
+		writeStreamDo: [ :str | str nextPutAll: (STON toStringPretty: self)].
+	self restoreModel.
+]
+
+{ #category : 'accessing' }
 CXBase >> serieNamed: aTitle [
 
 	^ series at: aTitle ifAbsent: [ self error: 'There is no serie named ', aTitle ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 CXBase >> series [
 
-	^ SortedCollection new 
-			sortBlock: [:a :b | a title < b title]; 
-			addAll: series values; 
-			yourself
-			
-
+	^ SortedCollection new
+		  sortBlock: self seriesSortBlock;
+		  addAll: series values;
+		  yourself
 ]
 
-{ #category : #iterations }
+{ #category : 'iterations' }
 CXBase >> seriesDo: aBlock [
 
 	self series do: aBlock
+]
+
+{ #category : 'adding' }
+CXBase >> seriesSortBlock [
+
+	^ [ :a :b | a title < b title ]
+]
+
+{ #category : 'accessing' }
+CXBase >> workingDirectory [
+
+	^ workingDirectory
+]
+
+{ #category : 'accessing' }
+CXBase >> workingDirectory: aFileReference [
+
+	workingDirectory := aFileReference 
 ]

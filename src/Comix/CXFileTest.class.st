@@ -1,30 +1,32 @@
 Class {
-	#name : #CXFileTest,
-	#superclass : #TestCase,
+	#name : 'CXFileTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testingWorkingDirectory'
 	],
-	#category : #'Comix-Tests'
+	#category : 'Comix-Tests',
+	#package : 'Comix',
+	#tag : 'Tests'
 }
 
-{ #category : #data }
+{ #category : 'data' }
 CXFileTest class >> contentsForTest [
 
 	^ ''
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 CXFileTest class >> fileNameForTest [
 	^ 'BD.ston'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXFileTest >> initialize [
 	super initialize.
 	testingWorkingDirectory := FileSystem memory workingDirectory
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 CXFileTest >> setUp [
 
 	super setUp.

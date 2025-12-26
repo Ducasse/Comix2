@@ -1,10 +1,12 @@
 Class {
-	#name : #NewCompactTableLatexPrinter,
-	#superclass : #CXComixBaseTools,
+	#name : 'NewCompactTableLatexPrinter',
+	#superclass : 'CXComixBaseTools',
 	#instVars : [
 		'stream',
 		'lines',
 		'fileName'
 	],
-	#category : #'Comix-Tools'
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }

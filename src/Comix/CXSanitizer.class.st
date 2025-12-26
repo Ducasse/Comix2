@@ -1,31 +1,42 @@
+"
+Some utilies
+
+```
+CXCompleteChecker new
+ setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);
+ suspects
+```
+"
 Class {
-	#name : #CXSanitizer,
-	#superclass : #CXComixBaseTools,
+	#name : 'CXSanitizer',
+	#superclass : 'CXComixBaseTools',
 	#instVars : [
 		'suspects'
 	],
-	#category : #'Comix-Tools'
+	#category : 'Comix-Tools',
+	#package : 'Comix',
+	#tag : 'Tools'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXSanitizer >> initialize [
 	super initialize.
 	suspects := OrderedCollection new.
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 CXSanitizer >> log: aSerie [
 
 	suspects add: aSerie
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSanitizer >> suspects [
 
 	^ suspects 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CXSanitizer >> visitBase [
 
 	base seriesDo: [ :aSerie | self visitSerie: aSerie ]

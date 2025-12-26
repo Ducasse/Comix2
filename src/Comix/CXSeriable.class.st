@@ -3,54 +3,62 @@ Having a computed (by opposition to storing the information) version of a serie 
 since we can have two comix and still the serie is in 5 tomes and we do not know it and cannot deduce it. 
 "
 Class {
-	#name : #CXSeriable,
-	#superclass : #Object,
+	#name : 'CXSeriable',
+	#superclass : 'Object',
 	#instVars : [
 		'title',
 		'sortedAs',
 		'serieComplete',
 		'bds'
 	],
-	#category : #'Comix-Model'
+	#category : 'Comix-Model',
+	#package : 'Comix',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> bds [ 
 
 	^ bds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> bds: aCol [
 
-	bds := SortedCollection new
-					sortBlock: [:a :b | a publicNumber < b publicNumber ] ;
-					addAll: aCol; 
-					yourself.
-	self checkValidity.
+	self rawBds: (SortedCollection new
+			 sortBlock: self bdsSortBlock;
+			 addAll: aCol;
+			 yourself).
+	self checkInvariant
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> bdsDo: aBlock [
 
 	^ bds do: aBlock
 ]
 
-{ #category : #accessing }
-CXSeriable >> checkValidity [
+{ #category : 'accessing' }
+CXSeriable >> bdsSortBlock [
+
+	^ [ :a :b | a publicNumber < b publicNumber ]
+]
+
+{ #category : 'accessing' }
+CXSeriable >> checkInvariant [
 	
 	bds allSatisfy: [ :each | each serie = self title ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CXSeriable >> initialize [
 
 	super initialize.
-	serieComplete := false.
+	serieComplete := false
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CXSeriable >> isSerieComplete [
 
 	^ serieComplete isNil 
@@ -58,7 +66,7 @@ CXSeriable >> isSerieComplete [
 		ifFalse: [ serieComplete ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 CXSeriable >> maxNumber [
 
 	| max |
@@ -67,12 +75,12 @@ CXSeriable >> maxNumber [
 	^ max 
 ]
 
-{ #category : #missing }
+{ #category : 'missing' }
 CXSeriable >> missingNumberString [
 	^ ''
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 CXSeriable >> missingNumbers [
 
 	| all strange max |
@@ -89,19 +97,25 @@ CXSeriable >> missingNumbers [
 	^ {all asArray . strange asArray}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CXSeriable >> numberOfBDs [
+
+	^ bds size
+]
+
+{ #category : 'accessing' }
 CXSeriable >> originalBds [
 
 	^ bds select: [ :each | each original ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> originalBdsDo: aBlock [
 
 	^ bds do: [ :aBd | aBd original ifTrue: [ aBlock value: aBd ]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CXSeriable >> printOn: aStream [
 
 	super printOn: aStream. 
@@ -109,32 +123,38 @@ CXSeriable >> printOn: aStream [
 	aStream << title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CXSeriable >> rawBds: aCollection [
+
+	bds := aCollection
+]
+
+{ #category : 'accessing' }
 CXSeriable >> serieComplete: aBoolean [
 
 	serieComplete := aBoolean.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> sortedAs [
 	"A serie can be sorted in a special way if it is set, by default use its title"
 	
 	^ sortedAs ifNil: [ title ] 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> sortedAs: aString [
 
 	sortedAs := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> title [ 
 
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXSeriable >> title: aString [
 
 	title := aString

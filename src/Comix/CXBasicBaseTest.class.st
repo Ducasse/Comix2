@@ -1,10 +1,12 @@
 Class {
-	#name : #CXBasicBaseTest,
-	#superclass : #CXFileTest,
-	#category : #'Comix-Tests'
+	#name : 'CXBasicBaseTest',
+	#superclass : 'CXFileTest',
+	#category : 'Comix-Tests',
+	#package : 'Comix',
+	#tag : 'Tests'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 CXBasicBaseTest class >> contentsForTest [ 
 
 	^ 'OrderedCollection [
@@ -113,19 +115,19 @@ CXBasicBaseTest class >> contentsForTest [
 }'
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 CXBasicBaseTest class >> fileNameForTest [
 
 	^ 'BD.ston'
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 CXBasicBaseTest >> stonFile [
 
 	^ (testingWorkingDirectory / self class fileNameForTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CXBasicBaseTest >> testCollection [
 	"self new testCollection"
 	

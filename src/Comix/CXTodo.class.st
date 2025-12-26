@@ -1,10 +1,12 @@
 Class {
-	#name : #CXTodo,
-	#superclass : #Object,
-	#category : #'Comix-Model'
+	#name : 'CXTodo',
+	#superclass : 'Object',
+	#category : 'Comix-Model',
+	#package : 'Comix',
+	#tag : 'Model'
 }
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 CXTodo >> a [
 
 	" add test for sortedAs 
@@ -12,21 +14,21 @@ CXTodo >> a [
 	we should revisit it for strange collection"
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 CXTodo >> a0 [
 	"Manage multiple bases and store so that we can add an element"
 
 	
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 CXTodo >> b [
 
 	" should model range based series such as manga
 	to say that we have 1 to 11, 13, 15 to 18"
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 CXTodo >> b1 [
 
 	" title may be rawTitle + number
@@ -66,19 +68,19 @@ CXTodo >> b1 [
 
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 CXTodo >> c [
 
 	" should model series explicitly from an item ie not as strings."
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 CXTodo >> c2 [
 
 	" mini serie should filter completed series"
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : 'accessing structure variables' }
 CXTodo >> d [
 
 	"not sure unitSerie makes sense"

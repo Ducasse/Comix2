@@ -1,6 +1,6 @@
 Class {
-	#name : #CXItem,
-	#superclass : #Object,
+	#name : 'CXItem',
+	#superclass : 'Object',
 	#instVars : [
 		'title',
 		'notes',
@@ -23,158 +23,160 @@ Class {
 		'coverPictureName',
 		'collection'
 	],
-	#category : #'Comix-Model'
+	#category : 'Comix-Model',
+	#package : 'Comix',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CXItem >> <= anItem [
 	
 	^  self title ifNil: [ self number <= anItem number] ifNotNil: [ self title <= anItem title ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> authors [
 	^ authors
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> authors: aValue [
 	authors := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> castermanNote [
 	^ castermanNote
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> castermanNote: aValue [
 	castermanNote := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> collection [
 	^ collection
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> collection: aValue [
 	collection := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> coverPictureName [
 	^ coverPictureName
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> coverPictureName: aValue [
 	coverPictureName := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> depotLegal [
 	^ depotLegal
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> depotLegal: aValue [
 	depotLegal := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> editor [
 	^ editor
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> editor: aValue [
 	editor := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> entryCreationDate [
 	^ entryCreationDate
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> entryCreationDate: aValue [
 	entryCreationDate := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> entryNumber [
 	^ entryNumber
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> entryNumber: aValue [
 	entryNumber := aValue
 
 ]
 
-{ #category : #'accessing - composed' }
+{ #category : 'accessing - composed' }
 CXItem >> hasNumber [
 
 	^ self publicNumber isNil not
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importAuthors: aString [
 	self authors: aString
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importCastermanNote: aString [
 	self castermanNote: aString
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importCollection: aString [
 	self collection: aString
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importCoverPictureName: aString [
 	self coverPictureName: aString
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importDepotLegal: aDate [
 	self depotLegal: aDate
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importEditor: aString [
 	self editor: aString
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> importEntryCreationDate: aValue [
 	self entryCreationDate: (Date readFromString: aValue)
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importEntryNumber: anInteger [
 
 	(anInteger isKindOf: Number)
@@ -183,19 +185,19 @@ CXItem >> importEntryNumber: anInteger [
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importMainSerie: aString [
 	self mainSerie: aString
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importNotes: aValue [
 	self notes: aValue asString
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importNumber: anInteger [
 
 	(anInteger isKindOf: Number)
@@ -204,7 +206,7 @@ CXItem >> importNumber: anInteger [
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importNumberOnCover: anInteger [
 
 	(anInteger isKindOf: Number)
@@ -213,7 +215,7 @@ CXItem >> importNumberOnCover: anInteger [
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importOriginal: aValue [
 
 	(aValue isKindOf: Boolean)
@@ -222,31 +224,31 @@ CXItem >> importOriginal: aValue [
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importSerie: aValue [
 	self serie: aValue
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importSerieComplete: aValue [
 	self serieComplete: (Object readFromString: aValue)
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importSortedAs: aString [
 	self sortedAs: aString asString
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importTitle: aString [
 	self title: aString asString
 
 ]
 
-{ #category : #'import from xml' }
+{ #category : 'import from xml' }
 CXItem >> importYear: anInteger [
 
 	(anInteger isKindOf: Year)
@@ -255,7 +257,7 @@ CXItem >> importYear: anInteger [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CXItem >> isSpeciallyNumbered [
 
 	| num1 num2 | 
@@ -268,110 +270,110 @@ CXItem >> isSpeciallyNumbered [
 		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> mainSerie [
 	^ mainSerie
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> mainSerie: aValue [
 	mainSerie := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> notes [
 	^ notes
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> notes: aValue [
 	notes := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> number [
 	^ number
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> number: aValue [
 	number := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> numberOnCover [
 	^ numberOnCover
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> numberOnCover: aValue [
 	numberOnCover := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> original [
 	^ original
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> original: aValue [
 	original := aValue
 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CXItem >> printOn: aStream [
 	
 	aStream nextPutAll: self title.
 ]
 
-{ #category : #'accessing - composed' }
+{ #category : 'accessing - composed' }
 CXItem >> publicNumber [
 	^ number ifNil: [ self numberOnCover isNil ifTrue: [0] ifFalse: [ self numberOnCover ]]
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> serie [
 	^ serie
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> serie: aValue [
 	serie := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> serieComplete [
 	^ serieComplete
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> serieComplete: aValue [
 	serieComplete := aValue
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> serieTitle [
 	"for now it will just be the serie but when serie got connected it will change"
 	
 	^ serie
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> sortedAs [
 	"An item is sorted within a serie as an explicit number, when there is a mess
 	in the numbering or via its public number"
@@ -381,31 +383,31 @@ CXItem >> sortedAs [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> sortedAs: aValue [
 	sortedAs := aValue asString
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> title [
 	^ title
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> title: aValue [
 	title := aValue asString
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> year [
 	^ year
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CXItem >> year: aValue [
 	year := aValue
 
