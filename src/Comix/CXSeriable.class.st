@@ -82,7 +82,8 @@ CXSeriable >> missingNumberString [
 
 { #category : 'queries' }
 CXSeriable >> missingNumbers [
-
+	"Returns all missing numbers within a collection."
+	
 	| all strange max |
 	strange := OrderedCollection new.
 	max := self maxNumber.
@@ -92,8 +93,11 @@ CXSeriable >> missingNumbers [
 					(all includes: each number) 
 						ifTrue: [ all remove: each number]
 						ifFalse: [ strange add: each number]]].
-	"when the serie is not finished we make sure that we mention that the next one is missing."
-	self isSerieComplete ifFalse: [all add: max + 1].
+	
+	"when the serie is not finished 
+	we make sure that we mention that the next one is missing."
+	self isSerieComplete 
+		ifFalse: [all add: max + 1].
 	^ {all asArray . strange asArray}
 ]
 

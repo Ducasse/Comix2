@@ -66,17 +66,6 @@ CXBaseTest >> invariantNumberOfSeries: aBase [
 	self assert: count equals: 3
 ]
 
-{ #category : 'tests' }
-CXBaseTest >> invariantSerieComplete: aSerie [
-	"self new testSerieNamed"
-	
-
-	self deny: aSerie isSerieComplete.
-	aSerie serieComplete: true. 
-	self assert: aSerie isSerieComplete.
-
-]
-
 { #category : 'setup' }
 CXBaseTest >> setUp [
 
@@ -155,15 +144,12 @@ CXBaseTest >> testSavedStonIsOk [
 	| newBase |
 	base saveOnFileReference: testingWorkingDirectory / 'saved.ston'.
 	newBase := base loadFromFileReference: (testingWorkingDirectory / 'saved.ston').
+	
 	self invariantNumberOfOriginalBDs: newBase.  	
-		
-	self invariantSerieComplete: (newBase serieNamed: 'Aquablue').
-	self invariantSerieComplete: (newBase serieNamed: 'Nic oumouk').
+	
 	self invariantNumberOfSeries: newBase.
-	
 	self invariantMaxNumber: newBase.
-	self invariantMissingNumbers: newBase
-	
+	self invariantMissingNumbers: newBase.
 	
 	
 	
@@ -172,8 +158,10 @@ CXBaseTest >> testSavedStonIsOk [
 { #category : 'tests' }
 CXBaseTest >> testSerieComplete [
 	
-	self invariantSerieComplete: (base serieNamed: 'Aquablue').
-	self invariantSerieComplete: (base serieNamed: 'Nic oumouk').
+	self deny: (base serieNamed: 'Aquablue') isSerieComplete.
+	self deny: (base serieNamed: 'Nic oumouk') isSerieComplete.
+	(base serieNamed: 'Aquablue') serieComplete: true.
+	self assert: (base serieNamed: 'Aquablue') isSerieComplete.
 ]
 
 { #category : 'tests' }
