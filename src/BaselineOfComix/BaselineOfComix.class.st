@@ -1,21 +1,23 @@
 Class {
-	#name : #BaselineOfComix,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfComix
+	#name : 'BaselineOfComix',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfComix',
+	#package : 'BaselineOfComix'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfComix >> baseline: spec [
 	<baseline>
 	
 	spec
 		for: #common
-		do: [ spec
-					project: 'XMLParser'
-					with: [ spec
-								className: #ConfigurationOfXMLParser;
-								versionString: #stable;
-								repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
-				spec package: 'Comix' with: [ spec requires: #('XMLParser') ] ]
+		do: [ 
+			spec
+			baseline: 'XMLParser' 
+			with: [ spec repository: 'github://pharo-contributions/XML-XMLParser/src' ].
+	spec package: 'Comix' with: [ spec requires: #('XMLParser') ] ]
 			
+		
+	
+	
 ]
