@@ -71,17 +71,20 @@ CXBase class >> workingDirectory: aFileReference [
 ]
 
 { #category : 'private for importing' }
-CXBase >> addNewSerieFromCollection: bds [
+CXBase >> addNewSeriesFromCollection: bds [
 	"bds is a collection of unconnected bds objects. It means that their series are not object but string"
 	
 	| newSeries |
 	newSeries := bds groupedBy: [ :each | each serie ].
-	newSeries keysAndValuesDo: [ :k :v | self addSerie: 
-													(CXSerie new 
-														sortedAs: k;
-														title: v first serie;
-														bds: v)
-														]
+	newSeries keysAndValuesDo: [ :k :v | 
+		| aSerie |
+		aSerie := (CXSerie new 
+						sortedAs: k;
+						title: v first serie;
+						bds: v).
+														
+		self addSerie: aSerie.
+		v do: [ :aBD | aBD serie: aSerie ] ]
 	
 		
 ]

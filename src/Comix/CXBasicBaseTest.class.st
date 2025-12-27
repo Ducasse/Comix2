@@ -8,7 +8,8 @@ Class {
 
 { #category : 'resources' }
 CXBasicBaseTest class >> contentsForTest [ 
-
+	"Note ice that the stonfile is a flat structure of unconnected books (there is no reference from the books to their series"
+	
 	^ 'OrderedCollection [
 		CXItem {
 			#title : ''Total souk pour nic oumouk'',

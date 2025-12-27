@@ -26,10 +26,13 @@ Class {
 }
 
 { #category : 'examples' }
-CXXMLImporter class >> stefBds [
-	<example>
+CXXMLImporter class >> importStefBdsAsPlainList [
+	<script>
 	
-	^ self stefImporter import
+	| bds |
+	bds := self stefImporter import.
+	bds inspect. 
+	^ bds
 
 	
 ]

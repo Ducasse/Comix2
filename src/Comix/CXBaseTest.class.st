@@ -71,7 +71,8 @@ CXBaseTest >> setUp [
 
 	super setUp.
 	base := CXBase new.  
-	base addNewSerieFromCollection: (STON fromString: self stonFile contents).
+	base addNewSeriesFromCollection: (STON fromString: self stonFile contents).
+	
 ]
 
 { #category : 'tests - migration from XML to Ston' }
@@ -85,6 +86,17 @@ CXBaseTest >> testAddNewSerieFromCollection [
 CXBaseTest >> testBdsDoCountsNotOriginalBDs [
 	
 	self invariantNumberOfAllBds: base
+]
+
+{ #category : 'tests -  import' }
+CXBaseTest >> testElementOfASerieShouldPointToTheirSerie [
+	
+	| aquablueSerie aya |
+	aquablueSerie := base serieNamed: 'Aquablue'.
+	
+	aquablueSerie bds do: [ :each | self assert: each serie == aquablueSerie ].
+	
+
 ]
 
 { #category : 'tests' }

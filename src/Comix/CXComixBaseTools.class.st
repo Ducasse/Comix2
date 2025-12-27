@@ -11,6 +11,7 @@ Class {
 
 { #category : 'visiting' }
 CXComixBaseTools >> doBase [
+
 	base seriesDo: [ :aSerie | self visitSerie: aSerie ]
 ]
 

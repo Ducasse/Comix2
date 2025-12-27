@@ -333,7 +333,13 @@ CXItem >> original: aValue [
 { #category : 'printing' }
 CXItem >> printOn: aStream [
 	
+	| serieTitle |
+	"to help debugging we make sure that a serie can be either a string or a serie object.
+	This is handy to debug the wiring"
+	
 	aStream nextPutAll: self title.
+	serieTitle := serie isString ifTrue: [ serie ] ifFalse: [ serie title ].
+	self serie ifNotNil: [ aStream nextPutAll:  ' (', serieTitle , ') ' ]
 ]
 
 { #category : 'accessing - composed' }
@@ -368,9 +374,8 @@ CXItem >> serieComplete: aValue [
 
 { #category : 'accessing' }
 CXItem >> serieTitle [
-	"for now it will just be the serie but when serie got connected it will change"
 	
-	^ serie
+	^ serie title
 ]
 
 { #category : 'accessing' }

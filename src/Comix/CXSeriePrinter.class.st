@@ -5,7 +5,7 @@ We will be able to document better: complete or not.
 
 ```
 CXSeriePrinter new
-	setBase: (CXBase stefBase addNewSerieFromCollection: CXXMLImporter stefBds);	
+	setBase: (CXBase stefBase addNewSeriesFromCollection: CXXMLImporter importStefBdsAsPlainList);	
 	setWorkingDirectoryFromBase;
 	save.
 ```

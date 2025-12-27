@@ -48,7 +48,7 @@ CXAbstractLaTeXPrinter >> emitLatexStart [
 					']{article}
 \usepackage[utf8]{inputenc}  %% les accents dans le fichier.tex
 \usepackage{calc}
-\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
 \usepackage{vmargin}
 \setmarginsrb{1.2cm}{2cm}{1.2cm}{1.2cm}{0cm}{0cm}{0cm}{0cm}
 \pagestyle{empty}

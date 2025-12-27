@@ -11,8 +11,7 @@ Class {
 
 { #category : 'setup' }
 CXCompleteCheckerTest >> setUp [
-	super setUp. 
-	base := CXBase new addNewSerieFromCollection: (STON fromString: self stonFile contents).
+	super setUp.
 	checker := CXCompleteChecker new setBase: base.
 	
 
