@@ -18,7 +18,7 @@ Class {
 	#name : 'CXXMLImporter',
 	#superclass : 'Object',
 	#instVars : [
-		'workingDirectory'
+		'directory'
 	],
 	#category : 'Comix-Migration Support',
 	#package : 'Comix',
@@ -39,14 +39,11 @@ CXXMLImporter class >> importStefBdsAsPlainList [
 
 { #category : 'examples' }
 CXXMLImporter class >> stefImporter [
-	<example>
-	
-	^ self new 
-		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix/' asFileReference ;
-		yourself
-	
 
-	
+	<sampleInstance>
+	^ self new
+		  directory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix/' asFileReference;
+		  yourself
 ]
 
 { #category : 'utils' }
@@ -68,6 +65,18 @@ CXXMLImporter >> compileSetterNamed: aName [
 		classified: 'accessing'
 ]
 
+{ #category : 'accessing' }
+CXXMLImporter >> directory [
+
+	^ directory
+]
+
+{ #category : 'accessing' }
+CXXMLImporter >> directory: aFileReference [
+
+	directory := aFileReference
+]
+
 { #category : 'utils' }
 CXXMLImporter >> getterBodyFor: aName [
 
@@ -85,7 +94,7 @@ CXXMLImporter >> getterBodyFor: aName [
 CXXMLImporter >> import [
 	"self new import"
 
-	^ self importFileName: (self workingDirectory lastFileFor: 'BD' extension: 'xml') fullName
+	^ self importFileName: (self directory resolve: (self workingDirectory lastFileFor: 'BD' extension: 'xml')) fullName
 ]
 
 { #category : 'importing' }
@@ -110,7 +119,7 @@ CXXMLImporter >> importFileName: aString [
 { #category : 'initialization' }
 CXXMLImporter >> initialize [ 
 	super initialize.
-	workingDirectory := FileSystem workingDirectory
+	directory := FileSystem workingDirectory
 ]
 
 { #category : 'utils' }
@@ -130,12 +139,12 @@ CXXMLImporter >> setterBodyFor: aName [
 
 { #category : 'accessing' }
 CXXMLImporter >> workingDirectory [
-
-	^ workingDirectory
+	self deprecated: 'use directory' transformWith: '`@rec workingDirectory' -> '`@rec directory'. 
+	^ directory
 ]
 
 { #category : 'accessing' }
 CXXMLImporter >> workingDirectory: aFileReference [
-
-	workingDirectory := aFileReference
+	self deprecated: 'use directory:' transformWith: '`@rec workingDirectory: `@dir' -> '`@rec directory: `@dir'. 
+	directory := aFileReference
 ]
