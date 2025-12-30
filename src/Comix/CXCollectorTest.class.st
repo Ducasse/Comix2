@@ -13,6 +13,7 @@ Class {
 CXCollectorTest >> setUp [
 
 	super setUp.
+	"using new does not impact the singleton"
 	collector := CXCollector new
 ]
 

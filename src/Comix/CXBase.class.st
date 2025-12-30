@@ -31,6 +31,8 @@ CXBase class >> load: filename [
 	"self load: 'BDs'"
 
 	| instance |
+	self flag: #doNotUseYet.
+	"should write more tests on saving collection in Ston."
 	instance := (self workingDirectory lastFileFor: filename extension: 'ston')
 		asFileReference readStreamDo: [ :str | STON fromStream: str ].
 	^ instance
@@ -39,10 +41,11 @@ CXBase class >> load: filename [
 
 { #category : 'ston-core' }
 CXBase class >> stefBase [
-	<example>
+	<script>
 	
 	^ self new 
-		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix' asFileReference ; 		
+		workingDirectory: '/Users/ducasse/Workspace/FirstCircle/Working/SF/sf/Comix' asFileReference ; 	
+		inspect; 
 		yourself
 ]
 
@@ -190,7 +193,11 @@ CXBase >> save [
 CXBase >> saveKind [
 	| name |
 	self flag: #comeBack. 
-	"check save and keep only one."
+	"check save and keep only one.
+	The save should include the kind because we should have 
+	only one list of lookingFor and one for we have.
+	
+	"
 	name := kind ifNotNil: [:akind | 'BDs', akind asString ] ifNil: [ 'BDs'].
 	(workingDirectory / (workingDirectory nextNameFor: name extension: 'ston')) 
 		asFileReference writeStreamDo: [ :str | str nextPutAll: 

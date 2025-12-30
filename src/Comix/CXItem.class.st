@@ -3,6 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'title',
+		'collectionState',
+		'state',
 		'notes',
 		'sortedAs',
 		'base',
@@ -92,6 +94,14 @@ CXItem >> depotLegal [
 CXItem >> depotLegal: aValue [
 	depotLegal := aValue
 
+]
+
+{ #category : 'printing' }
+CXItem >> displayStringOn: aStream [
+	
+	aStream nextPutAll: self title.
+	number ifNotNil: [ aStream space ; print: number; space ]. 
+	self serie ifNotNil: [ aStream nextPutAll:  ' (',  serie title , ') ' ]
 ]
 
 { #category : 'accessing' }
@@ -268,6 +278,12 @@ CXItem >> isSpeciallyNumbered [
 	^ ( num2 = num1 ) not
 	
 		
+]
+
+{ #category : 'accessing' }
+CXItem >> lookingFor [
+
+	collectionState := #lookingFor
 ]
 
 { #category : 'accessing' }

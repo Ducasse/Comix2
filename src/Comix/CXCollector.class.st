@@ -1,14 +1,16 @@
 "
 I manage multiple bases (group of series) in a generic manner.  
+But I cannot only have one base of a given kind. 
 I'm a singleton since I manage the bases. 
 
 ```
 	| ownedBaseFromXML ownedBaseFromSTON collector |
-	ownedBaseFromXML := CXBase new addNewSerieFromCollection: CXXMLImporter new import.
+	ownedBaseFromXML := CXBase new addNewSeriesFromCollection: CXXMLImporter importStefBdsAsPlainList.
 	ownedBaseFromXML kind: #xml.
+	
 	ownedBaseFromSTON := CXBase load: 'BDs'.
 	ownedBaseFromSTON kind: #ston.
-	ownedBaseFromSTON numberOfBDs . 
+	ownedBaseFromSTON numberOfBDs. 
 	ownedBaseFromXML numberOfBDs.
 	
 	collector := CXCollector new.
@@ -40,6 +42,14 @@ Class {
 	#package : 'Comix',
 	#tag : 'Model'
 }
+
+{ #category : 'using old file' }
+CXCollector class >> browseStef [
+	"self browseStef"
+	^ self uniqueInstance 
+		add: ((CXBase new addNewSeriesFromCollection: CXXMLImporter importStefBdsAsPlainList) kind: #bds);
+		yourself
+]
 
 { #category : 'save/load' }
 CXCollector class >> defaultFileName [
