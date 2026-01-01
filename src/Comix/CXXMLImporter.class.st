@@ -93,8 +93,11 @@ CXXMLImporter >> getterBodyFor: aName [
 { #category : 'importing' }
 CXXMLImporter >> import [
 	"self new import"
-
-	^ self importFileName: (self directory resolve: (self workingDirectory lastFileFor: 'BD' extension: 'xml')) fullName
+	
+	| vers |
+	vers := NewFileVersionner from: directory.
+	vers useBasenameNumberExtension. 
+	^ self importFileName: (vers lastFileFor: 'BD' extension: 'xml') fullName
 ]
 
 { #category : 'importing' }

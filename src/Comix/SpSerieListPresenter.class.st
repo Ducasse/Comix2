@@ -36,6 +36,7 @@ SpSerieListPresenter >> defaultLayout [
 SpSerieListPresenter >> initializePresenters [
 
 	seriesList := self newList.
+	seriesList display: [ :each | each title , (each isSerieComplete ifTrue: [ ' x ' ] ifFalse: [ ' - ' ])].
 	elementList := self newList.
 	
 			
