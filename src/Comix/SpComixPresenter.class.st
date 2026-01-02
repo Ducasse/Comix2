@@ -13,8 +13,7 @@ Class {
 SpComixPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
-			add: menuBar ; 
-			yourself
+		 
 ]
 
 { #category : 'initialization' }
