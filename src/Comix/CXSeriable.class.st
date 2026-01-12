@@ -24,11 +24,13 @@ CXSeriable >> bds [
 
 { #category : 'accessing' }
 CXSeriable >> bds: aCol [
-
-	self rawBds: (SortedCollection new
+	
+	"we do not use internally a sorted collection because the serializer get some pain with it."
+	"self rawBds: (SortedCollection new
 			 sortBlock: self bdsSortBlock;
 			 addAll: aCol;
-			 yourself).
+			 yourself)."
+	self rawBds: aCol.
 	self checkInvariant
 ]
 
@@ -82,23 +84,24 @@ CXSeriable >> missingNumberString [
 
 { #category : 'queries' }
 CXSeriable >> missingNumbers [
-	"Returns all missing numbers within a collection."
+	"Returns all missing numbers within a collection.
+	The first collection refers to the missing ones and the second collection to the books that have a number that dies not fit in the range."
 	
-	| all strange max |
-	strange := OrderedCollection new.
+	| all strangelyNumbered max |
+	strangelyNumbered := OrderedCollection new.
 	max := self maxNumber.
 	all := (1 to: max) asOrderedCollection.
-	bds do: [:each | 
+	bds do: [ :each | 
 				each original ifTrue: [
 					(all includes: each number) 
 						ifTrue: [ all remove: each number]
-						ifFalse: [ strange add: each number]]].
+						ifFalse: [ strangelyNumbered add: each number]]].
 	
 	"when the serie is not finished 
 	we make sure that we mention that the next one is missing."
 	self isSerieComplete 
 		ifFalse: [all add: max + 1].
-	^ {all asArray . strange asArray}
+	^ {all asArray . strangelyNumbered asArray}
 ]
 
 { #category : 'accessing' }
@@ -150,6 +153,15 @@ CXSeriable >> sortedAs [
 CXSeriable >> sortedAs: aString [
 
 	sortedAs := aString
+]
+
+{ #category : 'accessing' }
+CXSeriable >> sortedBds [
+
+	^ (SortedCollection new
+			 sortBlock: self bdsSortBlock;
+			 addAll: bds;
+			 yourself)
 ]
 
 { #category : 'accessing' }

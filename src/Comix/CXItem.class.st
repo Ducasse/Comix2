@@ -30,6 +30,45 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'sample' }
+CXItem class >> nic [
+	"self nic"
+	
+	^ STON fromString: 
+
+'CXItem {
+	#title : ''Total souk pour nic oumouk'',
+	#entryCreationDate : Date [ ''2006-03-25+01:00'' ],
+	#entryNumber : 1,
+	#editor : ''Dargaud'',
+	#year : 2005,
+	#serie : CXSerie {
+		#title : ''Nic oumouk'',
+		#sortedAs : ''Nic oumouk'',
+		#serieComplete : false,
+		#bds : OrderedCollection [
+			@1,
+			CXItem {
+				#title : ''La france a peur'',
+				#entryCreationDate : Date [ ''2007-03-25+01:00'' ],
+				#entryNumber : 1809,
+				#editor : ''Dargaud'',
+				#year : 2007,
+				#serie : @3,
+				#original : true,
+				#authors : ''Larcenet'',
+				#number : 2,
+				#serieComplete : false
+			}
+		]
+	},
+	#original : true,
+	#authors : ''Larcenet'',
+	#number : 1,
+	#serieComplete : false
+}'
+]
+
 { #category : 'testing' }
 CXItem >> <= anItem [
 	
@@ -324,7 +363,8 @@ CXItem >> number: aValue [
 
 { #category : 'accessing' }
 CXItem >> numberOnCover [
-	^ numberOnCover
+	
+	^ numberOnCover ifNil: [ number ]
 
 ]
 
