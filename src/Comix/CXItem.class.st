@@ -139,7 +139,8 @@ CXItem >> depotLegal: aValue [
 CXItem >> displayStringOn: aStream [
 	
 	aStream nextPutAll: self title.
-	number ifNotNil: [ aStream space ; print: number; space ]. 
+	aStream space ; print: self publicNumber; space.
+	(self publicNumber = self numberOnCover) ifFalse: [ aStream print: self numberOnCover ; space ]. 
 	self serie ifNotNil: [ aStream nextPutAll:  ' (',  serie title , ') ' ]
 ]
 
@@ -351,6 +352,10 @@ CXItem >> notes: aValue [
 
 { #category : 'accessing' }
 CXItem >> number [
+	"Return the number of the book as in the serie.
+	Usually this number is enough but some series such as potro minet the first album is numbered -99
+	the second -98 and the fifth -84!"
+	
 	^ number
 
 ]
@@ -364,7 +369,7 @@ CXItem >> number: aValue [
 { #category : 'accessing' }
 CXItem >> numberOnCover [
 	
-	^ numberOnCover ifNil: [ number ]
+	^ numberOnCover
 
 ]
 
@@ -400,6 +405,9 @@ CXItem >> printOn: aStream [
 
 { #category : 'accessing - composed' }
 CXItem >> publicNumber [
+	"usually the public number is the number as element appearance in the serie
+	other this is the numberOnCover. In case the number of cover is not known default to 0."
+	
 	^ number ifNil: [ self numberOnCover isNil ifTrue: [0] ifFalse: [ self numberOnCover ]]
 	
 ]

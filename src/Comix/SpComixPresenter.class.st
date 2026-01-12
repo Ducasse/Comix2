@@ -33,10 +33,11 @@ SpComixPresenter >> initializePresenters [
 
 { #category : 'initialization' }
 SpComixPresenter >> initializeWindow: aWindowPresenter [
-aWindowPresenter
-title: 'Mail';
-initialExtent: 650@500;
-menu: menuBar
+
+	aWindowPresenter
+		title: 'COmix';
+		initialExtent: 650 @ 500;
+		menu: menuBar
 ]
 
 { #category : 'initialization' }

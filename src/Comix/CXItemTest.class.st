@@ -43,8 +43,20 @@ CXItemTest >> testNumber [
 	nic := CXItem nic.
 	self assert: nic number equals: 1.
 	self assert: nic publicNumber equals: 1.
+
+	self assert: nic numberOnCover isNil
 	
-	"if the numberOnCover is the same as the number just return the number."
-	self assert: nic numberOnCover equals: 1.
+]
+
+{ #category : 'tests' }
+CXItemTest >> testNumberOfComplexSerie [
+	
+	| p b |
+	p := CXSerie potro.
+	b := p bds first.
+
+	self assert: b numberOnCover equals: 97.
+	self assert: b publicNumber equals: 3.
+	
 	
 ]
