@@ -4,7 +4,11 @@ Class {
 	#instVars : [
 		'bdTitle',
 		'serieTitle',
-		'number'
+		'number',
+		'year',
+		'editor',
+		'authors',
+		'original'
 	],
 	#category : 'Comix-UI',
 	#package : 'Comix',
@@ -22,16 +26,19 @@ SpSingleComixPresenter class >> sample [
 { #category : 'layout' }
 SpSingleComixPresenter >> defaultLayout [
 
-	^ SpBoxLayout newTopToBottom
-		  add: (SpBoxLayout newLeftToRight
-				   add: bdTitle;
-				   yourself);
-		 add: (SpBoxLayout newLeftToRight
-				   add: serieTitle;
-				   yourself);
-		add: (SpBoxLayout newLeftToRight
-				   add: number;
-				   yourself);
+	^ SpGridLayout new
+		  beColumnNotHomogeneous;
+		  column: 2 expand: true;
+		  build: [ :builder |
+				  builder
+					  add: 'Serie'; add: serieTitle; nextRow;
+					  add: 'Number'; add: number; nextRow;
+					  add: 'Titre'; add: bdTitle; nextRow;
+					  add: 'Year'; add: year; nextRow; 
+					  add: 'Publisher'; add: editor; nextRow;
+					  add: 'Authors'; add: authors; nextRow;
+					add: 'Original'; add: original; nextRow
+					];
 		  yourself
 ]
 
@@ -43,5 +50,12 @@ SpSingleComixPresenter >> initializePresenter [
 	serieTitle := self newTextInput.
 	serieTitle text: self model serie title.
 	number := self newTextInput.
-	number text: self model number asString
+	number text: self model number asString.
+	year := self newTextInput.
+	year text: self model year asString.
+	authors := self newTextInput.
+	authors text: self model authors.
+	original := self newCheckBox.
+	original state: self model original.
+	original disable.
 ]
