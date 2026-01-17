@@ -18,7 +18,9 @@ Class {
 	#name : 'CXXMLImporter',
 	#superclass : 'Object',
 	#instVars : [
-		'directory'
+		'directory',
+		'items',
+		'col'
 	],
 	#category : 'Comix-Migration Support',
 	#package : 'Comix',
