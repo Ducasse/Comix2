@@ -12,8 +12,27 @@ CXXMLItemSaverLoaderTest class >> xmlOriginalSample [
 	^  '<bd serieComplete="false" editor="Soleil" entryCreationDate="1 November 2008" entryNumber="2166" authors="Bec Raffaele" title="Le tunnel" serie="Pandemonium" original="true" number="2" year="2008" />'
 ]
 
-{ #category : 'tests' }
-CXXMLItemSaverLoaderTest >> testBasicGenerateXML [
+{ #category : 'helpers' }
+CXXMLItemSaverLoaderTest >> itemFromSpec [
+
+	| item |
+	item := CXItem new.
+	#('serieComplete' 'editor' 'entryCreationDate' 'entryNumber' 'authors' 'title' 'serie' 'original' 'number' 'year') 
+		with: #('false' 'Soleil' '1 November 2008' '2166' 'Bec Raffaele' 'Le tunnel' 'Pandemonium' 'true' '2' '2008')
+		do: [ :m :v | item perform: (m, ':') asSymbol with: v ].
+	^ item 
+]
+
+{ #category : 'tests - basics' }
+CXXMLItemSaverLoaderTest >> testBasicGenerateXMLFromItem [
+
+	self 
+		assert: self itemFromSpec asXML 
+		equals: '<bd serieComplete="false" editor="Soleil" entryCreationDate="1 November 2008" entryNumber="2166" authors="Bec Raffaele" title="Le tunnel" serie="Pandemonium" original="true" number="2" year="2008"/>'
+]
+
+{ #category : 'tests - basics' }
+CXXMLItemSaverLoaderTest >> testBasicGenerateXMLFromSpec [
 
 	| xmlW tag |
 	xmlW := XMLWriter new.
@@ -26,7 +45,7 @@ CXXMLItemSaverLoaderTest >> testBasicGenerateXML [
 	self assert: xmlW contents equals: '<bd serieComplete="false" editor="Soleil" entryCreationDate="1 November 2008" entryNumber="2166" authors="Bec Raffaele" title="Le tunnel" serie="Pandemonium" original="true" number="2" year="2008"/>'
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - basics' }
 CXXMLItemSaverLoaderTest >> testReadXMLIn [
 
 	| pxml bd |
@@ -36,19 +55,7 @@ CXXMLItemSaverLoaderTest >> testReadXMLIn [
 	self assert: bd attributes values equals: #('false' 'Soleil' '1 November 2008' '2166' 'Bec Raffaele' 'Le tunnel' 'Pandemonium' 'true' '2' '2008') 
 ]
 
-{ #category : 'tests' }
-CXXMLItemSaverLoaderTest >> testSaveXML [
-
-	| item |
-	item := CXItem new.
-	#('serieComplete' 'editor' 'entryCreationDate' 'entryNumber' 'authors' 'title' 'serie' 'original' 'number' 'year') 
-		with: #('false' 'Soleil' '1 November 2008' '2166' 'Bec Raffaele' 'Le tunnel' 'Pandemonium' 'true' '2' '2008')
-		do: [ :m :v | item perform: (m, ':') asSymbol with: v ].
-	self halt.
-	^ item 
-]
-
-{ #category : 'tests' }
+{ #category : 'helpers' }
 CXXMLItemSaverLoaderTest >> xmlOriginalSample [
 
 	^  self class xmlOriginalSample 

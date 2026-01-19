@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'title',
 		'collectionState',
-		'state',
 		'notes',
 		'sortedAs',
 		'base',
@@ -76,6 +75,30 @@ CXItem >> <= anItem [
 ]
 
 { #category : 'accessing' }
+CXItem >> ISBN [
+	^ ISBN
+]
+
+{ #category : 'accessing' }
+CXItem >> ISBN: aString [
+	ISBN := aString
+]
+
+{ #category : 'export to xml' }
+CXItem >> asXML [
+	
+	| xmlW tag |
+	xmlW := XMLWriter new.
+	tag := xmlW tag: 'bd'.
+	self serializableInstanceVariables
+		do: [ :v |
+			| value |
+			value := self perform: v.
+			value ifNotNil: [ tag attributeAt: v put: value ] ].
+	^ xmlW contents	
+]
+
+{ #category : 'accessing' }
 CXItem >> authors [
 	^ authors
 
@@ -109,6 +132,19 @@ CXItem >> collection [
 CXItem >> collection: aValue [
 	collection := aValue
 
+]
+
+{ #category : 'accessing' }
+CXItem >> collectionState [
+	
+	^ collectionState
+]
+
+{ #category : 'accessing' }
+CXItem >> collectionState: aString [
+	"perfect, good, ,,,"
+	
+	collectionState := aString
 ]
 
 { #category : 'accessing' }
@@ -410,6 +446,12 @@ CXItem >> publicNumber [
 	
 	^ number ifNil: [ self numberOnCover isNil ifTrue: [0] ifFalse: [ self numberOnCover ]]
 	
+]
+
+{ #category : 'accessing' }
+CXItem >> serializableInstanceVariables [
+
+	^  #(#title #collectionState #notes #sortedAs #entryCreationDate #entryNumber #editor #year #mainSerie #serie #original #depotLegal #castermanNote #authors #ISBN #number #numberOnCover #serieComplete #coverPictureName #collection)
 ]
 
 { #category : 'accessing' }

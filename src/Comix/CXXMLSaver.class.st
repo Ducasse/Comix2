@@ -27,5 +27,5 @@ CXXMLSaver >> saveFileName: aString [
 	| p |
 	p := XMLWriter on: aString asFileReference writeStream.
 	items do: [ :each | ].
-	^ col
+	^ items
 ]
