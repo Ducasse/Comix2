@@ -123,7 +123,7 @@ CXBaseTest >> testOriginalBdsDo [
 CXBaseTest >> testPrepareToBeStored [
 	"self new testPrepareToBeStored"
 
-	self assert: base series first bds class equals: SortedCollection. 
+	self assert: base series first bds class equals: OrderedCollection. 
 	base prepareModelToBeSaved.
 	self assert: base series first bds class equals: OrderedCollection. 
 ]
@@ -132,11 +132,11 @@ CXBaseTest >> testPrepareToBeStored [
 CXBaseTest >> testRestoreModel [
 	"self new testRestoreModel"
 
-	self assert: base series first bds class equals: SortedCollection. 
+	self assert: base series first bds class equals: OrderedCollection. 
 	base prepareModelToBeSaved.
 	self assert: base series first bds class equals: OrderedCollection. 
 	base restoreModel.
-	self assert: base series first bds class equals: SortedCollection. 
+	self assert: base series first bds class equals: OrderedCollection. 
 ]
 
 { #category : 'tests - save and load' }
