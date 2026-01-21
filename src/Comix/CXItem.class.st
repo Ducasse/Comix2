@@ -90,7 +90,7 @@ CXItem >> asXML [
 	| xmlW tag |
 	xmlW := XMLWriter new.
 	tag := xmlW tag: 'bd'.
-	self serializableInstanceVariables
+	self serializableInstanceVariables sorted
 		do: [ :v |
 			| value |
 			value := self perform: v.

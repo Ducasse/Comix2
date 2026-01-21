@@ -27,8 +27,9 @@ CXXMLItemSaverLoaderTest >> itemFromSpec [
 CXXMLItemSaverLoaderTest >> testBasicGenerateXMLFromItem [
 
 	self 
-		assert: self itemFromSpec asXML 
-		equals: '<bd serieComplete="false" editor="Soleil" entryCreationDate="1 November 2008" entryNumber="2166" authors="Bec Raffaele" title="Le tunnel" serie="Pandemonium" original="true" number="2" year="2008"/>'
+		assert: self itemFromSpec asXML  
+		equals: '<bd authors="Bec Raffaele" editor="Soleil" entryCreationDate="1 November 2008" entryNumber="2166" number="2" original="true" serie="Pandemonium" serieComplete="false" sortedAs="2" title="Le tunnel" year="2008"/>'
+	
 ]
 
 { #category : 'tests - basics' }
