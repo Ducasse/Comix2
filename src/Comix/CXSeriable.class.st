@@ -16,6 +16,12 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'visitin' }
+CXSeriable >> accept: aVisitor [
+
+	aVisitor visitSerie: self
+]
+
 { #category : 'accessing' }
 CXSeriable >> bds [ 
 

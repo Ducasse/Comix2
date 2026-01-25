@@ -84,6 +84,12 @@ CXItem >> ISBN: aString [
 	ISBN := aString
 ]
 
+{ #category : 'visiting' }
+CXItem >> accept: aVisitor [
+
+	aVisitor visitItem: self
+]
+
 { #category : 'export to xml' }
 CXItem >> asXML [
 	
@@ -94,7 +100,7 @@ CXItem >> asXML [
 		do: [ :v |
 			| value |
 			value := self perform: v.
-			value ifNotNil: [ tag attributeAt: v put: value ] ].
+			value ifNotNil: [ tag attributeAt: v put: value asString ] ].
 	^ xmlW contents	
 ]
 

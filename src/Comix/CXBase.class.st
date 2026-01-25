@@ -73,6 +73,12 @@ CXBase class >> workingDirectory: aFileReference [
 	workingDirectory := aFileReference
 ]
 
+{ #category : 'visiting' }
+CXBase >> accept: aVisitor [
+
+	aVisitor visitBase: self
+]
+
 { #category : 'private for importing' }
 CXBase >> addNewSeriesFromCollection: bds [
 	"bds is a collection of unconnected bds objects. It means that their series are not object but string"
