@@ -19,8 +19,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'directory',
-		'items',
-		'col'
+		'items'
 	],
 	#category : 'Comix-Migration Support',
 	#package : 'Comix',
@@ -103,22 +102,34 @@ CXXMLImporter >> import [
 ]
 
 { #category : 'importing' }
-CXXMLImporter >> importFileName: aString [
+CXXMLImporter >> import: aString [
 	"self new importFileName: 'BD.322.xml'"
+
 	| p col |
 	col := OrderedCollection new.
-	p := XMLDOMParser onFileNamed: aString.
-	p parseDocument elements first elements do: [ :each | 
-		| bd | 
-		bd := CXItem new.
-		col add: bd.
-		each attributeNamesAndValuesDo: [ :attName :value | 
-			bd perform: ('import', attName capitalized , ':') asSymbol with: value
-			"[ bd perform: attName with: value ] 
-					on: MessageNotUnderstood 
-					do: [ :ex | self compileAccessorsNamed: attName ]" ]
-		].
+	p := XMLDOMParser on: aString.
+	p parseDocument elements first elements do: [ :each |
+			self importFromXMLEntry: each ].
 	^ col
+]
+
+{ #category : 'importing' }
+CXXMLImporter >> importFileName: aString [
+	"self new importFileName: 'BD.322.xml'"
+	
+	^ self import: (aString asFileReference readStream)
+]
+
+{ #category : 'importing' }
+CXXMLImporter >> importFromXMLEntry: oneXML [
+
+	| bd |
+	bd := CXItem new.
+	oneXML attributeNamesAndValuesDo: [ :attName :value | 
+		bd perform: ('import', attName capitalized , ':') asSymbol with: value ].
+	^ bd
+		
+
 ]
 
 { #category : 'initialization' }

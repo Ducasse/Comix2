@@ -7,9 +7,25 @@ Class {
 }
 
 { #category : 'sample' }
-CXXMLItemSaverLoaderTest class >> xmlOriginalSample [
+CXXMLItemSaverLoaderTest class >> aBDXMLOriginalSample [
 
 	^  '<bd serieComplete="false" editor="Soleil" entryCreationDate="1 November 2008" entryNumber="2166" authors="Bec Raffaele" title="Le tunnel" serie="Pandemonium" original="true" number="2" year="2008" />'
+]
+
+{ #category : 'helpers' }
+CXXMLItemSaverLoaderTest >> aBDXMLOriginalSample [
+
+	^  self class aBDXMLOriginalSample 
+]
+
+{ #category : 'as yet unclassified' }
+CXXMLItemSaverLoaderTest >> aBaseXMLOriginalSample [
+
+^ '<?xml version="1.0" encoding="UTF-8"?>
+<Base date="24 January 2026" entriesNumber="2" note="nil">
+<bd authors="Larcenet" editor="Dargaud" entryCreationDate="25 March 2006" entryNumber="1" number="1" original="true" serie="Serie  Nic oumouk" serieComplete="false" sortedAs="1" title="Total souk pour nic oumouk" year="2005"/>
+<bd authors="Larcenet" editor="Dargaud" entryCreationDate="25 March 2007" entryNumber="1809" number="2" original="true" serie="Serie  Nic oumouk" serieComplete="false" sortedAs="2" title="La france a peur" year="2007"/></Base>'
+		
 ]
 
 { #category : 'helpers' }
@@ -47,10 +63,22 @@ CXXMLItemSaverLoaderTest >> testBasicGenerateXMLFromSpec [
 ]
 
 { #category : 'tests - basics' }
+CXXMLItemSaverLoaderTest >> testReadFromAsXML [
+
+	| vis item p xmlEntry |
+	vis := CXVisitor new.
+	CXItem nic serie bds first accept: vis.
+	p := XMLDOMParser on: vis contents.
+	xmlEntry := p parseDocument elements first.
+	item := CXXMLImporter new importFromXMLEntry: xmlEntry.
+	self assert: item class equals: CXItem
+]
+
+{ #category : 'tests - basics' }
 CXXMLItemSaverLoaderTest >> testReadXMLIn [
 
 	| pxml bd |
-	pxml := XMLDOMParser on: self xmlOriginalSample.
+	pxml := XMLDOMParser on: self aBDXMLOriginalSample.
 	bd := pxml parseDocument elements first. 
 	self assert: bd attributes keys equals: #('serieComplete' 'editor' 'entryCreationDate' 'entryNumber' 'authors' 'title' 'serie' 'original' 'number' 'year').
 	self assert: bd attributes values equals: #('false' 'Soleil' '1 November 2008' '2166' 'Bec Raffaele' 'Le tunnel' 'Pandemonium' 'true' '2' '2008') 
@@ -102,8 +130,12 @@ CXXMLItemSaverLoaderTest >> testVisitorXMLASingleSerie [
 
 ]
 
-{ #category : 'helpers' }
-CXXMLItemSaverLoaderTest >> xmlOriginalSample [
+{ #category : 'tests - basics' }
+CXXMLItemSaverLoaderTest >> testXMLImporter [
 
-	^  self class xmlOriginalSample 
+
+	| col |
+	col := CXXMLImporter new import: self aBaseXMLOriginalSample.
+	self assert: col size equals: 2.
+	self assert: col first class equals: CXItem. 
 ]
