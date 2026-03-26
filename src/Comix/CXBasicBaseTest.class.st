@@ -136,3 +136,12 @@ CXBasicBaseTest >> testCollection [
 	bds := (STON fromString: self stonFile contents).
 	self assert: bds size equals: 8
 ]
+
+{ #category : 'tests' }
+CXBasicBaseTest >> thisisAMETHODAddedAndRemoved [
+	"self new testCollection"
+	
+	| bds | 
+	bds := (STON fromString: self stonFile contents).
+	self assert: bds size equals: 8
+]
