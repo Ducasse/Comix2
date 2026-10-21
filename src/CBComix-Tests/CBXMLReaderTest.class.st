@@ -42,7 +42,11 @@ CBXMLReaderTest >> testMultilineAndEntityValues [
 	| attributes |
 	attributes := (CBXMLReader new elementsIn: '<bd title="Les mu
 railles" notes="dit &quot;rare&quot; &amp; beau" />') first value.
-	self assert: (attributes at: 'title') equals: 'Les mu
+	self 
+		assert: (attributes at: 'title') 
+		equals: 'Les mu
 railles'.
-	self assert: (attributes at: 'notes') equals: 'dit "rare" & beau'
+	self 
+		assert: (attributes at: 'notes') 
+		equals: 'dit "rare" & beau'
 ]

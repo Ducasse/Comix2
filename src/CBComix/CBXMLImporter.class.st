@@ -96,7 +96,8 @@ CBXMLImporter >> importFile: aFileReference [
 { #category : 'importing' }
 CBXMLImporter >> importString: aString [
 
-	(CBXMLReader new elementsIn: aString) do: [ :each | self importElement: each ].
+	(CBXMLReader new elementsIn: aString) 
+		do: [ :each | self importElement: each ].
 	library rebuildProjections
 ]
 
