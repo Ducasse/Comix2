@@ -20,5 +20,7 @@ CBAuthorTest >> testNamed [
 { #category : 'tests' }
 CBAuthorTest >> testPrintOn [
 
-	self assert: (CBAuthor named: 'Franquin') printString equals: 'Franquin'
+	self 
+		assert: (CBAuthor named: 'Franquin') printString 
+		equals: 'a CBAuthor (Franquin)'
 ]

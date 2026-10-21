@@ -19,6 +19,12 @@ CBAuthor class >> named: aString [
 		  yourself
 ]
 
+{ #category : 'printing' }
+CBAuthor >> displayStringOn: aStream [
+
+	aStream nextPutAll: name
+]
+
 { #category : 'initialization' }
 CBAuthor >> initialize [
 
@@ -41,5 +47,9 @@ CBAuthor >> name: aString [
 { #category : 'printing' }
 CBAuthor >> printOn: aStream [
 
-	aStream nextPutAll: name
+	super printOn: aStream. 
+	aStream 
+		nextPutAll: ' (';
+		nextPutAll: name;
+		nextPutAll: ')'
 ]

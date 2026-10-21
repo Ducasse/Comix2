@@ -34,6 +34,17 @@ CBAlbum >> authors [
 	^ authors copy
 ]
 
+{ #category : 'printing' }
+CBAlbum >> displayStringOn: aStream [
+
+	aStream
+		displayPrint: series;
+		space;
+		displayPrint: number;
+		nextPutAll: ' - ';
+		nextPutAll: title
+]
+
 { #category : 'accessing' }
 CBAlbum >> entryDate [
 
@@ -130,12 +141,15 @@ CBAlbum >> number: anInteger [
 { #category : 'printing' }
 CBAlbum >> printOn: aStream [
 
+	super printOn: aStream. 
 	aStream
+		nextPutAll: ' (';
 		print: series;
 		space;
 		print: number;
 		nextPutAll: ' - ';
-		nextPutAll: title
+		nextPutAll: title;
+		nextPutAll: ')'
 ]
 
 { #category : 'accessing' }

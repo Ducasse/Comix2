@@ -42,6 +42,12 @@ CBSeries >> albums [
 	^ albums copy
 ]
 
+{ #category : 'printing' }
+CBSeries >> displayStringOn: aStream [
+
+	aStream nextPutAll: name
+]
+
 { #category : 'tags' }
 CBSeries >> hasTag: aSymbol [
 

@@ -49,6 +49,14 @@ CBAlbumTest >> testDefaults [
 ]
 
 { #category : 'tests' }
+CBAlbumTest >> testDisplayPrintOn [
+
+	self 
+		assert: album displayString 
+		equals: 'Gaston 13 - Lagaffe mérite des baffes'
+]
+
+{ #category : 'tests' }
 CBAlbumTest >> testHasNumberAndYear [
 
 	album year: 1979.
@@ -59,7 +67,9 @@ CBAlbumTest >> testHasNumberAndYear [
 { #category : 'tests' }
 CBAlbumTest >> testPrintOn [
 
-	self assert: album printString equals: 'Gaston 13 - Lagaffe mérite des baffes'
+	self 
+		assert: album printString 
+		equals: 'a CBAlbum (Gaston 13 - Lagaffe mérite des baffes)'
 ]
 
 { #category : 'tests' }
