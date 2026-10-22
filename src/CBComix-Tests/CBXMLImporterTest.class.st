@@ -5,8 +5,9 @@ Class {
 		'library',
 		'importer'
 	],
-	#category : 'CBComix-Tests',
-	#package : 'CBComix-Tests'
+	#category : 'CBComix-Tests-ImportExport',
+	#package : 'CBComix-Tests',
+	#tag : 'ImportExport'
 }
 
 { #category : 'running' }
@@ -17,17 +18,19 @@ CBXMLImporterTest >> setUp [
 	importer := CBXMLImporter on: library
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - authors' }
 CBXMLImporterTest >> testAuthorNamesFormat2KeepsSpaces [
 
 	importer importBase: (Dictionary new
 			 at: 'format' put: '2';
 			 yourself).
 	self assert: importer format equals: '2'.
-	self assert: (importer authorNamesFrom: 'Van Hamme and Rosinski') asArray equals: #( 'Van Hamme' 'Rosinski' )
+	self 
+		assert: (importer authorNamesFrom: 'Van Hamme and Rosinski') asArray 
+		equals: #( 'Van Hamme' 'Rosinski' )
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - authors' }
 CBXMLImporterTest >> testAuthorNamesHistoricalFormat [
 
 	self assert: (importer authorNamesFrom: 'Tome Janry') asArray equals: #( 'Tome' 'Janry' ).

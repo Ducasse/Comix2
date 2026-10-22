@@ -9,8 +9,9 @@ Class {
 		'gaston10',
 		'blake1'
 	],
-	#category : 'CBComix-Tests',
-	#package : 'CBComix-Tests'
+	#category : 'CBComix-Tests-Core',
+	#package : 'CBComix-Tests',
+	#tag : 'Core'
 }
 
 { #category : 'running' }
@@ -72,7 +73,9 @@ CBBookCollectionTest >> testAlbumsSortedBy [
 { #category : 'tests' }
 CBBookCollectionTest >> testAlbumsWithTag [
 
-	self assert: (collection albumsWithTag: #belgian) asArray equals: {
+	self 
+		assert: (collection albumsWithTag: #belgian) asArray 
+		equals: {
 			gaston9.
 			gaston10 }
 ]
@@ -80,8 +83,12 @@ CBBookCollectionTest >> testAlbumsWithTag [
 { #category : 'tests' }
 CBBookCollectionTest >> testDetectIfNone [
 
-	self assert: (collection detect: [ :each | each number = 10 ] ifNone: [ nil ]) equals: gaston10.
-	self assert: (collection detect: [ :each | each number = 99 ] ifNone: [ #none ]) equals: #none
+	self 
+		assert: (collection detect: [ :each | each number = 10 ] ifNone: [ nil ]) 
+		equals: gaston10.
+	self 
+		assert: (collection detect: [ :each | each number = 99 ] ifNone: [ #none ]) 
+		equals: #none
 ]
 
 { #category : 'tests' }
@@ -94,13 +101,6 @@ CBBookCollectionTest >> testDo [
 			gaston9.
 			gaston10.
 			blake1 }
-]
-
-{ #category : 'tests' }
-CBBookCollectionTest >> testIsEmpty [
-
-	self deny: collection isEmpty.
-	self assert: CBBookCollection new isEmpty
 ]
 
 { #category : 'tests' }

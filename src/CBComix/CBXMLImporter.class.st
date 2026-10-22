@@ -10,8 +10,9 @@ Class {
 		'library',
 		'format'
 	],
-	#category : 'CBComix',
-	#package : 'CBComix'
+	#category : 'CBComix-ImportExport',
+	#package : 'CBComix',
+	#tag : 'ImportExport'
 }
 
 { #category : 'instance creation' }
@@ -96,7 +97,7 @@ CBXMLImporter >> importFile: aFileReference [
 { #category : 'importing' }
 CBXMLImporter >> importString: aString [
 
-	(CBXMLReader new elementsIn: aString) 
+	(CBFlatManualXMLReader new elementsIn: aString) 
 		do: [ :each | self importElement: each ].
 	library rebuildProjections
 ]

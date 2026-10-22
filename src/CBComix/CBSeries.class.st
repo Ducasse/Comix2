@@ -11,8 +11,9 @@ Class {
 		'tags',
 		'albums'
 	],
-	#category : 'CBComix',
-	#package : 'CBComix'
+	#category : 'CBComix-Core',
+	#package : 'CBComix',
+	#tag : 'Core'
 }
 
 { #category : 'instance creation' }

@@ -3,14 +3,15 @@ I am a minimal reader for the flat XML format of the collection (no external XML
 I return, for each element, an association tagName -> Dictionary of attributes. Nesting and text are ignored.
 "
 Class {
-	#name : 'CBXMLReader',
+	#name : 'CBFlatManualXMLReader',
 	#superclass : 'Object',
-	#category : 'CBComix',
-	#package : 'CBComix'
+	#category : 'CBComix-ImportExport',
+	#package : 'CBComix',
+	#tag : 'ImportExport'
 }
 
 { #category : 'encoding' }
-CBXMLReader class >> decode: aString [
+CBFlatManualXMLReader class >> decode: aString [
 
 	^ ((((aString copyReplaceAll: '&quot;' with: '"') copyReplaceAll: '&apos;' with: '''') copyReplaceAll: '&lt;' with: '<')
 		   copyReplaceAll: '&gt;'
@@ -18,7 +19,7 @@ CBXMLReader class >> decode: aString [
 ]
 
 { #category : 'encoding' }
-CBXMLReader class >> encode: aString [
+CBFlatManualXMLReader class >> encode: aString [
 
 	^ (((aString copyReplaceAll: '&' with: '&amp;') copyReplaceAll: '<' with: '&lt;') copyReplaceAll: '>' with: '&gt;')
 		  copyReplaceAll: '"'
@@ -26,7 +27,7 @@ CBXMLReader class >> encode: aString [
 ]
 
 { #category : 'reading' }
-CBXMLReader >> elementsIn: aString [
+CBFlatManualXMLReader >> elementsIn: aString [
 
 	| elements stream |
 	elements := OrderedCollection new.
@@ -39,13 +40,13 @@ CBXMLReader >> elementsIn: aString [
 ]
 
 { #category : 'private' }
-CBXMLReader >> isNameEnd: aCharacter [
+CBFlatManualXMLReader >> isNameEnd: aCharacter [
 
 	^ aCharacter isSeparator or: [ '=/>' includes: aCharacter ]
 ]
 
 { #category : 'private' }
-CBXMLReader >> readElementFrom: aStream [
+CBFlatManualXMLReader >> readElementFrom: aStream [
 
 	| tagName attributes |
 	tagName := self readNameFrom: aStream.
@@ -66,7 +67,7 @@ CBXMLReader >> readElementFrom: aStream [
 ]
 
 { #category : 'private' }
-CBXMLReader >> readNameFrom: aStream [
+CBFlatManualXMLReader >> readNameFrom: aStream [
 
 	^ String streamContents: [ :out |
 		  [ aStream atEnd or: [ self isNameEnd: aStream peek ] ] whileFalse: [ out nextPut: aStream next ] ]

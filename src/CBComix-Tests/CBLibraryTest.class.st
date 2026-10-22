@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'library'
 	],
-	#category : 'CBComix-Tests',
-	#package : 'CBComix-Tests'
+	#category : 'CBComix-Tests-Core',
+	#package : 'CBComix-Tests',
+	#tag : 'Core'
 }
 
 { #category : 'running' }
@@ -56,7 +57,9 @@ CBLibraryTest >> testAddProjection [
 
 	| projection |
 	projection := library addProjection: (library owned projectionNamed: 'recent' rule: [ :each | each year > 2020 ]).
-	self assert: (library projectionNamed: 'recent') identicalTo: projection
+	self
+		assert: (library projectionNamed: 'recent') 
+		identicalTo: projection
 ]
 
 { #category : 'tests' }
@@ -197,7 +200,9 @@ CBLibraryTest >> testUnknownPublisher [
 CBLibraryTest >> testWantedIsIndependentFromOwned [
 
 	library addWanted: (CBWantedAlbum seriesName: 'Gaston' number: 10).
-	self assert: library wanted size equals: 1.
+	self 
+		assert: library wanted size 
+		equals: 1.
 	self assert: library owned isEmpty.
 	self deny: (library hasSeriesNamed: 'Gaston')
 ]
@@ -214,6 +219,7 @@ CBLibraryTest >> testXMLRoundTrip [
 	library addWanted: (CBWantedAlbum seriesName: 'Gaston' number: 10).
 	file := FileSystem memory root / 'library.xml'.
 	library exportXMLTo: file.
+	
 	loaded := CBLibrary fromXMLFile: file.
 	self assert: loaded owned size equals: 1.
 	self assert: loaded wanted size equals: 1.

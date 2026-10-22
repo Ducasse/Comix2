@@ -12,8 +12,9 @@ Class {
 	#instVars : [
 		'library'
 	],
-	#category : 'CBComix',
-	#package : 'CBComix'
+	#category : 'CBComix-ImportExport',
+	#package : 'CBComix',
+	#tag : 'ImportExport'
 }
 
 { #category : 'instance creation' }
@@ -55,7 +56,7 @@ CBXMLExporter >> write: aName value: aString on: aStream [
 		space;
 		nextPutAll: aName;
 		nextPutAll: '="';
-		nextPutAll: (CBXMLReader encode: aString);
+		nextPutAll: (CBFlatManualXMLReader encode: aString);
 		nextPut: $"
 ]
 

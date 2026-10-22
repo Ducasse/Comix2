@@ -17,8 +17,9 @@ Class {
 		'publisher',
 		'authors'
 	],
-	#category : 'CBComix',
-	#package : 'CBComix'
+	#category : 'CBComix-Core',
+	#package : 'CBComix',
+	#tag : 'Core'
 }
 
 { #category : 'authors' }

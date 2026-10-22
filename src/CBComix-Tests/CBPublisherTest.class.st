@@ -1,8 +1,9 @@
 Class {
 	#name : 'CBPublisherTest',
 	#superclass : 'TestCase',
-	#category : 'CBComix-Tests',
-	#package : 'CBComix-Tests'
+	#category : 'CBComix-Tests-Core',
+	#package : 'CBComix-Tests',
+	#tag : 'Core'
 }
 
 { #category : 'tests' }

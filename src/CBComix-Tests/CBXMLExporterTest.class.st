@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'library'
 	],
-	#category : 'CBComix-Tests',
-	#package : 'CBComix-Tests'
+	#category : 'CBComix-Tests-ImportExport',
+	#package : 'CBComix-Tests',
+	#tag : 'ImportExport'
 }
 
 { #category : 'running' }
